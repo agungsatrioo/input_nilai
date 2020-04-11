@@ -1,0 +1,11 @@
+build app:
+  image: kattwinkel/flutter-android
+  stage: build
+  script:
+    - flutter upgrade
+    - flutter build apk --split-per-abi
+  artifacts:
+    expire_in: 1 week
+    paths:
+    - build/app/outputs/apk/release/
+ 
