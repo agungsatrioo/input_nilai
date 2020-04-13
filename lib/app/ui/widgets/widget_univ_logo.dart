@@ -11,7 +11,7 @@ class WidgetUnivLogo extends StatelessWidget {
           padding: EdgeInsets.only(right: 10),
           child: Image.asset(
             "assets/images/icon.png",
-            scale: 90,
+            scale: 10,
           ),
         ),
         Column(

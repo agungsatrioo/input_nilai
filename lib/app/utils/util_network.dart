@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkUtil {
@@ -20,7 +21,8 @@ class NetworkUtil {
 
     print("Response");
     print(response.headers);
-    print(response.body);
+
+    debugPrint(res);
 
     if (json == null)
       throw new Exception("Tidak ada pengolah JSON tersedia.");

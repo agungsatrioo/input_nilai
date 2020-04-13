@@ -7,6 +7,7 @@ import 'package:line_icons/line_icons.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 import '../widget_basic.dart';
+import '../widget_buttons.dart';
 
 Future<bool> showUserVerifyBottomSheet(BuildContext context,
     {@required Color yesColor,
@@ -197,21 +198,18 @@ class _PasswordWithToggleState extends State<_PasswordWithToggle> {
                     ]
                   : [
                       Expanded(
-                        child: makeButton(context, "Konfirmasi",
-                            buttonColor: yesColor,
-                            textColor: yesTextColor, onTap: () {
-                          if (_passKey.currentState.validate()) {
-                            login();
-                          }
-                        }),
+                          child: MyButton.secondary(
+                              caption: "Konfirmasi", onTap: () {
+                            if (_passKey.currentState.validate()) {
+                              login();
+                            }
+                          })
                       ),
                       Expanded(
-                        child: makeButton(context, "Batalkan",
-                            buttonColor: noColor,
-                            textColor: noTextColor, onTap: () {
-                          onVerifyResult(false);
-                        }),
-                      )
+                          child: MyButton.flat(caption: "Batalkan", onTap: () {
+                            onVerifyResult(false);
+                          })
+                      ),
                     ])
         ],
       ),

@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-import '../widget_basic.dart';
+import 'package:input_nilai/app/ui/widgets/widget_buttons.dart';
 
 Future<bool> showConfirmationBottomSheet(BuildContext context,
-        {@required Color yesColor,
-        Color yesTextColor,
-        @required Color noColor,
-        Color noTextColor,
-        Widget caption = const Text("Apakah Anda yakin untuk melanjutkan?"),
+    {Widget caption = const Text("Apakah Anda yakin untuk melanjutkan?"),
         bool isDismissible = true}) =>
     showModalBottomSheet(
         context: context,
@@ -25,15 +20,13 @@ Future<bool> showConfirmationBottomSheet(BuildContext context,
                   Row(
                     children: <Widget>[
                       Expanded(
-                          child: makeButton(context, "Ya",
-                              buttonColor: yesColor,
-                              textColor: yesTextColor,
-                              onTap: () => Navigator.of(context).pop(true))),
+                          child: MyButton.flat(caption: "Ya",
+                              onTap: () => Navigator.of(context).pop(true))
+                      ),
                       Expanded(
-                          child: makeButton(context, "Tidak",
-                              buttonColor: noColor,
-                              textColor: noTextColor,
-                              onTap: () => Navigator.of(context).pop(false))),
+                          child: MyButton.secondary(caption: "Tidak",
+                              onTap: () => Navigator.of(context).pop(false))
+                      ),
                     ],
                   )
                 ],

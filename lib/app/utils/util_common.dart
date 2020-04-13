@@ -15,6 +15,11 @@ bool isNumeric(String s) {
   return double.tryParse(s) != null;
 }
 
+void printWrapped(String text) {
+  final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
+  pattern.allMatches(text).forEach((match) => print(match.group(0)));
+}
+
 extension HexColor on Color {
   /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
   static Color fromHex(String hexString) {

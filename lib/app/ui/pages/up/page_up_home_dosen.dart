@@ -127,7 +127,10 @@ class _UPHomePageDosenState extends State<UPHomePageDosen>
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => ThemeConsumer(
-                                            child: PageUPDetails(item))));
+                                            child: PageUPDetails(item)))).then((
+                                    val) {
+                                  if (val) _refreshList();
+                                });
                               });
                         }
                     }

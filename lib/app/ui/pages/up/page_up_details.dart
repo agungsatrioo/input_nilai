@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:input_nilai/app/models/model_akademik.dart';
-import 'package:input_nilai/app/ui/pages/revisi/page_revisi_dosen.dart';
 import 'package:input_nilai/app/ui/widgets/cards/widget_card_sidang.dart';
 import 'package:input_nilai/app/ui/widgets/detail_sidang/widget_penilaian.dart';
-import 'package:input_nilai/app/ui/widgets/widget_basic.dart';
+import 'package:input_nilai/app/ui/widgets/detail_sidang/widget_revisi_button.dart';
+import 'package:input_nilai/app/ui/widgets/widget_buttons.dart';
 import 'package:input_nilai/app/utils/util_akademik.dart';
 import 'package:input_nilai/app/utils/util_penilaian.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:theme_provider/theme_provider.dart';
 
 class PageUPDetails extends StatefulWidget {
   ModelMhsSidang mhs;
@@ -17,7 +16,7 @@ class PageUPDetails extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _PageUPDetailsState(mhs);
+    return _PageUPDetailsState();
   }
 }
 
@@ -27,8 +26,6 @@ class _PageUPDetailsState extends State<PageUPDetails> {
   Future _nilai;
 
   bool _shouldUpdated = false;
-
-  _PageUPDetailsState(this.mhs);
 
   Future<bool> _onWillPop() async {
     Navigator.of(context).pop(_shouldUpdated);
@@ -43,6 +40,7 @@ class _PageUPDetailsState extends State<PageUPDetails> {
   void initState() {
     super.initState();
 
+    mhs = widget.mhs;
     _rest = RESTAkademik();
     _nilai = _rest.getNilai(mhs.idStatus);
   }
@@ -128,47 +126,39 @@ class _PageUPDetailsState extends State<PageUPDetails> {
                                     snapshot: snapshot.data,
                                   ),
                                   SizedBox(height: 20),
-                                  makeButton(
-                                      context,
-                                      snapshot.data.sudahAdaNilai
-                                          ? "Sunting penilaian"
-                                          : "Beri penilaian",
-                                      buttonWidth: double.infinity, onTap: () {
-                                    if (snapshot.data.sudahAdaNilai) {
+                                  snapshot.data.sudahAdaNilai
+                                      ? MyButton.flatPrimary(
+                                      caption: "Ubah penilaian",
+                                      buttonWidth: double.infinity,
+                                      onTap: () {
+                                        tap(
+                                            context: context,
+                                            message: "Anda akan mengubah penilaian ${mhs
+                                                .namaMhs} (NIM: ${mhs.nim})",
+                                            onAction: (nilai) =>
+                                                putNilai(myCtx, nilai)
+                                        );
+                                      }
+                                  )
+                                      : MyButton.primary(
+                                    caption: "Beri penilaian",
+                                    buttonWidth: double.infinity,
+                                    onTap: () {
                                       tap(
-                                        context: context,
-                                        message:
-                                            "Anda akan menyunting penilaian",
-                                        onAction: (nilai) =>
-                                            putNilai(myCtx, nilai),
+                                          context: context,
+                                          message: "Anda akan memberi penilaian kepada ${mhs
+                                              .namaMhs} (NIM: ${mhs.nim})",
+                                          onAction: (nilai) =>
+                                              setNilai(myCtx, nilai)
                                       );
-                                    } else {
-                                      tap(
-                                        context: context,
-                                        message: "Anda akan memberi penilaian",
-                                        onAction: (nilai) =>
-                                            setNilai(myCtx, nilai),
-                                      );
-                                    }
-                                  }),
-                                  makeButton(myCtx, "Beri Revisi",
-                                      buttonWidth: double.infinity, onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ThemeConsumer(
-                                                    child: PageRevisiDosen(
-                                                  rest: _rest,
-                                                  dosenSidang: snapshot.data,
-                                                )))).then((val) {
-                                      if (val) _refresh();
-                                    });
-                                  },
-                                      buttonColor:
-                                          ThemeProvider.themeOf(context)
-                                              .data
-                                              .colorScheme
-                                              .error)
+                                    },
+                                  ),
+                                  ButtonRevisi(
+                                    rest: _rest,
+                                    dosen: snapshot.data,
+                                    mahasiswa: mhs,
+                                    onPageValue: (v) {},
+                                  )
                                 ],
                               );
                             }

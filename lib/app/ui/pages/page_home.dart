@@ -7,6 +7,7 @@ import 'package:input_nilai/app/ui/pages/kompre/page_kompre_home_dosen.dart';
 import 'package:input_nilai/app/ui/pages/kompre/page_kompre_home_mhs.dart';
 import 'package:input_nilai/app/ui/pages/munaqosah/page_munaqosah_home_dosen.dart';
 import 'package:input_nilai/app/ui/pages/munaqosah/page_munaqosah_home_mhs.dart';
+import 'package:input_nilai/app/ui/pages/page_splash.dart';
 import 'package:input_nilai/app/ui/pages/quran/page_quran_home.dart';
 import 'package:input_nilai/app/ui/pages/up/page_up_home_dosen.dart';
 import 'package:input_nilai/app/ui/pages/up/page_up_home_mhs.dart';
@@ -15,6 +16,7 @@ import 'package:input_nilai/app/ui/widgets/home_menu/widget_home_menus.dart';
 import 'package:input_nilai/app/ui/widgets/user_box/widget_userbox_dosen.dart';
 import 'package:input_nilai/app/ui/widgets/user_box/widget_userbox_mhs.dart';
 import 'package:input_nilai/app/ui/widgets/widget_basic.dart';
+import 'package:input_nilai/app/ui/widgets/widget_buttons.dart';
 import 'package:input_nilai/app/ui/widgets/widget_univ_logo.dart';
 import 'package:input_nilai/app/utils/blocs/auth/util_authevent.dart';
 import 'package:input_nilai/app/utils/blocs/user_level/util_levelevent.dart';
@@ -119,6 +121,12 @@ class _HomePageState extends State<HomePage> {
             juzAmma: true,
           ),
           iconOrange1),
+      HomeMenu(
+          "Juz Amma",
+          "Baca Juz Amma sebelum sidang.",
+          LineIcons.coffee,
+          SplashPage(),
+          iconOrange1),
       HomeMenu("Tentang Aplikasi Ini", "Melihat info aplikasi ini.",
           LineIcons.info_circle, () {
         PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
@@ -158,16 +166,7 @@ class _HomePageState extends State<HomePage> {
                         caption: Text(
                             "Apakah Anda yakin akan logout dari aplikasi ini? "
                             "Pastikan Anda telah menyelesaikan semua pekerjaan Anda sebelum"
-                            "logout."),
-                        yesColor: ThemeProvider.themeOf(context)
-                            .data
-                            .colorScheme
-                            .surface,
-                        noColor: colorGreenStd,
-                        yesTextColor: ThemeProvider.themeOf(context)
-                            .data
-                            .colorScheme
-                            .onSurface)
+                                "logout."))
                     .then((val) {
                   if (val)
                     BlocProvider.of<AuthenticationBloc>(context)
@@ -182,14 +181,13 @@ class _HomePageState extends State<HomePage> {
           child: BlocBuilder<UserLevelBloc, UserLevelState>(
             builder: (context, state) {
               _menuList.clear();
-              Widget userbox;
-
+              List homeWidgets = <Widget>[];
               if (state is UserLevelDosen) {
                 _addMenuDosen();
-                userbox = UserBoxDosen(_ua);
+                homeWidgets.add(UserBoxDosen(_ua));
               } else if (state is UserLevelMahasiswa) {
                 _addMenuMahasiswa();
-                userbox = UserBoxMahasiswa(_ua);
+                homeWidgets.add(UserBoxMahasiswa(_ua));
               } else if (state is InitializingState) {
                 return loading();
               }
@@ -197,7 +195,7 @@ class _HomePageState extends State<HomePage> {
               return Container(
                 padding: EdgeInsets.all(8.0),
                 child: Column(
-                  children: <Widget>[userbox, HomeCardMenus(_menuList)],
+                  children: homeWidgets..add(HomeCardMenus(_menuList)),
                 ),
               );
             },

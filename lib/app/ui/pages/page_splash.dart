@@ -5,7 +5,7 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Input Nilai 1.0'),
+        child: Image.asset("assets/images/icon.png", scale: 3),
       ),
     );
   }
