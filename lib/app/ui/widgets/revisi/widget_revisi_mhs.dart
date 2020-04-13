@@ -30,8 +30,8 @@ class WidgetRevisiMahasiswa extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text(
-                    DateFormat("dd MMMM yyyy hh:mm:ss")
-                        .format(item.tglRevisiInput),
+                    DateFormat.yMMMMEEEEd("id").add_Hms().format(
+                        item.tglRevisiInput),
                     style: Theme.of(context).textTheme.subtitle,
                   ),
                 ),
@@ -88,7 +88,8 @@ class WidgetRevisiMahasiswa extends StatelessWidget {
               children: <Widget>[
                 Text("Selesaikan sebelum "),
                 Text(
-                  "${item.tglRevisiDeadline}.",
+                  DateFormat.yMMMMEEEEd("id").add_Hms().format(
+                      item.tglRevisiDeadline),
                   style: Theme.of(context).textTheme.subtitle,
                 ),
               ],

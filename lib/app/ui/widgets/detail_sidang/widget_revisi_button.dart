@@ -20,8 +20,9 @@ class ButtonRevisi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (mahasiswa.nilai.sudahAdaNilai) {
-      return MyButton.flatError(
+    return Visibility(
+      visible: this.dosen.sudahAdaNilai,
+      child: MyButton.flatError(
           caption: "Beri revisi",
           buttonWidth: double.infinity,
           onTap: () {
@@ -29,13 +30,11 @@ class ButtonRevisi extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => ThemeConsumer(
-                            child: PageRevisiDosen(
+                        child: PageRevisiDosen(
                           rest: rest,
                           dosenSidang: dosen,
                         )))).then((val) => onPageValue(val));
-          });
-    } else {
-      return Container();
-    }
+          }),
+    );
   }
 }

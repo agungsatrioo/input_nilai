@@ -125,7 +125,10 @@ class _MunaqosahHomeDosenState extends State<MunaqosahHomeDosen>
                                     MaterialPageRoute(
                                         builder: (context) => ThemeConsumer(
                                             child:
-                                                PageMunaqosahDetails(item))));
+                                            PageMunaqosahDetails(item)))).then((
+                                    val) {
+                                  if (val) _refreshList();
+                                });
                               });
                         }
                     }

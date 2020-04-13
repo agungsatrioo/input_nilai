@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:input_nilai/app/models/model_akademik.dart';
 import 'package:input_nilai/app/ui/widgets/cards/widget_card_sidang.dart';
 import 'package:input_nilai/app/ui/widgets/detail_sidang/widget_penilaian.dart';
+import 'package:input_nilai/app/ui/widgets/widget_boolean_builder.dart';
 import 'package:input_nilai/app/ui/widgets/widget_buttons.dart';
 import 'package:input_nilai/app/utils/util_akademik.dart';
 import 'package:input_nilai/app/utils/util_penilaian.dart';
@@ -117,33 +118,37 @@ class _PageKompreDetailsState extends State<PageKompreDetails> {
                                     snapshot: snapshot.data,
                                   ),
                                   SizedBox(height: 20),
-                                  snapshot.data.sudahAdaNilai
-                                      ? MyButton.flatPrimary(
-                                      caption: "Ubah penilaian",
-                                      buttonWidth: double.infinity,
-                                      onTap: () {
-                                        tap(
-                                            context: context,
-                                            message: "Anda akan mengubah penilaian ${mhs
-                                                .namaMhs} (NIM: ${mhs.nim})",
-                                            onAction: (nilai) =>
-                                                putNilai(myCtx, nilai)
-                                        );
-                                      }
-                                  )
-                                      : MyButton.primary(
-                                    caption: "Beri penilaian",
-                                    buttonWidth: double.infinity,
-                                    onTap: () {
-                                      tap(
-                                          context: context,
-                                          message: "Anda akan memberi penilaian kepada ${mhs
-                                              .namaMhs} (NIM: ${mhs.nim})",
-                                          onAction: (nilai) =>
-                                              setNilai(myCtx, nilai)
-                                      );
-                                    },
+                                  SingleChildBooleanWidget(
+                                      boolean: snapshot.data.sudahAdaNilai,
+                                      ifTrue: MyButton.flatPrimary(
+                                          caption: "Ubah penilaian",
+                                          buttonWidth: double.infinity,
+                                          onTap: () {
+                                            tap(
+                                                context: context,
+                                                message: "Anda akan mengubah penilaian ${mhs
+                                                    .namaMhs} (NIM: ${mhs
+                                                    .nim})",
+                                                onAction: (nilai) =>
+                                                    putNilai(myCtx, nilai)
+                                            );
+                                          }
+                                      ),
+                                      ifFalse: MyButton.primary(
+                                        caption: "Beri penilaian",
+                                        buttonWidth: double.infinity,
+                                        onTap: () {
+                                          tap(
+                                              context: context,
+                                              message: "Anda akan memberi penilaian kepada ${mhs
+                                                  .namaMhs} (NIM: ${mhs.nim})",
+                                              onAction: (nilai) =>
+                                                  setNilai(myCtx, nilai)
+                                          );
+                                        },
+                                      )
                                   ),
+                                  SizedBox(height: 20),
                                 ],
                               );
                             }
