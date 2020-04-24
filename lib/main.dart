@@ -2,18 +2,18 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:input_nilai/app/ui/pages/page_login.dart';
-import 'package:input_nilai/app/utils/util_theme.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:theme_provider/theme_provider.dart';
 
-import 'app/ui/pages/page_home.dart';
-import 'app/ui/pages/page_splash.dart';
-import 'app/ui/widgets/widget_loading.dart';
-import 'app/utils/blocs/auth/util_authevent.dart';
-import 'app/utils/blocs/auth/util_authstate.dart';
-import 'app/utils/util_blocs.dart';
-import 'app/utils/util_users.dart';
+import 'src/ui/pages/page_home.dart';
+import 'src/ui/pages/page_login.dart';
+import 'src/ui/pages/page_splash.dart';
+import 'src/ui/widgets/widget_loading.dart';
+import 'src/utils/blocs/auth/util_authevent.dart';
+import 'src/utils/blocs/auth/util_authstate.dart';
+import 'src/utils/util_blocs.dart';
+import 'src/utils/util_theme.dart';
+import 'src/utils/util_users.dart';
 
 void main() {
   BlocSupervisor.delegate = SimpleBlocDelegate();
@@ -25,15 +25,15 @@ void main() {
         return AuthenticationBloc(userRepository: userRepository)
           ..add(AppStarted());
       },
-      child: Phoenix(child: App(userRepository: userRepository)),
+      child: Phoenix(child: MyApp(userRepository: userRepository)),
     ),
   );
 }
 
-class App extends StatelessWidget {
+class MyApp extends StatelessWidget {
   final UserRepository userRepository;
 
-  App({Key key, @required this.userRepository}) : super(key: key) {
+  MyApp({Key key, @required this.userRepository}) : super(key: key) {
     initializeDateFormatting("id");
   }
 
