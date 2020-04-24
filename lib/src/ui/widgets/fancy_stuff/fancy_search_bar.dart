@@ -87,7 +87,9 @@ class _DefaultAppBarState extends State<MyAppBar>
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        AppBar(title: Text(this._title), elevation: 0, actions: [
+        AppBar(title: Text(this._title),
+            brightness: isInSearchMode ? Brightness.dark : Brightness.light,
+            elevation: 0, actions: [
           ..._widgetList,
           GestureDetector(
             // ignore: missing_required_param
@@ -103,7 +105,11 @@ class _DefaultAppBarState extends State<MyAppBar>
           builder: (context, child) {
             return CustomPaint(
               painter: MyPainter(
-                color: Colors.orange,
+                color: ThemeProvider
+                    .themeOf(context)
+                    .data
+                    .colorScheme
+                    .primary,
                 containerHeight: widget.preferredSize.height,
                 center: Offset(rippleStartX ?? 0, rippleStartY ?? 0),
                 radius: _animation.value * MediaQuery.of(context).size.width,

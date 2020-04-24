@@ -157,7 +157,6 @@ class _PageUPDetailsState extends State<PageUPDetails> {
                                         },
                                       )
                                   ),
-                                  SizedBox(height: 20),
                                   ButtonRevisi(
                                     rest: _rest,
                                     dosen: snapshot.data,

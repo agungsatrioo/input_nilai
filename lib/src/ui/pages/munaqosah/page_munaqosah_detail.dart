@@ -152,7 +152,6 @@ class _PageMunaqosahDetailsState extends State<PageMunaqosahDetails> {
                                         },
                                       )
                                   ),
-                                  SizedBox(height: 20),
                                   ButtonRevisi(
                                     rest: _rest,
                                     dosen: snapshot.data,

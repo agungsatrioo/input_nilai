@@ -13,8 +13,8 @@ List<AppTheme> initAppThemes() => [
           scaffoldBackgroundColor: hexToColor("#F1F1F1"),
           backgroundColor: hexToColor("#F1F1F1"),
           colorScheme: ColorScheme(
-              primary: hexToColor("#275da7"),
-              primaryVariant: hexToColor("#306fbf"),
+              primary: Color(0xff275da7),
+              primaryVariant: Color(0xff306fbf),
               secondary: hexToColor("#306fbf"),
               secondaryVariant: hexToColor("#f25c05"),
               surface: hexToColor("#F1F1F1"),

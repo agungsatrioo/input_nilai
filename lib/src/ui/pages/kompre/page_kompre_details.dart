@@ -148,7 +148,6 @@ class _PageKompreDetailsState extends State<PageKompreDetails> {
                                         },
                                       )
                                   ),
-                                  SizedBox(height: 20),
                                 ],
                               );
                             }
