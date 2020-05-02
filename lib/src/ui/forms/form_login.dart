@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:input_nilai/src/ui/widgets/widget_boolean_builder.dart';
+import 'package:input_nilai/src/ui/widgets/widget_buttons.dart';
 import 'package:line_icons/line_icons.dart';
 
 import '../../ui/widgets/widget_basic.dart';
@@ -110,11 +112,17 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                 ),
                 Container(
-                    child: state is LoginLoading
-                        ? CircularProgressIndicator()
-                        : makeButton(context, "Login",
-                            buttonWidth: double.infinity,
-                            onTap: () => _onLoginButtonPressed())),
+                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                  child: SingleChildBooleanWidget(
+                    boolean: state is LoginLoading, 
+                    ifTrue: CircularProgressIndicator(), 
+                    ifFalse: MyButton.primary(
+                      buttonWidth: double.infinity,
+                      caption: "Login", 
+                      onTap: () => _onLoginButtonPressed()
+                    )
+                  ),
+                ),
               ],
             ),
           );

@@ -251,16 +251,17 @@ class _PasswordWithToggleState extends State<_PasswordWithToggle> {
           Row(
             children: <Widget>[
               Expanded(
-                  child: makeButton(context, "Konfirmasi",
-                      buttonColor: yesColor,
-                      textColor: yesTextColor, onTap: () {
-                onVerifyResult(true);
-              })),
+                child: MyButton.primary(
+                  caption: "Kpnfirmasi", 
+                  onTap: () => onVerifyResult(true)
+                ),
+              ),
               Expanded(
-                  child: makeButton(context, "Batal",
-                      buttonColor: noColor,
-                      textColor: noTextColor,
-                      onTap: onVerifyResult(false))),
+                child: MyButton.flat(
+                  caption: "Batalkan", 
+                  onTap: () => onVerifyResult(false)
+                ),
+              ),
             ],
           )
         ],

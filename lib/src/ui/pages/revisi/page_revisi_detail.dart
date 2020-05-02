@@ -4,6 +4,8 @@ import 'package:input_nilai/src/models/model_akademik.dart';
 import 'package:input_nilai/src/ui/pages/revisi/page_revisi_form.dart';
 import 'package:input_nilai/src/ui/widgets/bottom_sheet/widget_bottomsheet_verify.dart';
 import 'package:input_nilai/src/ui/widgets/widget_basic.dart';
+import 'package:input_nilai/src/ui/widgets/widget_boolean_builder.dart';
+import 'package:input_nilai/src/ui/widgets/widget_buttons.dart';
 import 'package:input_nilai/src/utils/util_akademik.dart';
 import 'package:input_nilai/src/utils/util_colors.dart';
 import 'package:intl/intl.dart';
@@ -171,61 +173,20 @@ class _RevisiDetailPageState extends State<RevisiDetailPage> {
                                   .primary,
                               caption: "Deskripsi revisi",
                               content: snapshot.data.detailRevisi),
-                          Divider(),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: makeButton(
-                                context,
-                                snapshot.data.statusRevisi
-                                    ? "Batal tandai"
-                                    : "Tandai sebagai selesai",
-                                buttonColor: snapshot.data.statusRevisi
-                                    ? ThemeProvider.themeOf(context)
-                                        .data
-                                        .colorScheme
-                                        .surface
-                                    : colorGreenStd,
-                                textColor: snapshot.data.statusRevisi
-                                    ? ThemeProvider.themeOf(context)
-                                        .data
-                                        .colorScheme
-                                        .error
-                                    : ThemeProvider.themeOf(context)
-                                        .data
-                                        .colorScheme
-                                        .onPrimary,
-                                buttonWidth: double.infinity, onTap: () {
-                              showUserVerifyBottomSheet(context,
-                                      message: Text((snapshot.data.statusRevisi
-                                              ? "Apakah Anda yakin akan membatalkan tanda selesai?"
-                                              : "Apakah Anda yakin akan menandai revisi ini sebagai selesai? "
-                                                  "Pastikan mahasiswa yang bersangkutan telah menyelesaikan revisi ini "
-                                                  "sebelum Anda menandai.") +
-                                          "\n\nAnda harus memasukkan kata sandi untuk melanjutkan."),
-                                      yesColor: colorGreenStd,
-                                      noColor: ThemeProvider.themeOf(context)
-                                          .data
-                                          .colorScheme
-                                          .surface,
-                                      noTextColor:
-                                          ThemeProvider.themeOf(context)
-                                              .data
-                                              .colorScheme
-                                              .onSurface)
-                                  .then((val) {
-                                val ??= false;
-
-                                setState(() {
-                                  _shouldUpdated = val;
-                                });
-
-                                if (val) {
-                                  putMark(scaffoldContext, snapshot.data,
-                                      !snapshot.data.statusRevisi);
-                                }
-                              });
-                            }),
+                          SingleChildBooleanWidget(
+                            boolean: snapshot.data.statusRevisi, 
+                            ifTrue: MyButton.flatError(
+                              buttonWidth: double.infinity,
+                              caption: "Tandai sebagai belum selesai", 
+                              onTap: () => showRevisiOnTap(snapshot, scaffoldContext)
+                            ), 
+                            ifFalse: MyButton.secondary(
+                              buttonWidth: double.infinity,
+                              caption: "Tandai sebagai selesai", 
+                              onTap: () => showRevisiOnTap(snapshot, scaffoldContext)
+                            ), 
                           )
+                          
                         ],
                       );
                     }
@@ -234,6 +195,38 @@ class _RevisiDetailPageState extends State<RevisiDetailPage> {
             );
           }),
         ));
+  }
+
+  showRevisiOnTap(AsyncSnapshot snapshot, BuildContext scaffoldContext) {
+    showUserVerifyBottomSheet(context,
+            message: Text((snapshot.data.statusRevisi
+                    ? "Apakah Anda yakin akan membatalkan tanda selesai?"
+                    : "Apakah Anda yakin akan menandai revisi ini sebagai selesai? "
+                        "Pastikan mahasiswa yang bersangkutan telah menyelesaikan revisi ini "
+                        "sebelum Anda menandai.") +
+                "\n\nAnda harus memasukkan kata sandi untuk melanjutkan."),
+            yesColor: colorGreenStd,
+            noColor: ThemeProvider.themeOf(context)
+                .data
+                .colorScheme
+                .surface,
+            noTextColor:
+                ThemeProvider.themeOf(context)
+                    .data
+                    .colorScheme
+                    .onSurface)
+        .then((val) {
+      val ??= false;
+
+      setState(() {
+        if(!val) _shouldUpdated = val;
+      });
+
+      if (val) {
+        putMark(scaffoldContext, snapshot.data,
+            !snapshot.data.statusRevisi);
+      }
+    });
   }
 
   putMark(BuildContext ctx, Revisi revisi, bool nilai) {

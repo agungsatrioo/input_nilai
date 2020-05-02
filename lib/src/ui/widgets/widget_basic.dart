@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:input_nilai/src/utils/util_colors.dart';
-import 'package:theme_provider/theme_provider.dart';
 
 Widget center_text(String text) {
   return Center(
@@ -34,34 +33,6 @@ class SystemPadding extends StatelessWidget {
     return new AnimatedContainer(
         duration: const Duration(milliseconds: 300), child: child);
   }
-}
-
-Widget makeButton(BuildContext context, String caption,
-    {@required Function() onTap,
-    Color buttonColor,
-    Color textColor,
-    double fontSize = 16.0,
-    double buttonWidth = 88.0,
-    double buttonHeight = 48.0}) {
-  return Padding(
-      padding: EdgeInsets.all(8.0),
-      child: ButtonTheme(
-        minWidth: buttonWidth,
-        height: buttonHeight,
-        child: FlatButton(
-          color: buttonColor ??
-              ThemeProvider.themeOf(context).data.colorScheme.primary,
-          child: Text(caption,
-              style: TextStyle(
-                  fontSize: fontSize,
-                  color: textColor ??
-                      ThemeProvider.themeOf(context)
-                          .data
-                          .colorScheme
-                          .onPrimary)),
-          onPressed: onTap,
-        ),
-      ));
 }
 
 Widget textWithCaption(BuildContext context, String caption, String content) =>
@@ -150,38 +121,6 @@ Widget makeTextField(
         onChanged: (val) => onChange(val));
 
 Widget makeTextTableStyle(BuildContext context,
-        {@required String caption,
-        @required String content,
-        TextStyle leftTextStyle = const TextStyle(),
-        TextStyle rightTextStyle = const TextStyle(),
-        int leftFlex = 5,
-        int rightFlex = 5}) =>
-    Container(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: leftFlex,
-            child: Text(caption,
-                style: TextStyle(color: Theme.of(context).colorScheme.primary)
-                    .merge(leftTextStyle)),
-          ),
-          Expanded(
-            flex: rightFlex,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                content,
-                textAlign: TextAlign.right,
-                style: rightTextStyle,
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-
-Widget make(BuildContext context,
         {@required String caption,
         @required String content,
         TextStyle leftTextStyle = const TextStyle(),

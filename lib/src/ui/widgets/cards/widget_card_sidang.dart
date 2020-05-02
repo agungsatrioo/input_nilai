@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:input_nilai/src/models/model_akademik.dart';
 import 'package:input_nilai/src/ui/pages/revisi/page_revisi_mhs.dart';
 import 'package:input_nilai/src/ui/widgets/detail_sidang/widget_dosen_containers.dart';
+import 'package:input_nilai/src/ui/widgets/widget_buttons.dart';
 import 'package:intl/intl.dart';
 import 'package:theme_provider/theme_provider.dart';
 
@@ -165,10 +166,11 @@ Widget _judulSidangDosenDetails(BuildContext context, ModelMhsSidang item) {
   return textWithCaption(context, caption, value);
 }
 
-Widget tombolRevisi(BuildContext context, ModelMhsSidang item) =>
-    makeButton(context, "Lihat revisi", buttonWidth: double.infinity,
-        onTap: () {
-      List<Revisi> allRevisi = List();
+Widget tombolRevisi(BuildContext context, ModelMhsSidang item) {
+  return MyButton.error(
+    caption: "Lihat revisi", 
+    onTap: () {
+            List<Revisi> allRevisi = List();
 
       item.penguji.forEach((f) {
         allRevisi.addAll(f.revisi);
@@ -185,4 +187,6 @@ Widget tombolRevisi(BuildContext context, ModelMhsSidang item) =>
           MaterialPageRoute(
               builder: (context) =>
                   ThemeConsumer(child: PageRevisiMahasiswa(allRevisi))));
-    });
+    }
+  );
+}
