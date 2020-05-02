@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:input_nilai/src/models/model_surat_quran.dart';
 import 'package:input_nilai/src/ui/pages/quran/page_quran_surat.dart';
+import 'package:input_nilai/src/ui/widgets/quran/widget_surah_item.dart';
 import 'package:input_nilai/src/ui/widgets/widget_basic.dart';
 import 'package:input_nilai/src/utils/util_quran.dart';
 import 'package:theme_provider/theme_provider.dart';
@@ -36,7 +37,6 @@ class _QuranHomePageState extends State<QuranHomePage> {
           elevation: 0.0,
         ),
         body: Container(
-          padding: EdgeInsets.all(8.0),
           child: FutureBuilder<List<IndexQuran>>(
             future: _indexQuran,
             builder:
@@ -55,7 +55,7 @@ class _QuranHomePageState extends State<QuranHomePage> {
                               .data
                               .scaffoldBackgroundColor,
                           child: InkWell(
-                            child: item(surat),
+                            child: SurahItem(surah: surat),
                             onTap: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -71,59 +71,4 @@ class _QuranHomePageState extends State<QuranHomePage> {
           ),
         ));
   }
-
-  Widget item(IndexQuran item) => Container(
-      padding: EdgeInsets.all(4),
-      child: Row(
-        children: <Widget>[
-          Flexible(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 1),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "${item.nomor}. ${item.nama}",
-                                style: ThemeProvider.themeOf(context)
-                                    .data
-                                    .textTheme
-                                    .headline,
-                              ),
-                              Text(
-                                item.arti,
-                                style: ThemeProvider.themeOf(context)
-                                    .data
-                                    .textTheme
-                                    .caption,
-                              )
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 2),
-                            child: Text(item.asma,
-                                textAlign: TextAlign.end,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .display1
-                                    .merge(TextStyle(
-                                        fontFamily: 'Amiri',
-                                        height: 2.0,
-                                        color: ThemeProvider.themeOf(context)
-                                            .data
-                                            .colorScheme
-                                            .onSurface))),
-                          ),
-                        ]))
-              ],
-            ),
-          )
-        ],
-      ));
 }
