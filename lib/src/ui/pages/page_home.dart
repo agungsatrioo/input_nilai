@@ -130,7 +130,7 @@ class _HomePageState extends State<HomePage> {
             context: context,
             applicationIcon: Image.asset(
               "assets/images/icon.png",
-              scale: 90,
+              scale: 10,
             ),
             applicationName: appName,
             applicationVersion: '$version.$buildNumber',
