@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:input_nilai/src/models/model_surat_quran.dart';
 import 'package:input_nilai/src/ui/widgets/widget_basic.dart';
+import 'package:input_nilai/src/ui/widgets/widget_default_view.dart';
 import 'package:input_nilai/src/ui/widgets/widget_indicator.dart';
+import 'package:input_nilai/src/ui/widgets/widget_loading.dart';
 import 'package:input_nilai/src/utils/util_colors.dart';
 import 'package:input_nilai/src/utils/util_quran.dart';
 import 'package:theme_provider/theme_provider.dart';
@@ -43,10 +45,13 @@ class _QuranSuratDetailsState extends State<QuranSuratDetails> {
             builder: (BuildContext myCtx, AsyncSnapshot<SuratQuran> snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
-                  return loading();
+                  return LoadingWidget();
                 default:
                   if (snapshot.hasError) {
-                    return centerText("Gagal memuat surat yang diminta.");
+                      return DefaultViewWidget(
+                        title: "Gagal memuat surat yang diminta.",
+                        message: "Pastikan Anda memperoleh versi asli.",
+                      );
                   } else {
                     return ListView(
                         children: snapshot.data.text.entries.map((f) {

@@ -6,6 +6,8 @@ import 'package:input_nilai/src/ui/widgets/bottom_sheet/widget_bottomsheet_verif
 import 'package:input_nilai/src/ui/widgets/widget_basic.dart';
 import 'package:input_nilai/src/ui/widgets/widget_boolean_builder.dart';
 import 'package:input_nilai/src/ui/widgets/widget_buttons.dart';
+import 'package:input_nilai/src/ui/widgets/widget_default_view.dart';
+import 'package:input_nilai/src/ui/widgets/widget_loading.dart';
 import 'package:input_nilai/src/utils/util_akademik.dart';
 import 'package:input_nilai/src/utils/util_colors.dart';
 import 'package:intl/intl.dart';
@@ -139,10 +141,13 @@ class _RevisiDetailPageState extends State<RevisiDetailPage> {
                   (BuildContext futureContext, AsyncSnapshot<Revisi> snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.waiting:
-                    return loading();
+                    return LoadingWidget();
                   default:
                     if (snapshot.hasError) {
-                      return centerText("Gagal memuat detail revisi.");
+                      return DefaultViewWidget(
+                        title: "Gagal memuat informasi revisi.",
+                        message: "Coba refresh untuk memuat kembali. Pastikan kondisi jaringan Anda dalam keadaan baik.",
+                      );
                     } else {
                       return Column(
                         children: <Widget>[

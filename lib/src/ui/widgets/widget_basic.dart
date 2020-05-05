@@ -2,23 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:input_nilai/src/utils/util_colors.dart';
 
-Widget centerText(String text) {
-  return Center(
-    child: Text(text),
-  );
-}
-
-Widget loading() => Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CircularProgressIndicator()),
-          Text("Harap tunggu...")
-        ],
-      ),
-    );
 
 Widget caption_text(BuildContext context, String text) =>
     Text(text, style: TextStyle(color: Theme.of(context).colorScheme.primary));

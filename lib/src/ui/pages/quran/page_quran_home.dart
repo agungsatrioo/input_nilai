@@ -4,6 +4,8 @@ import 'package:input_nilai/src/models/model_surat_quran.dart';
 import 'package:input_nilai/src/ui/pages/quran/page_quran_surat.dart';
 import 'package:input_nilai/src/ui/widgets/quran/widget_surah_item.dart';
 import 'package:input_nilai/src/ui/widgets/widget_basic.dart';
+import 'package:input_nilai/src/ui/widgets/widget_default_view.dart';
+import 'package:input_nilai/src/ui/widgets/widget_loading.dart';
 import 'package:input_nilai/src/utils/util_quran.dart';
 import 'package:theme_provider/theme_provider.dart';
 
@@ -43,10 +45,13 @@ class _QuranHomePageState extends State<QuranHomePage> {
                 (BuildContext myCtx, AsyncSnapshot<List<IndexQuran>> snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
-                  return loading();
+                  return LoadingWidget();
                 default:
                   if (snapshot.hasError) {
-                    return centerText("Gagal memuat Al-Quran.");
+                    return DefaultViewWidget(
+                        title: "Gagal memuat Al-Quran.",
+                        message: "Pastikan Anda memperoleh versi asli.",
+                      );
                   } else {
                     return ListView(
                       children: snapshot.data.map((surat) {

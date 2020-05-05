@@ -15,6 +15,7 @@ import 'package:input_nilai/src/ui/widgets/home_menu/widget_home_menus.dart';
 import 'package:input_nilai/src/ui/widgets/user_box/widget_userbox_dosen.dart';
 import 'package:input_nilai/src/ui/widgets/user_box/widget_userbox_mhs.dart';
 import 'package:input_nilai/src/ui/widgets/widget_basic.dart';
+import 'package:input_nilai/src/ui/widgets/widget_loading.dart';
 import 'package:input_nilai/src/ui/widgets/widget_univ_logo.dart';
 import 'package:input_nilai/src/utils/blocs/auth/util_authevent.dart';
 import 'package:input_nilai/src/utils/blocs/user_level/util_levelevent.dart';
@@ -181,7 +182,7 @@ class _HomePageState extends State<HomePage> {
                 _addMenuMahasiswa();
                 homeWidgets.add(UserBoxMahasiswa(_ua));
               } else if (state is InitializingState) {
-                return loading();
+                return LoadingWidget();
               }
 
               return Container(

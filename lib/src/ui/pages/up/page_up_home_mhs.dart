@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:input_nilai/src/models/model_akademik.dart';
 import 'package:input_nilai/src/ui/widgets/detail_sidang/widget_mhs_sidang_base.dart';
 import 'package:input_nilai/src/ui/widgets/widget_basic.dart';
+import 'package:input_nilai/src/ui/widgets/widget_default_view.dart';
+import 'package:input_nilai/src/ui/widgets/widget_loading.dart';
 import 'package:input_nilai/src/utils/util_akademik.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -53,11 +55,13 @@ class _UPHomePageMahasiswaState extends State<UPHomePageMahasiswa> {
         builder: (BuildContext ctx, AsyncSnapshot<ModelMhsSidang> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return loading();
+              return LoadingWidget();
             default:
               if (snapshot.hasError) {
-                return centerText(
-                    "Gagal memuat data Ujian Proposal. Reason: ${snapshot.error.toString()}");
+                DefaultViewWidget(
+                  title: "Gagal memuat informasi Ujian Proposal.",
+                  message: "Coba refresh untuk memuat kembali. Pastikan kondisi jaringan Anda dalam keadaan baik.",
+                );
               } else {
                 return SingleChildScrollView(
                   child: Container(

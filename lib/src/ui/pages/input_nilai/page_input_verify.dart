@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:input_nilai/src/ui/widgets/widget_boolean_builder.dart';
 import 'package:input_nilai/src/utils/util_constants.dart';
 import 'package:input_nilai/src/utils/util_useragent.dart';
 import 'package:line_icons/line_icons.dart';
@@ -76,15 +77,17 @@ class _InputVerifyPageState extends State<InputVerifyPage> {
             title: Text("Verifikasi identitas Anda"),
             actions: <Widget>[
               IconButton(
-                icon: _isVerifying
-                    ? SizedBox(
+                icon: SingleChildBooleanWidget(
+                  boolean: _isVerifying, 
+                  ifTrue: SizedBox(
                         child: CircularProgressIndicator(
                           strokeWidth: 2.0,
                         ),
                         height: 24.0,
                         width: 24.0,
-                      )
-                    : Icon(LineIcons.check),
+                      ), 
+                  ifFalse: Icon(LineIcons.check)
+                ),
                 onPressed: () {
                   if (!_isVerifying && _passKey.currentState.validate())
                     login(ctx);

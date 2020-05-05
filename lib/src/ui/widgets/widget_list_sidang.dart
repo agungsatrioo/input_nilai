@@ -4,10 +4,9 @@ import 'package:flutter/widgets.dart';
 import 'package:input_nilai/src/models/model_akademik.dart';
 import 'package:input_nilai/src/ui/widgets/widget_basic.dart';
 import 'package:input_nilai/src/ui/widgets/widget_boolean_builder.dart';
+import 'package:input_nilai/src/ui/widgets/widget_default_view.dart';
 import 'package:intl/intl.dart';
 import 'package:theme_provider/theme_provider.dart';
-
-import 'cards/card_mhs.dart';
 
 Function(ModelMhsSidang) 
 belumSidang   = (item) => !item.nilai.sudahAdaNilai,
@@ -56,21 +55,21 @@ Widget makeSidangListView(BuildContext context, List<ModelMhsSidang> data,
   return SingleChildBooleanWidget(
     boolean: _altered.isNotEmpty, 
     ifTrue: ListView(children: buildChildFromLists(context, _altered, onTap)), 
-    ifFalse: centerText("Tidak ada data.")
+    ifFalse: DefaultViewWidget(title: "Tidak ada data.")
   );
 }
 
 List<Widget> buildChildFromLists(
     BuildContext context, List<ModelMhsSidang> data, Function onTap) {
-  List<Widget> _myList = List();
+  List<Widget> _myList = [];
 
   Map<String, List<ModelMhsSidang>> newMap =
       groupBy(data, (obj) => DateFormat.yMMMM("id").format(obj.sidangDate));
 
-  newMap.forEach((k, v) {
-    List<String> dates = List();
+  newMap.forEach((k, value) {
+    List<String> dates = [];
 
-    v.forEach((f) {
+    for (ModelMhsSidang item in value) {
       if (!dates.contains(k)) {
         dates.add(k);
 
@@ -92,13 +91,13 @@ List<Widget> buildChildFromLists(
         ));
       }
 
-      _myList.add(Material(
-        child: InkWell(
-          onTap: () => onTap(f),
-          child: MahasiswaCard(f),
-        ),
+      _myList.add(ListTile(
+        title: Text(item.namaMhs),
+        subtitle: Text('Tgl. sidang: ${DateFormat.yMMMMd("id").format(item.sidangDate)} '),
+        trailing: Text(item.nim),   
+        onTap: () => onTap(item),       
       ));
-    });
+    }
   });
 
   return _myList;

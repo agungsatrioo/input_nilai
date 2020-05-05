@@ -3,7 +3,9 @@ import 'package:input_nilai/src/models/model_akademik.dart';
 import 'package:input_nilai/src/ui/pages/kompre/page_kompre_details.dart';
 import 'package:input_nilai/src/ui/widgets/fancy_stuff/fancy_search_bar.dart';
 import 'package:input_nilai/src/ui/widgets/widget_basic.dart';
+import 'package:input_nilai/src/ui/widgets/widget_default_view.dart';
 import 'package:input_nilai/src/ui/widgets/widget_list_sidang.dart';
+import 'package:input_nilai/src/ui/widgets/widget_loading.dart';
 import 'package:input_nilai/src/utils/util_akademik.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:theme_provider/theme_provider.dart';
@@ -85,14 +87,16 @@ class _KomprehensifHomeDosenState extends State<KomprehensifHomePageDosen>
                 AsyncSnapshot<List<ModelMhsSidang>> snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
-                  return loading();
+                  return LoadingWidget();
                 default:
                   if (snapshot.hasError) {
                     print(snapshot.error.toString());
-                    return centerText(
-                        "Gagal memuat daftar mahasiswa Ujian Munaqosah.");
+                    return DefaultViewWidget(
+                        title: "Gagal memuat informasi Ujian Komprehensif.",
+                        message: "Coba refresh untuk memuat kembali. Pastikan kondisi jaringan Anda dalam keadaan baik.",
+                      );
                   } else if (snapshot.data.length < 1)
-                    return centerText("Tidak ada data.");
+                    return DefaultViewWidget(title: "Tidak ada data yang tersedia.");
                   else {
                     getStats(snapshot.data,
                       query: _query,

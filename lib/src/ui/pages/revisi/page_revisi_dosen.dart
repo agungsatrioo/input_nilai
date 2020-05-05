@@ -5,6 +5,8 @@ import 'package:input_nilai/src/ui/pages/revisi/page_revisi_detail.dart';
 import 'package:input_nilai/src/ui/pages/revisi/page_revisi_form.dart';
 import 'package:input_nilai/src/ui/widgets/revisi/widget_revisi_dosen_item.dart';
 import 'package:input_nilai/src/ui/widgets/widget_basic.dart';
+import 'package:input_nilai/src/ui/widgets/widget_default_view.dart';
+import 'package:input_nilai/src/ui/widgets/widget_loading.dart';
 import 'package:input_nilai/src/utils/util_akademik.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:theme_provider/theme_provider.dart';
@@ -93,12 +95,15 @@ class _PageRevisiDosenState extends State<PageRevisiDosen> {
                   AsyncSnapshot<List<Revisi>> snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.waiting:
-                    return loading();
+                    return LoadingWidget();
                   default:
                     if (snapshot.hasError) {
-                      return centerText("Gagal memuat data revisi.");
+                      return DefaultViewWidget(
+                        title: "Gagal memuat informasi revisi.",
+                        message: "Coba refresh untuk memuat kembali. Pastikan kondisi jaringan Anda dalam keadaan baik.",
+                      );
                     } else if (snapshot.data.isEmpty) {
-                      return centerText("Tidak ada data.");
+                      return DefaultViewWidget(title: "Tidak ada data yang tersedia.");
                     } else {
                       return ListView(
                         children: snapshot.data.map((item) {
