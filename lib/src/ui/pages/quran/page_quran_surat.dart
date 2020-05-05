@@ -46,7 +46,7 @@ class _QuranSuratDetailsState extends State<QuranSuratDetails> {
                   return loading();
                 default:
                   if (snapshot.hasError) {
-                    return center_text("Gagal memuat surat yang diminta.");
+                    return centerText("Gagal memuat surat yang diminta.");
                   } else {
                     return ListView(
                         children: snapshot.data.text.entries.map((f) {

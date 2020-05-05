@@ -37,6 +37,6 @@ class _PageRevisiMahasiswa extends State<PageRevisiMahasiswa> {
                   ),
                 ),
               )
-            : center_text("Hore, kamu belum dapat revisi apapun dari dosen!"));
+            : centerText("Hore, kamu belum dapat revisi apapun dari dosen!"));
   }
 }

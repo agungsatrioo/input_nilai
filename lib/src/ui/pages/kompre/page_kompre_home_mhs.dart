@@ -59,7 +59,7 @@ class _KompreHomePageMahasiswaState extends State<KompreHomePageMahasiswa> {
                   return loading();
                 default:
                   if (snapshot.hasError) {
-                    return center_text(
+                    return centerText(
                         "Gagal memuat data Ujian Komprehensif. Reason: ${snapshot.error.toString()}");
                   } else {
                     return SingleChildScrollView(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:input_nilai/src/utils/util_colors.dart';
 
-Widget center_text(String text) {
+Widget centerText(String text) {
   return Center(
     child: Text(text),
   );

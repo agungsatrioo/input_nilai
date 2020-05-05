@@ -89,10 +89,10 @@ class _KomprehensifHomeDosenState extends State<KomprehensifHomePageDosen>
                 default:
                   if (snapshot.hasError) {
                     print(snapshot.error.toString());
-                    return center_text(
+                    return centerText(
                         "Gagal memuat daftar mahasiswa Ujian Munaqosah.");
                   } else if (snapshot.data.length < 1)
-                    return center_text("Tidak ada data.");
+                    return centerText("Tidak ada data.");
                   else {
                     getStats(snapshot.data,
                       query: _query,

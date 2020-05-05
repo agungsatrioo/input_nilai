@@ -56,7 +56,7 @@ class _UPHomePageMahasiswaState extends State<UPHomePageMahasiswa> {
               return loading();
             default:
               if (snapshot.hasError) {
-                return center_text(
+                return centerText(
                     "Gagal memuat data Ujian Proposal. Reason: ${snapshot.error.toString()}");
               } else {
                 return SingleChildScrollView(

@@ -96,9 +96,9 @@ class _PageRevisiDosenState extends State<PageRevisiDosen> {
                     return loading();
                   default:
                     if (snapshot.hasError) {
-                      return center_text("Gagal memuat data revisi.");
+                      return centerText("Gagal memuat data revisi.");
                     } else if (snapshot.data.isEmpty) {
-                      return center_text("Tidak ada data.");
+                      return centerText("Tidak ada data.");
                     } else {
                       return ListView(
                         children: snapshot.data.map((item) {

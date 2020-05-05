@@ -3,10 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:input_nilai/src/models/model_akademik.dart';
 import 'package:input_nilai/src/ui/widgets/widget_basic.dart';
+import 'package:input_nilai/src/ui/widgets/widget_boolean_builder.dart';
 import 'package:intl/intl.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 import 'cards/card_mhs.dart';
+
+Function(ModelMhsSidang) 
+belumSidang   = (item) => !item.nilai.sudahAdaNilai,
+revisiSidang  = (item) => item.nilai.sudahAdaNilai && item.nilai.revisi.isNotEmpty,
+tuntasSidang  = (item) => item.nilai.sudahAdaNilai && item.nilai.revisi.isEmpty;
 
 List<ModelMhsSidang> _processQuery(List<ModelMhsSidang> data, String query) {
   if (query.isNotEmpty) {
@@ -25,15 +31,9 @@ getStats(List<ModelMhsSidang> data,
     }) {
   List<ModelMhsSidang> _altered = _processQuery(data, query);
 
-  jmlBelumSidang(_altered
-      .where((item) => !item.nilai.sudahAdaNilai)
-      .length);
-  jmlRevisiSidang(_altered.where((item) =>
-  item.nilai.sudahAdaNilai &&
-      item.nilai.revisi.isNotEmpty).length);
-  jmlTuntasSidang(_altered.where((item) =>
-  item.nilai.sudahAdaNilai &&
-      item.nilai.revisi.isEmpty).length);
+  jmlBelumSidang(_altered.where(belumSidang).length);
+  jmlRevisiSidang(_altered.where(revisiSidang).length);
+  jmlTuntasSidang(_altered.where(tuntasSidang).length);
 }
 
 Widget makeSidangListView(BuildContext context, List<ModelMhsSidang> data,
@@ -46,20 +46,18 @@ Widget makeSidangListView(BuildContext context, List<ModelMhsSidang> data,
   List<ModelMhsSidang> _altered = _processQuery(data, query);
 
   if (isRevisi) {
-    _altered = _altered.where((item) =>
-    item.nilai.sudahAdaNilai &&
-        item.nilai.revisi.isNotEmpty).toList();
+    _altered = _altered.where(revisiSidang).toList();
   } else if (isHistory) {
-    _altered = _altered.where((item) =>
-    item.nilai.sudahAdaNilai &&
-        item.nilai.revisi.isEmpty).toList();
+    _altered = _altered.where(tuntasSidang).toList();
   } else {
-    _altered = _altered.where((item) => !item.nilai.sudahAdaNilai).toList();
+    _altered = _altered.where(belumSidang).toList();
   }
 
-  return (_altered.length < 1)
-      ? center_text("Tidak ada data.")
-      : ListView(children: buildChildFromLists(context, _altered, onTap));
+  return SingleChildBooleanWidget(
+    boolean: _altered.isNotEmpty, 
+    ifTrue: ListView(children: buildChildFromLists(context, _altered, onTap)), 
+    ifFalse: centerText("Tidak ada data.")
+  );
 }
 
 List<Widget> buildChildFromLists(

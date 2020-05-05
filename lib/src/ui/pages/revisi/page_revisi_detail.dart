@@ -142,7 +142,7 @@ class _RevisiDetailPageState extends State<RevisiDetailPage> {
                     return loading();
                   default:
                     if (snapshot.hasError) {
-                      return center_text("Gagal memuat detail revisi.");
+                      return centerText("Gagal memuat detail revisi.");
                     } else {
                       return Column(
                         children: <Widget>[

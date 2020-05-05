@@ -46,7 +46,7 @@ class _QuranHomePageState extends State<QuranHomePage> {
                   return loading();
                 default:
                   if (snapshot.hasError) {
-                    return center_text("Gagal memuat Al-Quran.");
+                    return centerText("Gagal memuat Al-Quran.");
                   } else {
                     return ListView(
                       children: snapshot.data.map((surat) {

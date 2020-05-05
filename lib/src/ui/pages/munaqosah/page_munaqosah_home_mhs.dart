@@ -62,7 +62,7 @@ class _MunaqosahHomePageMahasiswaState
                   return loading();
                 default:
                   if (snapshot.hasError) {
-                    return center_text(
+                    return centerText(
                         "Gagal memuat data Ujian Munaqosah. Reason: ${snapshot.error.toString()}");
                   } else {
                     return SingleChildScrollView(
