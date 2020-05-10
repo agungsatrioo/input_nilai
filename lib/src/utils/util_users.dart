@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
-import 'package:input_nilai/src/models/model_session.dart';
 
+import '../models/model_session.dart';
 import 'util_constants.dart';
 import 'util_database.dart';
 import 'util_useragent.dart';

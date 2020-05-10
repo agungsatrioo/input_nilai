@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:input_nilai/src/models/model_akademik.dart';
-import 'package:input_nilai/src/ui/widgets/widget_basic.dart';
-import 'package:input_nilai/src/utils/util_common.dart';
 import 'package:theme_provider/theme_provider.dart';
+
+import '../../../models/model_akademik.dart';
+import '../../../utils/util_common.dart';
+import '../widget_basic.dart';
 
 class WidgetPenilaianDosen extends StatelessWidget {
   DosenSidang snapshot;

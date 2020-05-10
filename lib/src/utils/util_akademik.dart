@@ -1,8 +1,8 @@
-import 'package:input_nilai/src/models/model_akademik.dart';
-import 'package:input_nilai/src/utils/util_constants.dart';
-import 'package:input_nilai/src/utils/util_exceptions.dart';
-import 'package:input_nilai/src/utils/util_network.dart';
-import 'package:input_nilai/src/utils/util_useragent.dart';
+import '../models/model_akademik.dart';
+import 'util_constants.dart';
+import 'util_exceptions.dart';
+import 'util_network.dart';
+import 'util_useragent.dart';
 
 class RESTAkademik {
   static final RESTAkademik _singleton = RESTAkademik._internal();

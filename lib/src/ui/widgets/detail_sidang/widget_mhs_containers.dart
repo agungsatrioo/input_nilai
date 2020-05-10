@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:input_nilai/src/models/model_akademik.dart';
+
+import '../../../models/model_akademik.dart';
 
 class JadwalSidangMahasiwaContainer extends StatelessWidget {
   final ModelMhsSidang _data;

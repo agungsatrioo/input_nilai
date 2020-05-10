@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:input_nilai/src/models/model_akademik.dart';
-import 'package:input_nilai/src/ui/widgets/revisi/widget_revisi_mhs.dart';
-import 'package:input_nilai/src/ui/widgets/widget_basic.dart';
-import 'package:input_nilai/src/ui/widgets/widget_boolean_builder.dart';
-import 'package:input_nilai/src/ui/widgets/widget_default_view.dart';
+
+import '../../../models/model_akademik.dart';
+import '../../widgets/revisi/widget_revisi_mhs.dart';
+import '../../widgets/widget_boolean_builder.dart';
+import '../../widgets/widget_default_view.dart';
 
 class PageRevisiMahasiswa extends StatefulWidget {
   List<Revisi> _listRevisi = List();

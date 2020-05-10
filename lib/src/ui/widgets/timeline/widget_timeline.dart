@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:input_nilai/src/ui/widgets/widget_boolean_builder.dart';
-import 'package:input_nilai/src/ui/widgets/widget_indicator.dart';
 import 'package:line_icons/line_icons.dart';
+
+import '../widget_boolean_builder.dart';
+import '../widget_indicator.dart';
 
 Widget drawIndicator(bool status) => IndicatorDrawer(
     color: status ? Colors.green : Colors.grey, 

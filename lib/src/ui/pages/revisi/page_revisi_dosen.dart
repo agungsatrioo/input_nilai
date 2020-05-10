@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:input_nilai/src/models/model_akademik.dart';
-import 'package:input_nilai/src/ui/pages/revisi/page_revisi_detail.dart';
-import 'package:input_nilai/src/ui/pages/revisi/page_revisi_form.dart';
-import 'package:input_nilai/src/ui/widgets/revisi/widget_revisi_dosen_item.dart';
-import 'package:input_nilai/src/ui/widgets/widget_basic.dart';
-import 'package:input_nilai/src/ui/widgets/widget_default_view.dart';
-import 'package:input_nilai/src/ui/widgets/widget_loading.dart';
-import 'package:input_nilai/src/utils/util_akademik.dart';
+import '../../../models/model_akademik.dart';
+import 'page_revisi_detail.dart';
+import 'page_revisi_form.dart';
+import '../../widgets/revisi/widget_revisi_dosen_item.dart';
+import '../../widgets/widget_basic.dart';
+import '../../widgets/widget_default_view.dart';
+import '../../widgets/widget_loading.dart';
+import '../../../utils/util_akademik.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:theme_provider/theme_provider.dart';
 

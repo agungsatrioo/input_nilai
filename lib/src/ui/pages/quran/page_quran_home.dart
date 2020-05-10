@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:input_nilai/src/models/model_surat_quran.dart';
-import 'package:input_nilai/src/ui/pages/quran/page_quran_surat.dart';
-import 'package:input_nilai/src/ui/widgets/quran/widget_surah_item.dart';
-import 'package:input_nilai/src/ui/widgets/widget_basic.dart';
-import 'package:input_nilai/src/ui/widgets/widget_default_view.dart';
-import 'package:input_nilai/src/ui/widgets/widget_loading.dart';
-import 'package:input_nilai/src/utils/util_quran.dart';
 import 'package:theme_provider/theme_provider.dart';
+
+import '../../../models/model_surat_quran.dart';
+import '../../../utils/util_quran.dart';
+import '../../widgets/quran/widget_surah_item.dart';
+import '../../widgets/widget_default_view.dart';
+import '../../widgets/widget_loading.dart';
+import 'page_quran_surat.dart';
 
 class QuranHomePage extends StatefulWidget {
   bool juzAmma;

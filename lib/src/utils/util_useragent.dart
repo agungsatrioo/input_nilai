@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:input_nilai/src/models/model_session.dart';
-import 'package:input_nilai/src/models/podos.dart';
-import 'package:input_nilai/src/utils/util_constants.dart';
-import 'package:input_nilai/src/utils/util_database.dart';
-import 'package:input_nilai/src/utils/util_network.dart';
+import '../models/model_session.dart';
+import '../models/podos.dart';
+import 'util_constants.dart';
+import 'util_database.dart';
+import 'util_network.dart';
 
 class UserAgent {
   static final UserAgent _singleton = UserAgent._internal();

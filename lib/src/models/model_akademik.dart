@@ -5,7 +5,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:input_nilai/src/utils/util_common.dart';
+import '../utils/util_common.dart';
 
 class ModelMhsSidang {
   String idStatus;

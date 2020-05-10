@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:input_nilai/src/ui/widgets/widget_buttons.dart';
+
+import '../widget_buttons.dart';
 
 Future<bool> showConfirmationBottomSheet(BuildContext context,
     {Widget caption = const Text("Apakah Anda yakin untuk melanjutkan?"),

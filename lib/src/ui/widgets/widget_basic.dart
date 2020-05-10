@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:input_nilai/src/utils/util_colors.dart';
+
+import '../../utils/util_colors.dart';
 
 
 Widget caption_text(BuildContext context, String text) =>

@@ -1,5 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:input_nilai/src/utils/util_common.dart';
+
+import 'util_common.dart';
 
 class NotificationUtils {
   static final NotificationUtils _instance = NotificationUtils._internal();

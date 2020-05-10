@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
                 return LoginPageBloc(userRepository: userRepository);
               }
               if (state is AuthenticationLoading) {
-                return LoadingIndicator();
+                return LoadingPage();
               }
             },
           ),

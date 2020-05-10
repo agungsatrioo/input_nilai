@@ -1,12 +1,12 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:input_nilai/src/models/model_akademik.dart';
-import 'package:input_nilai/src/ui/widgets/widget_basic.dart';
-import 'package:input_nilai/src/ui/widgets/widget_boolean_builder.dart';
-import 'package:input_nilai/src/ui/widgets/widget_default_view.dart';
 import 'package:intl/intl.dart';
 import 'package:theme_provider/theme_provider.dart';
+
+import '../../models/model_akademik.dart';
+import 'widget_boolean_builder.dart';
+import 'widget_default_view.dart';
 
 Function(ModelMhsSidang) 
 belumSidang   = (item) => !item.nilai.sudahAdaNilai,

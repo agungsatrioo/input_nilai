@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:input_nilai/src/models/menus.dart';
-import 'package:input_nilai/src/ui/widgets/home_menu/widget_homemenu_item.dart';
 import 'package:theme_provider/theme_provider.dart';
+
+import '../../../models/menus.dart';
+import 'widget_homemenu_item.dart';
 
 class HomeCardMenus extends StatelessWidget {
   final List<HomeMenu> menuList;

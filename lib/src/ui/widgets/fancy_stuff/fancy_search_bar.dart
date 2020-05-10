@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:input_nilai/src/ui/widgets/fancy_stuff/widget_painter.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:theme_provider/theme_provider.dart';
+
+import 'widget_painter.dart';
 
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   String title;

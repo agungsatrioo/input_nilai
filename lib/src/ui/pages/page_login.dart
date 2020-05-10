@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:input_nilai/src/ui/forms/form_login.dart';
-import 'package:input_nilai/src/utils/util_blocs.dart';
-import 'package:input_nilai/src/utils/util_users.dart';
+
+import '../../utils/util_blocs.dart';
+import '../../utils/util_users.dart';
+import '../forms/form_login.dart';
 
 class LoginPageBloc extends StatelessWidget {
   final UserRepository userRepository;

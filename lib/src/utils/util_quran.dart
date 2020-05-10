@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:input_nilai/src/models/model_surat_quran.dart';
+
+import '../models/model_surat_quran.dart';
 
 class UtilQuran {
   static Future<List<IndexQuran>> loadIndexSurat({bool juzAmma = false}) async {

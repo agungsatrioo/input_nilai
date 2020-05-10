@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:input_nilai/src/models/model_akademik.dart';
-import 'package:input_nilai/src/ui/pages/kompre/page_kompre_details.dart';
-import 'package:input_nilai/src/ui/widgets/fancy_stuff/fancy_search_bar.dart';
-import 'package:input_nilai/src/ui/widgets/widget_basic.dart';
-import 'package:input_nilai/src/ui/widgets/widget_default_view.dart';
-import 'package:input_nilai/src/ui/widgets/widget_list_sidang.dart';
-import 'package:input_nilai/src/ui/widgets/widget_loading.dart';
-import 'package:input_nilai/src/utils/util_akademik.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:theme_provider/theme_provider.dart';
+
+import '../../../models/model_akademik.dart';
+import '../../../utils/util_akademik.dart';
+import '../../widgets/fancy_stuff/fancy_search_bar.dart';
+import '../../widgets/widget_default_view.dart';
+import '../../widgets/widget_list_sidang.dart';
+import '../../widgets/widget_loading.dart';
+import 'page_kompre_details.dart';
 
 class KomprehensifHomePageDosen extends StatefulWidget {
   @override

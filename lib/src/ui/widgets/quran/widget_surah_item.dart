@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:input_nilai/src/models/model_surat_quran.dart';
 import 'package:theme_provider/theme_provider.dart';
+
+import '../../../models/model_surat_quran.dart';
 
 class SurahItem extends StatelessWidget {
   IndexQuran surah;

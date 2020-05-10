@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:input_nilai/src/models/model_akademik.dart';
-import 'package:input_nilai/src/ui/pages/revisi/page_revisi_mhs.dart';
-import 'package:input_nilai/src/ui/widgets/detail_sidang/widget_dosen_containers.dart';
-import 'package:input_nilai/src/ui/widgets/widget_buttons.dart';
 import 'package:intl/intl.dart';
 import 'package:theme_provider/theme_provider.dart';
 
+import '../../../models/model_akademik.dart';
+import '../../pages/revisi/page_revisi_mhs.dart';
+import '../detail_sidang/widget_dosen_containers.dart';
 import '../widget_basic.dart';
+import '../widget_buttons.dart';
 
 Widget cardMahasiswaSidangHeader(BuildContext context,
     {@required String title,

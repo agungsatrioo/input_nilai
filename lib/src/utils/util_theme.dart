@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:input_nilai/src/utils/util_common.dart';
 import 'package:theme_provider/theme_provider.dart';
+
+import 'util_common.dart';
 
 List<AppTheme> initAppThemes() => [
   AppTheme.light().copyWith(

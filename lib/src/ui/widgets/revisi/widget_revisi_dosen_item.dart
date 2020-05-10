@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:input_nilai/src/models/model_akademik.dart';
-import 'package:input_nilai/src/ui/widgets/timeline/widget_timeline.dart';
 import 'package:intl/intl.dart';
+
+import '../../../models/model_akademik.dart';
+import '../timeline/widget_timeline.dart';
 
 class RevisiDosenItem extends StatelessWidget {
   Revisi _revisi;

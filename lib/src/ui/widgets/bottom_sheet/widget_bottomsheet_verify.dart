@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:input_nilai/src/utils/util_colors.dart';
-import 'package:input_nilai/src/utils/util_constants.dart';
-import 'package:input_nilai/src/utils/util_useragent.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:theme_provider/theme_provider.dart';
 
-import '../widget_basic.dart';
+import '../../../utils/util_colors.dart';
+import '../../../utils/util_constants.dart';
+import '../../../utils/util_useragent.dart';
 import '../widget_buttons.dart';
 
 Future<bool> showUserVerifyBottomSheet(BuildContext context,

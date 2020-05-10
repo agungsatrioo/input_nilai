@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:input_nilai/src/models/menus.dart';
+
+import '../../../models/menus.dart';
 
 class HomeMenuItem extends StatelessWidget {
   @required

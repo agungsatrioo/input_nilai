@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:input_nilai/src/ui/pages/input_nilai/page_input_verify.dart';
-import 'package:input_nilai/src/ui/widgets/detail_sidang/widget_penilaian.dart';
 import 'package:theme_provider/theme_provider.dart';
+
+import '../ui/pages/input_nilai/page_input_verify.dart';
+import '../ui/widgets/detail_sidang/widget_penilaian.dart';
 
 Future<bool> verifyUser(
     {@required BuildContext context, @required String message}) {

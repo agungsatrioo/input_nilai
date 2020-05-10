@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:input_nilai/src/ui/widgets/widget_boolean_builder.dart';
-import 'package:input_nilai/src/ui/widgets/widget_buttons.dart';
 import 'package:line_icons/line_icons.dart';
 
-import '../../ui/widgets/widget_basic.dart';
 import '../../utils/blocs/login/util_loginevent.dart';
 import '../../utils/blocs/login/util_loginstate.dart';
 import '../../utils/util_blocs.dart';
+import '../widgets/widget_boolean_builder.dart';
+import '../widgets/widget_buttons.dart';
 
 class LoginForm extends StatefulWidget {
   @override

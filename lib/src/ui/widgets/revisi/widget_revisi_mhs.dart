@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:input_nilai/src/models/model_akademik.dart';
-import 'package:input_nilai/src/ui/widgets/timeline/widget_timeline.dart';
-import 'package:input_nilai/src/ui/widgets/timeline/widget_timeline_paint.dart';
+import '../../../models/model_akademik.dart';
+import '../timeline/widget_timeline.dart';
+import '../timeline/widget_timeline_paint.dart';
 import 'package:intl/intl.dart';
 
 class WidgetRevisiMahasiswa extends StatelessWidget {

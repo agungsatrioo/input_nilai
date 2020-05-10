@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:input_nilai/src/models/model_akademik.dart';
-import 'package:input_nilai/src/ui/pages/revisi/page_revisi_dosen.dart';
-import 'package:input_nilai/src/ui/widgets/widget_buttons.dart';
-import 'package:input_nilai/src/utils/util_akademik.dart';
 import 'package:theme_provider/theme_provider.dart';
+
+import '../../../models/model_akademik.dart';
+import '../../../utils/util_akademik.dart';
+import '../../pages/revisi/page_revisi_dosen.dart';
+import '../widget_buttons.dart';
 
 class ButtonRevisi extends StatelessWidget {
   ModelMhsSidang mahasiswa;

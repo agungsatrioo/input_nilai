@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:input_nilai/src/models/model_akademik.dart';
-import 'package:input_nilai/src/ui/widgets/cards/widget_card_sidang.dart';
-import 'package:input_nilai/src/ui/widgets/detail_sidang/widget_penilaian.dart';
-import 'package:input_nilai/src/ui/widgets/detail_sidang/widget_revisi_button.dart';
-import 'package:input_nilai/src/ui/widgets/widget_boolean_builder.dart';
-import 'package:input_nilai/src/ui/widgets/widget_buttons.dart';
-import 'package:input_nilai/src/utils/util_akademik.dart';
-import 'package:input_nilai/src/utils/util_penilaian.dart';
 import 'package:line_icons/line_icons.dart';
+
+import '../../../models/model_akademik.dart';
+import '../../../utils/util_akademik.dart';
+import '../../../utils/util_penilaian.dart';
+import '../../widgets/cards/widget_card_sidang.dart';
+import '../../widgets/detail_sidang/widget_penilaian.dart';
+import '../../widgets/detail_sidang/widget_revisi_button.dart';
+import '../../widgets/widget_boolean_builder.dart';
+import '../../widgets/widget_buttons.dart';
 
 class PageUPDetails extends StatefulWidget {
   ModelMhsSidang mhs;

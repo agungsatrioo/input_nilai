@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:input_nilai/src/ui/widgets/widget_boolean_builder.dart';
-import 'package:input_nilai/src/utils/util_constants.dart';
-import 'package:input_nilai/src/utils/util_useragent.dart';
 import 'package:line_icons/line_icons.dart';
+
+import '../../../utils/util_constants.dart';
+import '../../../utils/util_useragent.dart';
+import '../../widgets/widget_boolean_builder.dart';
 
 class InputVerifyPage extends StatefulWidget {
   String message;

@@ -1,20 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:input_nilai/src/models/model_akademik.dart';
-import 'package:input_nilai/src/ui/pages/revisi/page_revisi_form.dart';
-import 'package:input_nilai/src/ui/widgets/bottom_sheet/widget_bottomsheet_verify.dart';
-import 'package:input_nilai/src/ui/widgets/widget_basic.dart';
-import 'package:input_nilai/src/ui/widgets/widget_boolean_builder.dart';
-import 'package:input_nilai/src/ui/widgets/widget_buttons.dart';
-import 'package:input_nilai/src/ui/widgets/widget_default_view.dart';
-import 'package:input_nilai/src/ui/widgets/widget_loading.dart';
-import 'package:input_nilai/src/utils/util_akademik.dart';
-import 'package:input_nilai/src/utils/util_colors.dart';
 import 'package:intl/intl.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:theme_provider/theme_provider.dart';
 
+import '../../../models/model_akademik.dart';
+import '../../../utils/util_akademik.dart';
+import '../../../utils/util_colors.dart';
 import '../../dialogs.dart';
+import '../../widgets/bottom_sheet/widget_bottomsheet_verify.dart';
+import '../../widgets/widget_basic.dart';
+import '../../widgets/widget_boolean_builder.dart';
+import '../../widgets/widget_buttons.dart';
+import '../../widgets/widget_default_view.dart';
+import '../../widgets/widget_loading.dart';
+import 'page_revisi_form.dart';
 
 class RevisiDetailPage extends StatefulWidget {
   Revisi revisi;

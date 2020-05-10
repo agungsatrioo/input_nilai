@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:input_nilai/src/models/model_akademik.dart';
-import 'package:input_nilai/src/ui/widgets/detail_sidang/widget_mhs_sidang_base.dart';
-import 'package:input_nilai/src/ui/widgets/widget_basic.dart';
-import 'package:input_nilai/src/ui/widgets/widget_default_view.dart';
-import 'package:input_nilai/src/ui/widgets/widget_loading.dart';
-import 'package:input_nilai/src/utils/util_akademik.dart';
 import 'package:line_icons/line_icons.dart';
+
+import '../../../models/model_akademik.dart';
+import '../../../utils/util_akademik.dart';
+import '../../widgets/detail_sidang/widget_mhs_sidang_base.dart';
+import '../../widgets/widget_default_view.dart';
+import '../../widgets/widget_loading.dart';
 
 class UPHomePageMahasiswa extends StatefulWidget {
   @override

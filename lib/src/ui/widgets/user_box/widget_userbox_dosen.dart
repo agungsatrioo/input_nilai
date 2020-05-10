@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:input_nilai/src/models/podos.dart';
-import 'package:input_nilai/src/ui/widgets/user_box/widget_userbox_base.dart';
-import 'package:input_nilai/src/ui/widgets/user_box/widget_userbox_refresh_btn.dart';
-import 'package:input_nilai/src/utils/util_useragent.dart';
+
+import '../../../models/podos.dart';
+import '../../../utils/util_useragent.dart';
+import 'widget_userbox_base.dart';
+import 'widget_userbox_refresh_btn.dart';
 
 class UserBoxDosen extends StatefulWidget {
   UserAgent _ua;

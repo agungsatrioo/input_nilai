@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class LoadingIndicator extends StatelessWidget {
+class LoadingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         body: SafeArea(
-          child: LoadingIndicator(),
+          child: CircularProgressIndicator(),
         ),
       );
 }

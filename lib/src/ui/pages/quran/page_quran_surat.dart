@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:input_nilai/src/models/model_surat_quran.dart';
-import 'package:input_nilai/src/ui/widgets/widget_basic.dart';
-import 'package:input_nilai/src/ui/widgets/widget_default_view.dart';
-import 'package:input_nilai/src/ui/widgets/widget_indicator.dart';
-import 'package:input_nilai/src/ui/widgets/widget_loading.dart';
-import 'package:input_nilai/src/utils/util_colors.dart';
-import 'package:input_nilai/src/utils/util_quran.dart';
 import 'package:theme_provider/theme_provider.dart';
+
+import '../../../models/model_surat_quran.dart';
+import '../../../utils/util_colors.dart';
+import '../../../utils/util_quran.dart';
+import '../../widgets/widget_default_view.dart';
+import '../../widgets/widget_indicator.dart';
+import '../../widgets/widget_loading.dart';
 
 class QuranSuratDetails extends StatefulWidget {
   IndexQuran surat;
