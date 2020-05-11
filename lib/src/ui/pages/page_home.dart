@@ -138,7 +138,7 @@ class _HomePageState extends State<HomePage> {
             applicationLegalese: '© 2020 Agung Satrio Budi Prakoso',
           );
         });
-      }, hexToColor("#585858"))
+      }, hexToColor("#585858")), 
     ]);
   }
 
@@ -188,7 +188,11 @@ class _HomePageState extends State<HomePage> {
               return Container(
                 padding: EdgeInsets.all(8.0),
                 child: Column(
-                  children: homeWidgets..add(HomeCardMenus(_menuList)),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget> [
+                    ...homeWidgets..add(HomeGridMenus(menuList: _menuList,)),
+                    
+                  ],
                 ),
               );
             },

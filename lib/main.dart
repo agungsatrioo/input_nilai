@@ -45,6 +45,15 @@ class MyApp extends StatelessWidget {
       themes: initAppThemes(),
       child: MaterialApp(
         title: 'Input Nilai',
+        theme: ThemeData.from(
+        colorScheme: const ColorScheme.light(),
+      ).copyWith(
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: <TargetPlatform, PageTransitionsBuilder>{
+            TargetPlatform.android: ZoomPageTransitionsBuilder(),
+          },
+        ),
+      ),
         home: ThemeConsumer(
           child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
             // ignore: missing_return

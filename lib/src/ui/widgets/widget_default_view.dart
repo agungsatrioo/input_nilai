@@ -1,5 +1,5 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:theme_provider/theme_provider.dart';
 
 class DefaultViewWidget extends StatelessWidget {
   String title, message;
@@ -14,16 +14,10 @@ class DefaultViewWidget extends StatelessWidget {
     return Container(
         padding: EdgeInsets.all(8.0),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(title, textAlign: TextAlign.center,
-                style: ThemeProvider.themeOf(context).data.textTheme.subtitle,),
-              Text(message, textAlign: TextAlign.center,
-                style: ThemeProvider.themeOf(context).data.textTheme.caption,),
-            ]
-          ),
+          child: ListTile(
+            title: Text(title),
+            subtitle: Text(message)
+          )
         ),
       );
   }
