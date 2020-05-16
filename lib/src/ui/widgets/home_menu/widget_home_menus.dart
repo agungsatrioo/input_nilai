@@ -5,10 +5,10 @@ import 'package:theme_provider/theme_provider.dart';
 import '../../../models/menus.dart';
 import 'widget_homemenu_item.dart';
 
-class HomeGridMenus extends StatelessWidget {
-  final List<HomeMenu> menuList;
+class HomeMenuGridListWidget extends StatelessWidget {
+  final List<HomeMenuItem> menuList;
 
-  HomeGridMenus({
+  HomeMenuGridListWidget({
     @required this.menuList
   });
 
@@ -25,14 +25,14 @@ class HomeGridMenus extends StatelessWidget {
         itemCount: menuList.length,
         shrinkWrap: true,
         itemBuilder: (context, position) {
-          HomeMenu item = menuList[position];
+          HomeMenuItem item = menuList[position];
 
           return Material(
                     color: ThemeProvider.themeOf(context)
                         .data
                         .scaffoldBackgroundColor,
                     child: InkWell(
-                      child: HomeMenuItem(item),
+                      child: HomeMenuItemWidget(item),
                       onTap: () {
                         print(item.route);
                         if (item.route != null) {

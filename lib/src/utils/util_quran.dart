@@ -28,6 +28,6 @@ class UtilQuran {
     return await rootBundle
         .loadString("assets/quran/$surat.json")
         .then((v) => jsonDecode(v))
-        .then((val) => SuratQuran.fromJson(val['${surat}']));
+        .then((val) => SuratQuran.fromJson(val[surat]));
   }
 }

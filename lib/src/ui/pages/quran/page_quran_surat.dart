@@ -48,10 +48,10 @@ class _QuranSuratDetailsState extends State<QuranSuratDetails> {
                   return LoadingWidget();
                 default:
                   if (snapshot.hasError) {
-                      return DefaultViewWidget(
-                        title: "Gagal memuat surat yang diminta.",
-                        message: "Pastikan Anda memperoleh versi asli.",
-                      );
+                    return DefaultViewWidget(
+                      title: "Gagal memuat surat yang diminta.",
+                      message: "Pastikan Anda memperoleh versi asli.",
+                    );
                   } else {
                     return ListView(
                         children: snapshot.data.text.entries.map((f) {
@@ -68,48 +68,44 @@ class _QuranSuratDetailsState extends State<QuranSuratDetails> {
                                     textDirection: TextDirection.rtl,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .display1
+                                        .headline4
                                         .merge(TextStyle(
                                             fontFamily: 'Amiri',
-                                            height: 3.0,
-                                            color:
-                                                ThemeProvider.themeOf(context)
-                                                    .data
-                                                    .colorScheme
-                                                    .onSurface))),
+                                            height: 3.0,))),
                               ),
                             ),
                             Align(
-                              alignment: Alignment.topLeft,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Container(
-                                    padding: EdgeInsets.only(right:8.0),
-                                    child: IndicatorDrawer(
-                                      color: colorGreenStd, 
-                                      padding: 8.0,
-                                      child: Text(
-                                      "${f.key}",
-                                      style: ThemeProvider.themeOf(context)
-                                          .data
-                                          .textTheme
-                                          .headline.merge(TextStyle(color: Colors.white)),
+                                alignment: Alignment.topLeft,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                      padding: EdgeInsets.only(right: 8.0),
+                                      child: IndicatorDrawer(
+                                        color: colorGreenStd,
+                                        padding: 8.0,
+                                        child: Text(
+                                          "${f.key}",
+                                          style: ThemeProvider.themeOf(context)
+                                              .data
+                                              .textTheme
+                                              .headline
+                                              .merge(TextStyle(
+                                                  color: Colors.white)),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      "${snapshot.data.translations.id.text[f.key]}",
-                                      style: ThemeProvider.themeOf(context)
-                                          .data
-                                          .textTheme
-                                          .headline,
+                                    Expanded(
+                                      child: Text(
+                                        "${snapshot.data.translations.id.text[f.key]}",
+                                        style: ThemeProvider.themeOf(context)
+                                            .data
+                                            .textTheme
+                                            .headline,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              )
-                            ),
+                                  ],
+                                )),
                             Divider()
                           ],
                         ),

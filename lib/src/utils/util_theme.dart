@@ -1,63 +1,72 @@
 import 'package:flutter/material.dart';
 import 'package:theme_provider/theme_provider.dart';
 
-import 'util_common.dart';
-
 List<AppTheme> initAppThemes() => [
-  AppTheme.light().copyWith(
+      AppTheme.light().copyWith(
           id: "siflab_default",
           description: "Tema Default",
-      data: ThemeData(
-          primaryColor: hexToColor("#275da7"),
-          primaryColorDark: hexToColor("#275da7"),
-          primaryColorLight: hexToColor("#306fbf"),
-          scaffoldBackgroundColor: hexToColor("#F1F1F1"),
-          backgroundColor: hexToColor("#F1F1F1"),
-          colorScheme: ColorScheme(
-              primary: Color(0xff275da7),
-              primaryVariant: Color(0xff306fbf),
-              secondary: hexToColor("#306fbf"),
-              secondaryVariant: hexToColor("#f25c05"),
-              surface: hexToColor("#F1F1F1"),
-              background: hexToColor("#158cea"),
-              error: hexToColor("#fc5342"),
-              onPrimary: Colors.white,
-              onSecondary: Colors.black,
-              onSurface: Colors.black,
-              onBackground: Colors.white,
-              onError: Colors.white,
-              brightness: Brightness.light),
-          textTheme: TextTheme(headline: TextStyle(fontSize: 18.0)),
-          appBarTheme: AppBarTheme(
-            elevation: 0.0,
-            color: hexToColor("#F1F1F1"),
-            brightness: Brightness.light,
+          data: ThemeData.from(
+                  colorScheme: ColorScheme(
+                      primary: Color(0xff275da7),
+                      primaryVariant: Color(0xff306fbf),
+                      secondary: Color(0xff306fbf),
+                      secondaryVariant: Color(0xff306fbf),
+                      surface: Color(0xffF1F1F1),
+                      background: Color(0xffF1F1F1),
+                      error: Color(0xfffc5342),
+                      onPrimary: Colors.white,
+                      onSecondary: Colors.white,
+                      onSurface: Colors.black,
+                      onBackground: Colors.black,
+                      onError: Colors.white,
+                      brightness: Brightness.light))
+              .copyWith(
+            primaryIconTheme: IconThemeData(color: Colors.white),
             iconTheme: IconThemeData(color: Colors.black),
-            actionsIconTheme: IconThemeData(color: Colors.black),
-          ),
-          primaryIconTheme: IconThemeData(color: Colors.white),
-          iconTheme: IconThemeData(color: Colors.black),
-          primaryTextTheme: TextTheme(
-              title: TextStyle(color: Colors.black, fontSize: 20.0)),
-          accentTextTheme: TextTheme(
-              title: TextStyle(color: Colors.white, fontSize: 12.0)),
-          buttonTheme: ButtonThemeData(
-              colorScheme: ColorScheme(
-                  primary: hexToColor("#275da7"),
-                  primaryVariant: hexToColor("#306fbf"),
-                  secondary: hexToColor("#03a60f"),
-                  secondaryVariant: hexToColor("#2ea64c"),
-                  surface: hexToColor("#F1F1F1"),
-                  background: hexToColor("#158cea"),
-                  error: hexToColor("#fc5342"),
-                  onPrimary: Colors.white,
-                  onSecondary: Colors.white,
-                  onSurface: Colors.black,
-                  onBackground: Colors.white,
-                  onError: Colors.white,
-                  brightness: Brightness.light)
-          )
-      )
-  ),
-      AppTheme.dark(id: "siflab_dark")
+            secondaryHeaderColor: Color(0xff306fbf),
+            primaryTextTheme: TextTheme(
+                headline6: TextStyle(color: Colors.black, fontSize: 20.0)),
+            appBarTheme: AppBarTheme(
+              elevation: 0.0,
+              color: Color(0xffF1F1F1),
+              brightness: Brightness.light,
+              iconTheme: IconThemeData(color: Colors.black),
+              actionsIconTheme: IconThemeData(color: Colors.black),
+            ),
+          )),
+      AppTheme.dark().copyWith(
+          id: "siflab_dark",
+          description: "Tema Gelap",
+          data: ThemeData.from(
+                  colorScheme: ColorScheme(
+                      primary: Color(0xff275da7),
+                      primaryVariant: Color(0xff306fbf),
+                      secondary: Color(0xff306fbf),
+                      secondaryVariant: Color(0xff306fbf),
+                      surface: Colors.black12,
+                      background: Colors.grey[900],
+                      error: Color(0xfffc5342),
+                      onPrimary: Colors.black,
+                      onSecondary: Colors.black12,
+                      onSurface: Colors.black,
+                      onBackground: Colors.black,
+                      onError: Colors.white,
+                      brightness: Brightness.dark))
+              .copyWith(
+            primaryIconTheme: IconThemeData(color: Colors.white),
+            iconTheme: IconThemeData(color: Colors.white),
+            secondaryHeaderColor: Color(0xff306fbf),
+            primaryTextTheme: TextTheme(
+                headline6: TextStyle(color: Colors.white, fontSize: 20.0)),
+            appBarTheme: AppBarTheme(
+              elevation: 0.0,
+              color: Colors.grey[900],
+              brightness: Brightness.dark,
+              iconTheme: IconThemeData(color: Colors.white),
+              actionsIconTheme: IconThemeData(color: Colors.white),
+            ),
+            toggleButtonsTheme: ToggleButtonsThemeData(
+              color: Colors.white
+            )
+          ))
     ];

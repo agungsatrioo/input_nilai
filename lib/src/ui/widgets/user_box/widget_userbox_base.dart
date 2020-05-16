@@ -16,7 +16,7 @@ class WidgetUserBoxBase extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
       decoration: new BoxDecoration(
-          color: ThemeProvider.themeOf(context).data.primaryColorLight,
+          color: ThemeProvider.themeOf(context).data.secondaryHeaderColor,
           borderRadius: new BorderRadius.all(new Radius.circular(3.0))),
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.start,

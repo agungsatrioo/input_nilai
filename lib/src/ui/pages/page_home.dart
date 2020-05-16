@@ -12,13 +12,11 @@ import '../../utils/blocs/user_level/util_levelevent.dart';
 import '../../utils/blocs/user_level/util_levelstate.dart';
 import '../../utils/util_blocs.dart';
 import '../../utils/util_colors.dart';
-import '../../utils/util_common.dart';
 import '../../utils/util_notifications.dart';
 import '../../utils/util_useragent.dart';
 import '../widgets/bottom_sheet/widget_bottomsheet_confirmation.dart';
 import '../widgets/home_menu/widget_home_menus.dart';
 import '../widgets/user_box/widget_userbox_dosen.dart';
-import '../widgets/user_box/widget_userbox_mhs.dart';
 import '../widgets/widget_loading.dart';
 import '../widgets/widget_univ_logo.dart';
 import 'kompre/page_kompre_home_dosen.dart';
@@ -43,109 +41,119 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   UserAgent _ua;
-  List<HomeMenu> _menuList;
+  PackageInfo packageInfo;
 
   @override
   void initState() {
     super.initState();
+
     _ua = UserAgent();
-    _menuList = List();
+    _initPackageInfo();
   }
 
-  _addMenuDosen() {
-    _menuList.add(HomeMenu(
-        "Sidang Proposal",
-        "Lihat dan beri penilaian proposal mahasiswa.",
-        LineIcons.binoculars,
-        UPHomePageDosen(),
-        iconBlue1));
-
-    _menuList.add(HomeMenu(
-        "Sidang Komprehensif",
-        "Lihat dan beri penilaian terhadap kemampuan komprehensif mahasiswa.",
-        LineIcons.book,
-        KomprehensifHomePageDosen(),
-        iconGreen1));
-
-    _menuList.add(HomeMenu(
-        "Sidang Munaqosah",
-        "Lihat dan beri penilian terhadap munaqosah mahasiswa.",
-        LineIcons.book,
-        MunaqosahHomeDosen(),
-        iconPurple1));
-
-    _addMenuCommon();
+  _initPackageInfo() async {
+    packageInfo = await PackageInfo.fromPlatform();
   }
 
-  _addMenuMahasiswa() {
-    _menuList.add(HomeMenu(
-        "Sidang Proposal",
-        "Lihat penilaian terhadap proposal Anda.",
-        LineIcons.binoculars,
-        UPHomePageMahasiswa(),
-        iconBlue1));
+  _getMenuDosen() => [
+        HomeMenuItem(
+          name: "Sidang Proposal",
+          description: "Lihat dan beri penilaian proposal mahasiswa.",
+          route: UPHomePageDosen(),
+          icon: LineIcons.binoculars,
+          iconColor: iconBlue1,
+        ),
+        HomeMenuItem(
+          name: "Sidang Komprehensif",
+          description: "Lihat dan beri penilaian komprehensif mahasiswa.",
+          route: KomprehensifHomePageDosen(),
+          icon: LineIcons.book,
+          iconColor: iconGreen1,
+        ),
+        HomeMenuItem(
+          name: "Sidang Munaqosah",
+          description: "Lihat dan beri penilaian munaqosah mahasiswa.",
+          route: MunaqosahHomeDosen(),
+          icon: LineIcons.file_text,
+          iconColor: iconRed1,
+        ),
+      ];
 
-    _menuList.add(HomeMenu(
-        "Sidang Komprehensif",
-        "Lihat dan beri penilaian terhadap kemampuan komprehensif Anda.",
-        LineIcons.book,
-        KompreHomePageMahasiswa(),
-        iconGreen1));
+  _getMenuMahasiswa() => [
+        HomeMenuItem(
+          name: "Sidang Proposal",
+          description: "Lihat penilaian proposal Anda.",
+          route: UPHomePageMahasiswa(),
+          icon: LineIcons.binoculars,
+          iconColor: iconBlue1,
+        ),
+        HomeMenuItem(
+          name: "Sidang Komprehensif",
+          description: "Lihat penilaian komprehensif Anda.",
+          route: KompreHomePageMahasiswa(),
+          icon: LineIcons.book,
+          iconColor: iconGreen1,
+        ),
+        HomeMenuItem(
+          name: "Sidang Munaqosah",
+          description: "Lihat dan beri penilaian munaqosah Anda.",
+          route: MunaqosahHomePageMahasiswa(),
+          icon: LineIcons.file_text,
+          iconColor: iconRed1,
+        ),
+      ];
 
-    _menuList.add(HomeMenu(
-        "Sidang Munaqosah",
-        "Lihat  penilian terhadap munaqosah Anda.",
-        LineIcons.book,
-        MunaqosahHomePageMahasiswa(),
-        iconRed1));
-
-    _addMenuCommon();
-  }
-
-  _addMenuCommon() {
-    _menuList.addAll([
-      HomeMenu("Ganti Tema", "Memungkinkan Anda untuk mengganti tema aplikasi.",
-          LineIcons.paint_brush, () {
-        showDialog(
-            context: context,
-            builder: (_) => ThemeConsumer(child: ThemeDialog()));
-      }, iconOrange1),
-      HomeMenu("Al Quran", "Baca Al-Quran sebelum sidang.",
-          Image.asset("assets/images/quran.png"), QuranHomePage(), iconOrange1),
-      HomeMenu(
-          "Juz Amma",
-          "Baca Juz Amma sebelum sidang.",
-          Image.asset("assets/images/juz_amma.gif"),
-          QuranHomePage(
+  _getMenuCommon() => [
+        HomeMenuItem(
+          name: "Ganti Tema",
+          description: "Memungkinkan Anda untuk mengganti tema aplikasi.",
+          route: () {
+            showDialog(
+                context: context,
+                builder: (_) => ThemeConsumer(child: ThemeDialog()));
+          },
+          icon: LineIcons.paint_brush,
+          iconColor: iconOrange1,
+        ),
+        HomeMenuItem(
+          name: "Al Quran",
+          description: "Baca Al-Quran sebelum sidang agar berkah.",
+          route: QuranHomePage(),
+          icon: Image.asset("assets/images/quran.png"),
+        ),
+        HomeMenuItem(
+          name: "Juz Amma",
+          description: "Baca Juz Amma sebelum sidang agar berkah.",
+          route: QuranHomePage(
             juzAmma: true,
           ),
-          iconOrange1),
-      HomeMenu("Tentang Aplikasi Ini", "Melihat info aplikasi ini.",
-          LineIcons.info_circle, () {
-        PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
-          String appName = packageInfo.appName;
-          String version = packageInfo.version;
-          String buildNumber = packageInfo.buildNumber;
+          icon: Image.asset("assets/images/juz_amma.gif"),
+        ),
+        HomeMenuItem(
+            name: "Tentang Aplikasi Ini",
+            description: "Melihat informasi aplikasi ini.",
+            route: () {
+              String appName = packageInfo.appName;
+              String version = packageInfo.version;
+              String buildNumber = packageInfo.buildNumber;
 
-          showAboutDialog(
-            context: context,
-            applicationIcon: Image.asset(
-              "assets/images/icon.png",
-              scale: 10,
-            ),
-            applicationName: appName,
-            applicationVersion: '$version.$buildNumber',
-            applicationLegalese: '© 2020 Agung Satrio Budi Prakoso',
-          );
-        });
-      }, hexToColor("#585858")), 
-    ]);
-  }
+              showAboutDialog(
+                context: context,
+                applicationIcon: Image.asset(
+                  "assets/images/icon.png",
+                  scale: 10,
+                ),
+                applicationName: appName,
+                applicationVersion: '$version.$buildNumber',
+                applicationLegalese: '© 2020 Agung Satrio Budi Prakoso',
+              );
+            },
+            icon: LineIcons.info_circle,
+            iconColor: iconBlue3),
+      ];
 
   @override
   Widget build(BuildContext context) {
-    _addMenuCommon();
-
     return Scaffold(
         appBar: AppBar(
           title: WidgetUnivLogo(),
@@ -158,8 +166,8 @@ class _HomePageState extends State<HomePage> {
                         isDismissible: false,
                         caption: Text(
                             "Apakah Anda yakin akan logout dari aplikasi ini? "
-                                "Pastikan Anda telah menyelesaikan semua pekerjaan Anda sebelum "
-                                "logout."))
+                            "Pastikan Anda telah menyelesaikan semua pekerjaan Anda sebelum "
+                            "logout."))
                     .then((val) {
                   if (val)
                     BlocProvider.of<AuthenticationBloc>(context)
@@ -173,14 +181,20 @@ class _HomePageState extends State<HomePage> {
           create: (ctx) => UserLevelBloc(userAgent: _ua)..add(InitLevelEvent()),
           child: BlocBuilder<UserLevelBloc, UserLevelState>(
             builder: (context, state) {
-              _menuList.clear();
-              List homeWidgets = <Widget>[];
+              var homeWidgets = <Widget>[];
+
               if (state is UserLevelDosen) {
-                _addMenuDosen();
-                homeWidgets.add(UserBoxDosen(_ua));
+                homeWidgets.addAll([
+                  UserBoxDosen(_ua),
+                  HomeMenuGridListWidget(
+                      menuList: [..._getMenuDosen(), ..._getMenuCommon()])
+                ]);
               } else if (state is UserLevelMahasiswa) {
-                _addMenuMahasiswa();
-                homeWidgets.add(UserBoxMahasiswa(_ua));
+                homeWidgets.addAll([
+                  UserBoxDosen(_ua),
+                  HomeMenuGridListWidget(
+                      menuList: [..._getMenuMahasiswa(), ..._getMenuCommon()])
+                ]);
               } else if (state is InitializingState) {
                 return LoadingWidget();
               }
@@ -189,9 +203,8 @@ class _HomePageState extends State<HomePage> {
                 padding: EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget> [
-                    ...homeWidgets..add(HomeGridMenus(menuList: _menuList,)),
-                    
+                  children: <Widget>[
+                    ...homeWidgets,
                   ],
                 ),
               );
@@ -200,7 +213,3 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 }
-
-/*
-
- */

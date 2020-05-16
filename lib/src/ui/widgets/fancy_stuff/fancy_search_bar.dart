@@ -8,24 +8,25 @@ import 'widget_painter.dart';
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   String title;
   List<Widget> widgetList;
+    final VoidCallback onCancelSearch;
+  final Function(String) onSearchQueryChanged;
+  PreferredSizeWidget bottom;
 
   MyAppBar(
       {Key key,
       @required this.title,
       @required this.onCancelSearch,
       @required this.onSearchQueryChanged,
-      @required this.widgetList})
+      @required this.widgetList,this.bottom})
       : super(key: key);
 
-  final VoidCallback onCancelSearch;
-  final Function(String) onSearchQueryChanged;
+
 
   @override
   Size get preferredSize => Size.fromHeight(56.0);
 
   @override
-  _DefaultAppBarState createState() => _DefaultAppBarState(this.title,
-      this.widgetList, this.onCancelSearch, this.onSearchQueryChanged);
+  _DefaultAppBarState createState() => _DefaultAppBarState();
 }
 
 class _DefaultAppBarState extends State<MyAppBar>
@@ -34,15 +35,6 @@ class _DefaultAppBarState extends State<MyAppBar>
   bool isInSearchMode = false;
   AnimationController _controller;
   Animation _animation;
-
-  final VoidCallback onCancelSearch;
-  final Function(String) onSearchQueryChanged;
-
-  String _title;
-  final List<Widget> _widgetList;
-
-  _DefaultAppBarState(this._title, this._widgetList, this.onCancelSearch,
-      this.onSearchQueryChanged);
 
   @override
   void initState() {
@@ -69,8 +61,6 @@ class _DefaultAppBarState extends State<MyAppBar>
       rippleStartY = details.globalPosition.dy;
     });
 
-    print("pointer location $rippleStartX, $rippleStartY");
-
     _controller.forward();
   }
 
@@ -81,36 +71,38 @@ class _DefaultAppBarState extends State<MyAppBar>
 
     _controller.reverse();
 
-    onSearchQueryChanged('');
+    widget.onSearchQueryChanged('');
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        AppBar(title: Text(this._title),
-            brightness: isInSearchMode ? Brightness.dark : Brightness.light,
-            elevation: 0, actions: [
-          ..._widgetList,
-          GestureDetector(
-            // ignore: missing_required_param
-            child: IconButton(
-              icon: Icon(LineIcons.search,
-                  color: ThemeProvider.themeOf(context).data.iconTheme.color),
-            ),
-            onTapUp: onSearchTapUp,
-          )
-        ]),
+        AppBar(
+            title: Text(this.widget.title),
+            brightness: isInSearchMode
+                ? Brightness.dark
+                : ThemeProvider.themeOf(context).data.appBarTheme.brightness,
+            elevation: 0,
+            bottom: widget.bottom,
+            actions: [
+              ...widget.widgetList,
+              GestureDetector(
+                // ignore: missing_required_param
+                child: IconButton(
+                  icon: Icon(LineIcons.search,
+                      color:
+                          ThemeProvider.themeOf(context).data.iconTheme.color),
+                ),
+                onTapUp: onSearchTapUp,
+              )
+            ]),
         AnimatedBuilder(
           animation: _animation,
           builder: (context, child) {
             return CustomPaint(
               painter: MyPainter(
-                color: ThemeProvider
-                    .themeOf(context)
-                    .data
-                    .colorScheme
-                    .primary,
+                color: ThemeProvider.themeOf(context).data.colorScheme.primary,
                 containerHeight: widget.preferredSize.height,
                 center: Offset(rippleStartX ?? 0, rippleStartY ?? 0),
                 radius: _animation.value * MediaQuery.of(context).size.width,
@@ -123,7 +115,7 @@ class _DefaultAppBarState extends State<MyAppBar>
         isInSearchMode
             ? (SearchBar(
                 onCancelSearch: onSearchCanceled,
-                onSearchQueryChanged: onSearchQueryChanged,
+                onSearchQueryChanged: widget.onSearchQueryChanged,
               ))
             : (Container())
       ],

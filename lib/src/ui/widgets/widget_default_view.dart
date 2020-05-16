@@ -15,8 +15,8 @@ class DefaultViewWidget extends StatelessWidget {
         padding: EdgeInsets.all(8.0),
         child: Center(
           child: ListTile(
-            title: Text(title),
-            subtitle: Text(message)
+            title: Center(child: Text(title)),
+            subtitle: Center(child: Text(message))
           )
         ),
       );

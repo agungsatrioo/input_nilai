@@ -24,8 +24,7 @@ class _MunaqosahHomeDosenState extends State<MunaqosahHomeDosen>
   RESTAkademik rest;
 
   String _query = "";
-  bool _isHistory = false,
-      _isRevisi = false;
+  bool _isHistory = false, _isRevisi = false;
   List<bool> _isTabSelected;
   List<int> tabNumbers;
 
@@ -99,13 +98,16 @@ class _MunaqosahHomeDosenState extends State<MunaqosahHomeDosen>
                   if (snapshot.hasError) {
                     print(snapshot.error.toString());
                     return DefaultViewWidget(
-                        title: "Gagal memuat informasi Ujian Munaqosah.",
-                        message: "Coba refresh untuk memuat kembali. Pastikan kondisi jaringan Anda dalam keadaan baik.",
-                      );
-                  } else if (snapshot.data.length < 1)
-                    return DefaultViewWidget(title: "Tidak ada data yang tersedia.");
+                      title: "Gagal memuat informasi Ujian Munaqosah.",
+                      message:
+                          "Coba refresh untuk memuat kembali. Pastikan kondisi jaringan Anda dalam keadaan baik.",
+                    );
+                  } else if (snapshot.data.isEmpty)
+                    return DefaultViewWidget(
+                        title: "Tidak ada data yang tersedia.");
                   else {
-                    getStats(snapshot.data,
+                    getStats(
+                      snapshot.data,
                       query: _query,
                       jmlBelumSidang: (val) {
                         tabNumbers[0] = val;
@@ -124,34 +126,39 @@ class _MunaqosahHomeDosenState extends State<MunaqosahHomeDosen>
                           child: ToggleButtons(
                             children: <Widget>[
                               Container(
-                                  width: (MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width - 36) / 3,
+                                  width:
+                                      (MediaQuery.of(context).size.width - 36) /
+                                          3,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Center(child: Text(
-                                        "Belum sidang (${tabNumbers[0]})")),
+                                    child: Center(
+                                        child: Text(
+                                      "Belum sidang (${tabNumbers[0]})",
+                                      style: ThemeProvider.themeOf(context)
+                                          .data
+                                          .primaryTextTheme
+                                          .headline6,
+                                    )),
                                   )),
                               Container(
-                                  width: (MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width - 36) / 3,
+                                  width:
+                                      (MediaQuery.of(context).size.width - 36) /
+                                          3,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Center(child: Text(
-                                        "Revisi (${tabNumbers[1]})")),
+                                    child: Center(
+                                        child:
+                                            Text("Revisi (${tabNumbers[1]})")),
                                   )),
                               Container(
-                                  width: (MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width - 36) / 3,
+                                  width:
+                                      (MediaQuery.of(context).size.width - 36) /
+                                          3,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Center(child: Text(
-                                        "Tuntas sidang (${tabNumbers[2]})")),
+                                    child: Center(
+                                        child: Text(
+                                            "Tuntas sidang (${tabNumbers[2]})")),
                                   )),
                             ],
                             isSelected: _isTabSelected,
@@ -161,19 +168,21 @@ class _MunaqosahHomeDosenState extends State<MunaqosahHomeDosen>
                           ),
                         ),
                         Expanded(
-                          child: makeSidangListView(context, snapshot.data,
+                          child: makeSidangListView(
+                            context,
+                            snapshot.data,
                             query: _query,
                             isHistory: _isHistory,
                             isRevisi: _isRevisi,
                             onRefresh: () => _refreshList(),
                             onTap: (item) {
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          ThemeConsumer(
-                                              child: PageMunaqosahDetails(
-                                                  item)))).then((val) {
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ThemeConsumer(
+                                              child:
+                                                  PageMunaqosahDetails(item))))
+                                  .then((val) {
                                 if (val) _refreshList();
                               });
                             },
@@ -201,4 +210,3 @@ class _MunaqosahHomeDosenState extends State<MunaqosahHomeDosen>
     super.dispose();
   }
 }
-

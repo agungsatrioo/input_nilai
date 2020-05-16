@@ -5,6 +5,7 @@ import 'package:line_icons/line_icons.dart';
 import '../../../models/model_akademik.dart';
 import '../../../utils/util_akademik.dart';
 import '../../../utils/util_penilaian.dart';
+import '../../../utils/util_penilaian_dosen.dart';
 import '../../widgets/cards/widget_card_sidang.dart';
 import '../../widgets/detail_sidang/widget_penilaian.dart';
 import '../../widgets/detail_sidang/widget_revisi_button.dart';
@@ -34,10 +35,6 @@ class _PageUPDetailsState extends State<PageUPDetails> {
     return false;
   }
 
-  getMenilaiAs() {
-    return 0;
-  }
-
   @override
   void initState() {
     super.initState();
@@ -50,6 +47,12 @@ class _PageUPDetailsState extends State<PageUPDetails> {
   _refresh() {
     setState(() {
       _nilai = _rest.getNilai(mhs.idStatus);
+    });
+  }
+
+  _setShouldUpdated() {
+    setState(() {
+      _shouldUpdated = true;
     });
   }
 
@@ -108,7 +111,7 @@ class _PageUPDetailsState extends State<PageUPDetails> {
                                           "Memuat nilai dan data revisi, harap tunggu...",
                                           style: Theme.of(context)
                                               .textTheme
-                                              .title),
+                                              .bodyText1),
                                     ),
                                   )
                                 ],
@@ -119,7 +122,8 @@ class _PageUPDetailsState extends State<PageUPDetails> {
                               return Padding(
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: Text("Gagal memuat nilai.",
-                                    style: Theme.of(context).textTheme.title),
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1),
                               );
                             else {
                               return Column(
@@ -136,28 +140,44 @@ class _PageUPDetailsState extends State<PageUPDetails> {
                                           onTap: () {
                                             tap(
                                                 context: context,
-                                                message: "Anda akan mengubah penilaian ${mhs
-                                                    .namaMhs} (NIM: ${mhs
-                                                    .nim})",
+                                                message:
+                                                    "Anda akan memberi penilaian ${mhs.namaMhs} (NIM: ${mhs.nim})",
                                                 onAction: (nilai) =>
-                                                    putNilai(myCtx, nilai)
-                                            );
-                                          }
-                                      ),
+                                                    editNilaiDosen(
+                                                        scaffoldContext: myCtx,
+                                                        restAkademik: _rest,
+                                                        mahasiswaSidang: mhs,
+                                                        nilai: nilai,
+                                                        onRefresh: () async {
+                                                          await _refresh();
+                                                        },
+                                                        onSuccess: () =>
+                                                            _setShouldUpdated()));
+                                          }),
                                       ifFalse: MyButton.primary(
                                         caption: "Beri penilaian",
                                         buttonWidth: double.infinity,
                                         onTap: () {
                                           tap(
                                               context: context,
-                                              message: "Anda akan memberi penilaian kepada ${mhs
-                                                  .namaMhs} (NIM: ${mhs.nim})",
+                                              message:
+                                                  "Anda akan mengubah penilaian ${mhs.namaMhs} (NIM: ${mhs.nim})",
                                               onAction: (nilai) =>
-                                                  setNilai(myCtx, nilai)
-                                          );
+                                                  setNilaiDosen(
+                                                      scaffoldContext: myCtx,
+                                                      restAkademik: _rest,
+                                                      mahasiswaSidang: mhs,
+                                                      nilai: nilai,
+                                                      onRefresh: () async {
+                                                        await _refresh();
+                                                      },
+                                                      onSuccess: () {
+                                                        setState() {
+                                                          _shouldUpdated = true;
+                                                        }
+                                                      }));
                                         },
-                                      )
-                                  ),
+                                      )),
                                   ButtonRevisi(
                                     rest: _rest,
                                     dosen: snapshot.data,
@@ -176,49 +196,5 @@ class _PageUPDetailsState extends State<PageUPDetails> {
             ),
           )),
     );
-  }
-
-  setNilai(BuildContext ctx, int nilai) {
-    _rest.setNilai(mhs.idStatus, nilai).then((String value) async {
-      await _refresh();
-
-      Scaffold.of(ctx).showSnackBar(SnackBar(
-        content: Text('Sukses menambahkan nilai.'),
-        backgroundColor: Colors.green,
-      ));
-
-      setState(() {
-        _shouldUpdated = true;
-      });
-    }).catchError((e) async {
-      await _refresh();
-
-      Scaffold.of(ctx).showSnackBar(SnackBar(
-        content: Text(e.toString()),
-        backgroundColor: Colors.red,
-      ));
-    });
-  }
-
-  putNilai(BuildContext ctx, int nilai) {
-    _rest.putNilai(mhs.idStatus, nilai).then((String value) async {
-      await _refresh();
-
-      Scaffold.of(ctx).showSnackBar(SnackBar(
-        content: Text('Sukses menyunting nilai.'),
-        backgroundColor: Colors.green,
-      ));
-
-      setState(() {
-        _shouldUpdated = true;
-      });
-    }).catchError((e) async {
-      await _refresh();
-
-      Scaffold.of(ctx).showSnackBar(SnackBar(
-        content: Text('Gagal menyunting nilai. Silakan coba kembali.'),
-        backgroundColor: Colors.red,
-      ));
-    });
   }
 }

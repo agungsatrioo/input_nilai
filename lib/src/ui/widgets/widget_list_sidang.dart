@@ -80,11 +80,7 @@ List<Widget> buildChildFromLists(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Text(k,
-                  style: Theme.of(context).textTheme.subtitle.merge(TextStyle(
-                      color: ThemeProvider.themeOf(context)
-                          .data
-                          .colorScheme
-                          .onSurface))),
+                  style: Theme.of(context).textTheme.subtitle1),
             ],
           ),
           padding: EdgeInsets.all(10.0),
