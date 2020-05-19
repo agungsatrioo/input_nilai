@@ -18,9 +18,7 @@ class OpenContainerWrapper extends StatelessWidget {
     return OpenContainer(
       transitionType: transitionType,
       openBuilder: (BuildContext context, VoidCallback _) {
-        return ThemeConsumer(
-          child: route,
-        );
+        return route;
       },
       tappable: false,
       closedBuilder: closedBuilder,

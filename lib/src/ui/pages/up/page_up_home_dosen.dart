@@ -171,8 +171,7 @@ class _UPHomePageDosenState extends State<UPHomePageDosen>
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => ThemeConsumer(
-                                            child: PageUPDetails(item)))).then((
+                                        builder: (context) => PageUPDetails(item))).then((
                                     val) {
                                   if (val) _refreshList();
                                 });

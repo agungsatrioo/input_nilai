@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class DefaultViewWidget extends StatelessWidget {
-  String title, message;
+  final String title, message;
 
   DefaultViewWidget({
     @required this.title,

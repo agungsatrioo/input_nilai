@@ -82,11 +82,10 @@ class _RevisiDetailPageState extends State<RevisiDetailPage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ThemeConsumer(
-                                        child: PageRevisiForm(
+                                builder: (context) => PageRevisiForm(
                                       rest: _rest,
                                       source: _revisi,
-                                    )))).then((val) {
+                                    ))).then((val) {
                           setState(() {
                             _shouldUpdated = val ?? false;
                           });

@@ -64,8 +64,7 @@ class _QuranHomePageState extends State<QuranHomePage> {
                             onTap: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ThemeConsumer(
-                                        child: QuranSuratDetails(surat)))),
+                                    builder: (context) => QuranSuratDetails(surat))),
                           ),
                         );
                       }).toList(),

@@ -7,13 +7,13 @@ import 'package:flutter/widgets.dart';
 import 'widget_boolean_builder.dart';
 
 class MyButton extends StatelessWidget {
-  String caption;
-  Function() onTap;
+  final String caption;
+  final Function() onTap;
   Color buttonColor;
   Color textColor;
-  double fontSize = 16.0;
-  double buttonWidth = 88.0;
-  double buttonHeight = 48.0;
+  final double fontSize = 16.0;
+  final double buttonWidth;
+  final double buttonHeight;
   int _buttonType;
   bool _isOutline = false,
       _isLink = false;

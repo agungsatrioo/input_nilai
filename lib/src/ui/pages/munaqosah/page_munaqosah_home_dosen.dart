@@ -179,9 +179,7 @@ class _MunaqosahHomeDosenState extends State<MunaqosahHomeDosen>
                               Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => ThemeConsumer(
-                                              child:
-                                                  PageMunaqosahDetails(item))))
+                                          builder: (context) => PageMunaqosahDetails(item)))
                                   .then((val) {
                                 if (val) _refreshList();
                               });

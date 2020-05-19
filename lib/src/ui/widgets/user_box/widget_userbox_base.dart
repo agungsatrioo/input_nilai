@@ -16,7 +16,7 @@ class WidgetUserBoxBase extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
       decoration: new BoxDecoration(
-          color: ThemeProvider.themeOf(context).data.secondaryHeaderColor,
+          color: ThemeProvider.themeOf(context).data.colorScheme.secondary,
           borderRadius: new BorderRadius.all(new Radius.circular(3.0))),
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,7 +24,7 @@ class WidgetUserBoxBase extends StatelessWidget {
           new Container(
             padding: EdgeInsets.all(12.0),
             decoration: new BoxDecoration(
-                color: ThemeProvider.themeOf(context).data.primaryColor),
+                color: ThemeProvider.themeOf(context).data.colorScheme.primary),
             child: new Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -58,7 +58,7 @@ class WidgetUserBoxBase extends StatelessWidget {
                       child: Text(
                         item.value,
                         style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
+                            color: ThemeProvider.themeOf(context).data.colorScheme.onPrimary, fontWeight: FontWeight.bold),
                       ),
                     )
                   ],

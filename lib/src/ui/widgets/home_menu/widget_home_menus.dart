@@ -42,7 +42,7 @@ class HomeMenuGridListWidget extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        ThemeConsumer(child: item.route)));
+                                        item.route));
                           else if (item.route is Function) item.route();
                         }
                       },

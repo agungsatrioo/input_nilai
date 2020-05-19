@@ -186,7 +186,7 @@ Widget tombolRevisi(BuildContext context, ModelMhsSidang item) {
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  ThemeConsumer(child: PageRevisiMahasiswa(allRevisi))));
+                  PageRevisiMahasiswa(allRevisi)));
     }
   );
 }

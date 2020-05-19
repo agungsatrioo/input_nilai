@@ -110,7 +110,7 @@ class _HomePageState extends State<HomePage> {
           route: () {
             showDialog(
                 context: context,
-                builder: (_) => ThemeConsumer(child: ThemeDialog()));
+                builder: (_) => ThemeDialog());
           },
           icon: LineIcons.paint_brush,
           iconColor: iconOrange1,

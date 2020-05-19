@@ -30,11 +30,10 @@ class ButtonRevisi extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ThemeConsumer(
-                        child: PageRevisiDosen(
-                          rest: rest,
-                          dosenSidang: dosen,
-                        )))).then((val) => onPageValue(val));
+                    builder: (context) => PageRevisiDosen(
+                      rest: rest,
+                      dosenSidang: dosen,
+                    ))).then((val) => onPageValue(val));
           }),
     );
   }

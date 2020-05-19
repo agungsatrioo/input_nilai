@@ -7,7 +7,7 @@ Widget UserBoxRefreshButton({
   @required Function() onTap,
 }) =>
     Material(
-      color: ThemeProvider.themeOf(context).data.primaryColor,
+      color: ThemeProvider.themeOf(context).data.colorScheme.primary,
       child: InkWell(
         child: Icon(
           LineIcons.refresh,

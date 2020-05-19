@@ -43,13 +43,13 @@ List<AppTheme> initAppThemes() => [
                       primaryVariant: Color(0xff306fbf),
                       secondary: Color(0xff306fbf),
                       secondaryVariant: Color(0xff306fbf),
-                      surface: Colors.black12,
-                      background: Colors.grey[900],
+                      surface: Color(0xff424242),
+                      background: Color(0xff212121),
                       error: Color(0xfffc5342),
-                      onPrimary: Colors.black,
-                      onSecondary: Colors.black12,
-                      onSurface: Colors.black,
-                      onBackground: Colors.black,
+                      onPrimary: Colors.white,
+                      onSecondary: Colors.white,
+                      onSurface: Colors.white,
+                      onBackground: Colors.white,
                       onError: Colors.white,
                       brightness: Brightness.dark))
               .copyWith(
@@ -60,13 +60,10 @@ List<AppTheme> initAppThemes() => [
                 headline6: TextStyle(color: Colors.white, fontSize: 20.0)),
             appBarTheme: AppBarTheme(
               elevation: 0.0,
-              color: Colors.grey[900],
+              color: Color(0xff212121),
               brightness: Brightness.dark,
               iconTheme: IconThemeData(color: Colors.white),
               actionsIconTheme: IconThemeData(color: Colors.white),
             ),
-            toggleButtonsTheme: ToggleButtonsThemeData(
-              color: Colors.white
-            )
           ))
     ];

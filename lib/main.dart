@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -31,49 +32,93 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final UserRepository userRepository;
-
   MyApp({Key key, @required this.userRepository}) : super(key: key) {
     initializeDateFormatting("id");
   }
 
+  final UserRepository userRepository;
+
   @override
   Widget build(BuildContext context) {
     return ThemeProvider(
-      saveThemesOnChange: true,
-      loadThemeOnInit: true,
-      themes: initAppThemes(),
-      child: MaterialApp(
-        title: 'Input Nilai',
-        theme: ThemeData.from(
-        colorScheme: const ColorScheme.light(),
-      ).copyWith(
-        pageTransitionsTheme: const PageTransitionsTheme(
-          builders: <TargetPlatform, PageTransitionsBuilder>{
-            TargetPlatform.android: ZoomPageTransitionsBuilder(),
-          },
-        ),
-      ),
-        home: ThemeConsumer(
-          child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-            // ignore: missing_return
-            builder: (context, state) {
-              if (state is AuthenticationUninitialized) {
-                return SplashPage();
-              }
-              if (state is AuthenticationAuthenticated) {
-                return HomePage();
-              }
-              if (state is AuthenticationUnauthenticated) {
-                return LoginPageBloc(userRepository: userRepository);
-              }
-              if (state is AuthenticationLoading) {
-                return LoadingPage();
-              }
+        saveThemesOnChange: true,
+        loadThemeOnInit: true,
+        themes: initAppThemes(),
+        child: ThemeConsumer(
+            child: Builder(
+          builder: (themeContext) => MaterialApp(
+            theme: ThemeProvider.themeOf(themeContext).data.copyWith(
+                  pageTransitionsTheme: const PageTransitionsTheme(
+                    builders: <TargetPlatform, PageTransitionsBuilder>{
+                      TargetPlatform.android: ZoomPageTransitionsBuilder(),
+                    },
+                  ),
+                ),
+            title: 'Input Nilai',
+            home: AnnotatedRegion<SystemUiOverlayStyle>(
+              value: SystemUiOverlayStyle(
+                statusBarColor: Colors.transparent,
+                statusBarIconBrightness: ThemeProvider.themeOf(themeContext).data.appBarTheme.brightness,
+              ),
+              child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                // ignore: missing_return
+                builder: (context, state) {
+                  if (state is AuthenticationUninitialized) {
+                    return SplashPage();
+                  }
+                  if (state is AuthenticationAuthenticated) {
+                    return HomePage();
+                  }
+                  if (state is AuthenticationUnauthenticated) {
+                    return LoginPageBloc(userRepository: userRepository);
+                  }
+                  if (state is AuthenticationLoading) {
+                    return LoadingPage();
+                  }
+                },
+              ),
+            ),
+          ),
+        )));
+  }
+}
+
+/*
+theme: ThemeData.from(
+          colorScheme: const ColorScheme.light(),
+        ).copyWith(
+          pageTransitionsTheme: const PageTransitionsTheme(
+            builders: <TargetPlatform, PageTransitionsBuilder>{
+              TargetPlatform.android: ZoomPageTransitionsBuilder(),
             },
           ),
         ),
-      ),
-    );
-  }
-}
+*/
+
+/*
+ThemeConsumer(
+          child: AnnotatedRegion<SystemUiOverlayStyle>(
+            value: SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent,
+              statusBarIconBrightness: Brightness.dark,
+            ),
+            child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+              // ignore: missing_return
+              builder: (context, state) {
+                if (state is AuthenticationUninitialized) {
+                  return SplashPage();
+                }
+                if (state is AuthenticationAuthenticated) {
+                  return HomePage();
+                }
+                if (state is AuthenticationUnauthenticated) {
+                  return LoginPageBloc(userRepository: userRepository);
+                }
+                if (state is AuthenticationLoading) {
+                  return LoadingPage();
+                }
+              },
+            ),
+          ),
+        ),
+*/

@@ -73,11 +73,10 @@ class _PageRevisiDosenState extends State<PageRevisiDosen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ThemeConsumer(
-                                  child: PageRevisiForm(
+                          builder: (context) => PageRevisiForm(
                                 dosen: dosenSidang,
                                 rest: _rest,
-                              )))).then((val) {
+                              ))).then((val) {
                     if (val) _refresh();
                   });
                 },
@@ -117,11 +116,10 @@ class _PageRevisiDosenState extends State<PageRevisiDosen> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => ThemeConsumer(
-                                                  child: RevisiDetailPage(
+                                          builder: (context) => RevisiDetailPage(
                                                 rest: _rest,
                                                 revisi: item,
-                                              )))).then((val) {
+                                              ))).then((val) {
                                     if (val) _refresh();
                                   });
                                 }),

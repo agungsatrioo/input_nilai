@@ -152,8 +152,7 @@ class _KomprehensifHomeDosenState extends State<KomprehensifHomePageDosen>
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          ThemeConsumer(
-                                              child: PageKompreDetails(item))))
+                                          PageKompreDetails(item)))
                                   .then((val) {
                                 if (val) _refreshList();
                               });
