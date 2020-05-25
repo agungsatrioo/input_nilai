@@ -7,12 +7,11 @@ final Random _random = Random.secure();
 String generateStr([int length = 32]) =>
     base64Url.encode(List<int>.generate(length, (i) => _random.nextInt(256)));
 
-bool isNumeric(String s) {
+bool isNumeric(dynamic s) {
   if (s == null) {
     return false;
-  }
-
-  return double.tryParse(s) != null;
+  } else
+    return num.tryParse("$s") != null;
 }
 
 void printWrapped(String text) {

@@ -58,7 +58,7 @@ class _UPHomePageMahasiswaState extends State<UPHomePageMahasiswa> {
               return LoadingWidget();
             default:
               if (snapshot.hasError) {
-                DefaultViewWidget(
+                return DefaultViewWidget(
                   title: "Gagal memuat informasi Ujian Proposal.",
                   message: "Coba refresh untuk memuat kembali. Pastikan kondisi jaringan Anda dalam keadaan baik.",
                 );

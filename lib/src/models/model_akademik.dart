@@ -119,7 +119,6 @@ class DosenSidang {
   });
 
   bool get sudahAdaNilai => isNumeric(this.nilai);
-
   Color get colorObj => hexToColor(this.color);
 
   factory DosenSidang.fromRawJson(String str) =>

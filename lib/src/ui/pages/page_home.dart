@@ -17,6 +17,7 @@ import '../../utils/util_useragent.dart';
 import '../widgets/bottom_sheet/widget_bottomsheet_confirmation.dart';
 import '../widgets/home_menu/widget_home_menus.dart';
 import '../widgets/user_box/widget_userbox_dosen.dart';
+import '../widgets/user_box/widget_userbox_mhs.dart';
 import '../widgets/widget_loading.dart';
 import '../widgets/widget_univ_logo.dart';
 import 'kompre/page_kompre_home_dosen.dart';
@@ -191,7 +192,7 @@ class _HomePageState extends State<HomePage> {
                 ]);
               } else if (state is UserLevelMahasiswa) {
                 homeWidgets.addAll([
-                  UserBoxDosen(_ua),
+                  UserBoxMahasiswa(_ua),
                   HomeMenuGridListWidget(
                       menuList: [..._getMenuMahasiswa(), ..._getMenuCommon()])
                 ]);

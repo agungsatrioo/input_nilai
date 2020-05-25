@@ -14,8 +14,9 @@ List<TableRow> detailDosenSidang(
 
 List<Widget> listDosenDetail(BuildContext context, List<DosenSidang> list) =>
     list
-        .map((item) => makeTextTableStyle(context,
-            caption: item.namaStatus, content: item.namaDosen))
+        .map((item) => ListTile(
+          
+        ))
         .toList();
 
 List<Widget> listDosenNilaiDetail(

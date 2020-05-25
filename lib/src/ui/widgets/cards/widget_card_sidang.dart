@@ -169,6 +169,7 @@ Widget _judulSidangDosenDetails(BuildContext context, ModelMhsSidang item) {
 Widget tombolRevisi(BuildContext context, ModelMhsSidang item) {
   return MyButton.error(
     caption: "Lihat revisi", 
+    buttonWidth: double.infinity,
     onTap: () {
             List<Revisi> allRevisi = List();
 
