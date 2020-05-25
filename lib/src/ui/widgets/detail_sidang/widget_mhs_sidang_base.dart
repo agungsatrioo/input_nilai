@@ -30,6 +30,14 @@ class DetailSidangMahasiswaBase extends StatelessWidget {
 
     List<Revisi> allRevisi = List();
 
+    for (DosenSidang r in data.penguji ?? []) {
+      allRevisi.addAll(r.revisi);
+    }
+
+    for (DosenSidang r in data.pembimbing ?? []) {
+      allRevisi.addAll(r.revisi);
+    }
+
     if (data.judulProposal != null) {
       judul = makeTextTableStyle(context,
           caption: "Judul Proposal", content: data.judulProposal);
@@ -70,35 +78,27 @@ class DetailSidangMahasiswaBase extends StatelessWidget {
       ];
     }
 
-    if (!data.nilai.sudahAdaNilai) {
-      isiNilai = AlertWidget(
-          alertType: AlertType.warning,
-          title: "Eits, belum ada nilai nih buat kamu.",
-          message:
-              "Tunggu dulu sampai para dosen memberi nilai untuk kamu, ya!");
-    } else {
+    if (data.nilai.sudahAdaNilai) {
       isiNilai = makeTextTableStyle(context,
           caption: "Nilai Akhir",
           content: "${data.nilai.nilai} (${data.nilai.mutu})",
           rightTextStyle: TextStyle(
             fontSize: 48,
           ).merge(warnaNilai));
-    }
 
-    for (DosenSidang r in data.penguji ?? []) {
-      allRevisi.addAll(r.revisi);
-    }
-
-    for (DosenSidang r in data.pembimbing ?? []) {
-      allRevisi.addAll(r.revisi);
-    }
-
-    if (allRevisi.isNotEmpty) {
-      alertRevisi = AlertWidget(
-          alertType: AlertType.danger,
-          title: "Waduh, ada revisi menanti kamu.",
+      if (allRevisi.isNotEmpty) {
+        alertRevisi = AlertWidget(
+            alertType: AlertType.danger,
+            title: "Waduh, ada revisi menanti kamu.",
+            message:
+                "Rincian revisi dapat kamu akses dengan menekan tombol \"Lihat Revisi\" di layar paling bawah.");
+      }
+    } else {
+      isiNilai = AlertWidget(
+          alertType: AlertType.warning,
+          title: "Eits, belum ada nilai nih buat kamu.",
           message:
-              "Rincian revisi dapat kamu akses dengan menekan tombol \"Lihat Revisi\" di layar paling bawah.");
+              "Tunggu dulu sampai para dosen memberi nilai untuk kamu, ya!");
     }
 
     return Column(
