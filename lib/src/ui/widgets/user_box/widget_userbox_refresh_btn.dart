@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:theme_provider/theme_provider.dart';
+import '../../../utils/util_color_extension.dart';
 
 Widget UserBoxRefreshButton({
   @required BuildContext context,
+  @required Color colorBase,
   @required Function() onTap,
 }) =>
     Material(
-      color: ThemeProvider.themeOf(context).data.colorScheme.primary,
+      color: colorBase.changeShade(-.03),
       child: InkWell(
         child: Icon(
           LineIcons.refresh,

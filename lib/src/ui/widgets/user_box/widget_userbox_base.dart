@@ -2,21 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:theme_provider/theme_provider.dart';
 
+import '../../../utils/util_color_extension.dart';
+import '../../../utils/util_colors.dart';
+
 class WidgetUserBoxBase extends StatelessWidget {
   String nama;
   final int _leftSide = 3, _rightSide = 7;
   Widget reloadButton;
   Map<String, String> details;
+  Color colorBase;
 
   WidgetUserBoxBase(
       {@required this.nama,
       @required this.details,
-      @required this.reloadButton});
+      @required this.reloadButton,
+      this.colorBase = colorBlueStd});
 
   @override
   Widget build(BuildContext context) => Container(
       decoration: new BoxDecoration(
-          color: ThemeProvider.themeOf(context).data.colorScheme.secondary,
+          color: colorBase,
           borderRadius: new BorderRadius.all(new Radius.circular(3.0))),
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,7 +29,7 @@ class WidgetUserBoxBase extends StatelessWidget {
           new Container(
             padding: EdgeInsets.all(12.0),
             decoration: new BoxDecoration(
-                color: ThemeProvider.themeOf(context).data.colorScheme.primary),
+                color: colorBase.changeShade(-.03)),
             child: new Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[

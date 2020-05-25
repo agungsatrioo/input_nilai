@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../models/podos.dart';
+import '../../../utils/util_colors.dart';
 import '../../../utils/util_useragent.dart';
 import 'widget_userbox_base.dart';
 import 'widget_userbox_refresh_btn.dart';
@@ -38,6 +39,8 @@ class _UserBoxMahasiswaState extends State<UserBoxMahasiswa> {
 
   @override
   Widget build(BuildContext context) {
+    Color colorBase = colorGreenStd;
+
     return FutureBuilder<MahasiswaProfil>(
       future: _future,
       builder: (BuildContext context, AsyncSnapshot<MahasiswaProfil> snapshot) {
@@ -50,7 +53,7 @@ class _UserBoxMahasiswaState extends State<UserBoxMahasiswa> {
             break;
           default:
             _reloadButton =
-                UserBoxRefreshButton(context: context, onTap: _onRefresh);
+                UserBoxRefreshButton(colorBase: colorBase, context: context, onTap: _onRefresh);
 
             if (snapshot.hasError) {
               _nama = "Gagal memuat nama";
@@ -62,6 +65,7 @@ class _UserBoxMahasiswaState extends State<UserBoxMahasiswa> {
         }
 
         return WidgetUserBoxBase(
+          colorBase: colorBase,
           nama: _nama,
           reloadButton: _reloadButton,
           details: {"NIM": _nim, "Jurusan": _jurusan},

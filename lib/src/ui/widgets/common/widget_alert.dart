@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
-enum AlertType { info, success, danger }
+import '../../../utils/util_color_extension.dart';
+import '../../../utils/util_colors.dart';
+
+enum AlertType { info, success, warning, danger }
 
 class AlertWidget extends StatelessWidget {
   final String title, message;
@@ -18,10 +21,32 @@ class AlertWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget icon = Icon(LineIcons.info);
+    Color bgColor = colorBlueStd;
+
+    switch (alertType) {
+      case AlertType.info:
+        bgColor = colorBlueStd;
+        break;
+      case AlertType.success:
+        bgColor = colorAlertSuccess;
+        break;
+      case AlertType.danger:
+        bgColor = colorAlertDanger;
+        break;
+      case AlertType.warning:
+        bgColor = colorAlertWarning;
+        break;
+    }
+
+    Color textColor = bgColor.computeLuminance() > .5 ? bgColor.changeShade(-.3) : bgColor.changeShade(.5);
+
     return Container(
-      decoration: new BoxDecoration(color: Colors.red),
+      decoration: new BoxDecoration(color: bgColor),
       padding: EdgeInsets.symmetric(vertical: 8.0),
+      margin: EdgeInsets.only(bottom: 10),
       child: ListTileTheme(
+        textColor: textColor,
+        iconColor: textColor,
         child: ListTile(
           leading: icon,
           title: Text(title),

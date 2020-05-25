@@ -1,4 +1,5 @@
-import 'dart:ui';
+
+import 'package:flutter/material.dart';
 
 const colorBlueStd = Color(0xff275da7);
 const colorBlueLight = Color(0xff306fbf);
@@ -18,3 +19,8 @@ const iconPurple1 = Color(0xff7950e0);
 const iconBlue3 = Color(0xff1c8ce3);
 const iconGreen2 = Color(0xff1db289);
 const iconBlue4 = Color(0xff248dd9);
+
+const colorAlertInfo = Color(0xff17a2b8);
+const colorAlertSuccess = Color(0xff28a745);
+const colorAlertWarning = Color(0xffffc107);
+const colorAlertDanger = Color(0xffdc3545);

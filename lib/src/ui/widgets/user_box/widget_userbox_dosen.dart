@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../models/podos.dart';
+import '../../../utils/util_colors.dart';
 import '../../../utils/util_useragent.dart';
 import 'widget_userbox_base.dart';
 import 'widget_userbox_refresh_btn.dart';
@@ -38,6 +39,8 @@ class _UserBoxDosenState extends State<UserBoxDosen> {
 
   @override
   Widget build(BuildContext context) {
+    Color colorBase = colorBlueStd;
+
     return FutureBuilder<Dosen>(
       future: _future,
       builder: (BuildContext context, AsyncSnapshot<Dosen> snapshot) {
@@ -54,7 +57,7 @@ class _UserBoxDosenState extends State<UserBoxDosen> {
             break;
           default:
             _reloadButton =
-                UserBoxRefreshButton(context: context, onTap: _onRefresh);
+                UserBoxRefreshButton(colorBase: colorBase, context: context, onTap: _onRefresh);
 
             if (snapshot.hasError) {
               _nama = "Gagal memuat nama";
@@ -68,6 +71,7 @@ class _UserBoxDosenState extends State<UserBoxDosen> {
         }
 
         return WidgetUserBoxBase(
+          colorBase: colorBase,
           nama: _nama,
           reloadButton: _reloadButton,
           details: {
