@@ -220,4 +220,16 @@ class Revisi {
             : tglRevisiDeadline.toIso8601String(),
         "status_revisi": statusRevisi == null ? null : statusRevisi,
       };
+
+  Map<String, dynamic> toJsonForExport() => {
+        "id_revisi": idRevisi == null ? "" : "$idRevisi",
+        "id_status": idStatus == null ? "null" : "$idStatus",
+        "detail_revisi": detailRevisi == null ? "null" : detailRevisi,
+        "tgl_revisi_input":
+            tglRevisiInput == null ? null : tglRevisiInput.toIso8601String(),
+        "tgl_revisi_deadline": tglRevisiDeadline == null
+            ? "null"
+            : tglRevisiDeadline.toIso8601String(),
+        "status_revisi": statusRevisi == null ? "null" : "$statusRevisi",
+      };
 }

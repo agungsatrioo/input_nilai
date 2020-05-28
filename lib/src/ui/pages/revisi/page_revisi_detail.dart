@@ -30,6 +30,7 @@ class _RevisiDetailPageState extends State<RevisiDetailPage> {
   Revisi _revisi;
   RESTAkademik _rest;
   bool _shouldUpdated, isDeleting = false;
+  bool isLoading = false;
 
   Future<Revisi> _future;
 
@@ -51,6 +52,12 @@ class _RevisiDetailPageState extends State<RevisiDetailPage> {
     });
   }
 
+  _toggleLoading() {
+    setState(() {
+      isLoading = !isLoading;
+    });
+  }
+
   _toggleDel() {
     setState(() {
       isDeleting = !isDeleting;
@@ -68,71 +75,89 @@ class _RevisiDetailPageState extends State<RevisiDetailPage> {
         onWillPop: _onWillPop,
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Detail Revisi'),
-            elevation: 0.0,
-            leading: IconButton(
-              icon: Icon(LineIcons.arrow_left),
-              onPressed: () => Navigator.of(context).pop(_shouldUpdated),
-            ),
-            actions: !isDeleting
-                ? <Widget>[
-                    IconButton(
-                      icon: Icon(LineIcons.edit),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PageRevisiForm(
-                                      rest: _rest,
-                                      source: _revisi,
-                                    ))).then((val) {
-                          setState(() {
-                            _shouldUpdated = val ?? false;
-                          });
-                          if (val ?? false) _refresh();
-                        });
-                      },
-                    ),
-                    IconButton(
-                      icon: Icon(LineIcons.trash),
-                      onPressed: () {
-                        showUserVerifyBottomSheet(context,
-                                message: Text(
-                                    "Anda akan menghapus revisi ini. Masukkan kata sandi untuk melanjutkan."),
-                                yesColor: colorGreenStd,
-                                noColor: ThemeProvider.themeOf(context)
-                                    .data
-                                    .colorScheme
-                                    .surface,
-                                noTextColor: ThemeProvider.themeOf(context)
-                                    .data
-                                    .colorScheme
-                                    .onSurface)
-                            .then((val) {
-                          setState(() {
-                            _shouldUpdated = val ?? false;
-                          });
-
-                          if (val ?? false) {
-                            deleteRevisi(context, _revisi);
-                          }
-                        });
-                      },
-                    )
-                  ]
-                : <Widget>[
-                    IconButton(
-                      icon: SizedBox(
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2.0,
+              title: Text('Detail Revisi'),
+              elevation: 0.0,
+              leading: IconButton(
+                icon: Icon(LineIcons.arrow_left),
+                onPressed: () => Navigator.of(context).pop(_shouldUpdated),
+              ),
+              actions: [
+                FutureBuilder<Revisi>(
+                    future: _future,
+                    builder: (BuildContext futureContext,
+                        AsyncSnapshot<Revisi> snapshot) {
+                      return Visibility(
+                        visible:
+                            snapshot.connectionState == ConnectionState.done &&
+                                !snapshot.hasError &&
+                                snapshot.hasData,
+                        child: IconButton(
+                          icon: Icon(LineIcons.edit),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PageRevisiForm(
+                                          rest: _rest,
+                                          source: _revisi,
+                                        ))).then((val) {
+                              setState(() {
+                                _shouldUpdated = val ?? false;
+                              });
+                              if (val ?? false) _refresh();
+                            });
+                          },
                         ),
-                        height: 24.0,
-                        width: 24.0,
-                      ),
-                      onPressed: () {},
-                    )
-                  ],
-          ),
+                      );
+                    }),
+                FutureBuilder<Revisi>(
+                    future: _future,
+                    builder: (BuildContext futureContext,
+                        AsyncSnapshot<Revisi> snapshot) {
+                      return SingleChildBooleanWidget(
+                          boolean: snapshot.connectionState ==
+                                  ConnectionState.done &&
+                              !snapshot.hasError &&
+                              snapshot.hasData,
+                          ifTrue: IconButton(
+                            icon: Icon(LineIcons.trash),
+                            onPressed: () {
+                              showUserVerifyBottomSheet(context,
+                                      message: Text(
+                                          "Anda akan menghapus revisi ini. Masukkan kata sandi untuk melanjutkan."),
+                                      yesColor: colorGreenStd,
+                                      noColor: ThemeProvider.themeOf(context)
+                                          .data
+                                          .colorScheme
+                                          .surface,
+                                      noTextColor:
+                                          ThemeProvider.themeOf(context)
+                                              .data
+                                              .colorScheme
+                                              .onSurface)
+                                  .then((val) {
+                                setState(() {
+                                  _shouldUpdated = val ?? false;
+                                });
+
+                                if (val ?? false) {
+                                  deleteRevisi(context, _revisi);
+                                }
+                              });
+                            },
+                          ),
+                          ifFalse: IconButton(
+                            icon: SizedBox(
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2.0,
+                              ),
+                              height: 24.0,
+                              width: 24.0,
+                            ),
+                            onPressed: () {},
+                          ));
+                    }),
+              ]),
           body: Builder(builder: (scaffoldContext) {
             return FutureBuilder<Revisi>(
               future: _future,
@@ -145,7 +170,8 @@ class _RevisiDetailPageState extends State<RevisiDetailPage> {
                     if (snapshot.hasError) {
                       return DefaultViewWidget(
                         title: "Gagal memuat informasi revisi.",
-                        message: "Coba refresh untuk memuat kembali. Pastikan kondisi jaringan Anda dalam keadaan baik.",
+                        message:
+                            "Coba refresh untuk memuat kembali. Pastikan kondisi jaringan Anda dalam keadaan baik.",
                       );
                     } else {
                       return Column(
@@ -178,19 +204,18 @@ class _RevisiDetailPageState extends State<RevisiDetailPage> {
                               caption: "Deskripsi revisi",
                               content: snapshot.data.detailRevisi),
                           SingleChildBooleanWidget(
-                            boolean: snapshot.data.statusRevisi, 
+                            boolean: snapshot.data.statusRevisi,
                             ifTrue: MyButton.flatError(
-                              buttonWidth: double.infinity,
-                              caption: "Tandai sebagai belum selesai", 
-                              onTap: () => showRevisiOnTap(snapshot, scaffoldContext)
-                            ), 
+                                buttonWidth: double.infinity,
+                                caption: "Tandai sebagai belum selesai",
+                                onTap: () =>
+                                    showRevisiOnTap(snapshot, scaffoldContext)),
                             ifFalse: MyButton.secondary(
-                              buttonWidth: double.infinity,
-                              caption: "Tandai sebagai selesai", 
-                              onTap: () => showRevisiOnTap(snapshot, scaffoldContext)
-                            ), 
+                                buttonWidth: double.infinity,
+                                caption: "Tandai sebagai selesai",
+                                onTap: () =>
+                                    showRevisiOnTap(snapshot, scaffoldContext)),
                           )
-                          
                         ],
                       );
                     }
@@ -210,32 +235,29 @@ class _RevisiDetailPageState extends State<RevisiDetailPage> {
                         "sebelum Anda menandai.") +
                 "\n\nAnda harus memasukkan kata sandi untuk melanjutkan."),
             yesColor: colorGreenStd,
-            noColor: ThemeProvider.themeOf(context)
-                .data
-                .colorScheme
-                .surface,
+            noColor: ThemeProvider.themeOf(context).data.colorScheme.surface,
             noTextColor:
-                ThemeProvider.themeOf(context)
-                    .data
-                    .colorScheme
-                    .onSurface)
+                ThemeProvider.themeOf(context).data.colorScheme.onSurface)
         .then((val) {
       val ??= false;
 
       setState(() {
-        if(!val) _shouldUpdated = val;
+        if (!val) _shouldUpdated = val;
       });
 
       if (val) {
-        putMark(scaffoldContext, snapshot.data,
-            !snapshot.data.statusRevisi);
+        putMark(scaffoldContext, snapshot.data, !snapshot.data.statusRevisi);
       }
     });
   }
 
   putMark(BuildContext ctx, Revisi revisi, bool nilai) {
-    _rest.putRevisiMark(revisi, nilai).then((String value) {
+    _rest.putRevisiMark(revisi, nilai).then((value) {
       _refresh();
+
+      setState(() {
+        _shouldUpdated = true;
+      });
 
       Scaffold.of(ctx).showSnackBar(SnackBar(
         content: Text('Sukses mengubah tanda.'),
@@ -249,7 +271,7 @@ class _RevisiDetailPageState extends State<RevisiDetailPage> {
     });
   }
 
-  _onRevisiAction(BuildContext context, String value) {
+  _onRevisiAction(BuildContext context, value) {
     _toggleDel();
 
     setState(() {

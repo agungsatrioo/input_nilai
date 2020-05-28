@@ -61,26 +61,47 @@ class _PageRevisiDosenState extends State<PageRevisiDosen> {
               onPressed: () => Navigator.of(context).pop(_shouldUpdated),
             ),
             actions: <Widget>[
-              IconButton(
-                icon: Icon(LineIcons.refresh),
-                onPressed: () {
-                  _refresh();
-                },
-              ),
-              IconButton(
-                icon: Icon(LineIcons.plus),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PageRevisiForm(
-                                dosen: dosenSidang,
-                                rest: _rest,
-                              ))).then((val) {
-                    if (val) _refresh();
-                  });
-                },
-              )
+              FutureBuilder<List<Revisi>>(
+                  future: _revisi,
+                  builder: (BuildContext futureContext,
+                      AsyncSnapshot<List<Revisi>> snapshot) {
+                    return Visibility(
+                      visible:
+                          snapshot.connectionState == ConnectionState.done &&
+                              !snapshot.hasError &&
+                              snapshot.hasData,
+                      child: IconButton(
+                        icon: Icon(LineIcons.refresh),
+                        onPressed: () {
+                          _refresh();
+                        },
+                      ),
+                    );
+                  }),
+              FutureBuilder<List<Revisi>>(
+                  future: _revisi,
+                  builder: (BuildContext futureContext,
+                      AsyncSnapshot<List<Revisi>> snapshot) {
+                    return Visibility(
+                        visible:
+                            snapshot.connectionState == ConnectionState.done &&
+                                !snapshot.hasError &&
+                                snapshot.hasData,
+                        child: IconButton(
+                          icon: Icon(LineIcons.plus),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PageRevisiForm(
+                                          dosen: dosenSidang,
+                                          rest: _rest,
+                                        ))).then((val) {
+                              if (val) _refresh();
+                            });
+                          },
+                        ));
+                  }),
             ],
           ),
           body: RefreshIndicator(
@@ -99,10 +120,12 @@ class _PageRevisiDosenState extends State<PageRevisiDosen> {
                     if (snapshot.hasError) {
                       return DefaultViewWidget(
                         title: "Gagal memuat informasi revisi.",
-                        message: "Coba refresh untuk memuat kembali. Pastikan kondisi jaringan Anda dalam keadaan baik.",
+                        message:
+                            "Coba refresh untuk memuat kembali. Pastikan kondisi jaringan Anda dalam keadaan baik.",
                       );
                     } else if (snapshot.data.isEmpty) {
-                      return DefaultViewWidget(title: "Tidak ada data yang tersedia.");
+                      return DefaultViewWidget(
+                          title: "Tidak ada data yang tersedia.");
                     } else {
                       return ListView(
                         children: snapshot.data.map((item) {
@@ -116,7 +139,8 @@ class _PageRevisiDosenState extends State<PageRevisiDosen> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => RevisiDetailPage(
+                                          builder: (context) =>
+                                              RevisiDetailPage(
                                                 rest: _rest,
                                                 revisi: item,
                                               ))).then((val) {

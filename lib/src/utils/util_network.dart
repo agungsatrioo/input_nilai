@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
@@ -19,10 +20,8 @@ class NetworkUtil {
     final String res = response.body;
     final int statusCode = response.statusCode;
 
-    print("Response");
-    print(response.headers);
-
-    debugPrint(res);
+    print(res);
+    print(statusCode);
 
     if (json == null)
       throw new Exception("Tidak ada pengolah JSON tersedia.");
@@ -44,7 +43,7 @@ class NetworkUtil {
           case 413:
             return "Permintaan terlalu besar untuk diproses oleh server.";
           case 418:
-            return "Mana ada kopi dicampur dengan teh.";
+            return "Teapot";
           case 429:
             return "Permintaan dari Anda melebihi batas yang ditentukan oleh server.";
           case 500:
@@ -65,42 +64,24 @@ class NetworkUtil {
     return (http.Response response) => _processResponse(response);
   }
 
-  get _onValueDelete {
-    return (http.StreamedResponse response) => _processResponse(response);
-  }
 
-  _combine(Map map) {
-    return {
-      "accept": "application/json",
-      "content-type": "application/json",
-      "Authorization":
-          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IlNpZmxhYkFwcElucHV0Ig.G7Dnvzs6KKvw7JKy529dkey2mYrUVtDGh2ediS3IRIE"
-    }..addAll(map ?? {}); //add map if not null
-  }
-
-  Future<dynamic> get(String url, {Map headers}) {
-    return http.get(url, headers: _combine(headers)).then(_onValue);
+  Future<dynamic> get(String url, {Map<String, String> headers}) {
+    return http.get(url, headers: headers).then(_onValue);
   }
 
   Future<dynamic> post(String url, {Map headers, Map body, encoding}) {
     return http
-        .post(url,
-            headers: _combine(headers),
-            body: json.encode(body),
-            encoding: encoding)
+        .post(url, headers: headers, body: body, encoding: encoding)
         .then(_onValue);
   }
 
-  Future<dynamic> put(String url, {Map headers, Map body, encoding}) async {
+  Future<dynamic> put(String url, {Map headers, Map body, encoding}) {
     return http
-        .put(url,
-            headers: _combine(headers),
-            body: json.encode(body),
-            encoding: encoding)
+        .put(url, headers: headers, body: body, encoding: encoding)
         .then(_onValue);
   }
 
   Future<dynamic> delete(String url, {Map headers}) async {
-    return http.delete(url, headers: _combine(headers)).then(_onValue);
+    return http.delete(url, headers: headers).then(_onValue);
   }
 }

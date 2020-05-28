@@ -133,11 +133,7 @@ class _MunaqosahHomeDosenState extends State<MunaqosahHomeDosen>
                                     padding: const EdgeInsets.all(8.0),
                                     child: Center(
                                         child: Text(
-                                      "Belum sidang (${tabNumbers[0]})",
-                                      style: ThemeProvider.themeOf(context)
-                                          .data
-                                          .primaryTextTheme
-                                          .headline6,
+                                      "Belum sidang (${tabNumbers[0]})"
                                     )),
                                   )),
                               Container(

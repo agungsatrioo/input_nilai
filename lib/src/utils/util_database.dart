@@ -33,16 +33,16 @@ class DatabaseHelper {
     // When creating the db, create the table
     await db
         .execute(
-            "CREATE TABLE User(user_identity INTEGER PRIMARY KEY, user_level INTEGER, last_login TEXT)")
+            "CREATE TABLE User(user_identity INTEGER PRIMARY KEY, token TEXT, user_level INTEGER, last_login TEXT)")
         .catchError((e) {
       print("Gagal");
     });
     print("Created tables");
   }
 
-  Future<int> saveUser(User user) async {
+  Future<int> saveUser(UserModel user) async {
     var dbClient = await db;
-    int res = await dbClient.insert("User", user.toMap());
+    int res = await dbClient.insert("User", user.toJson());
     return res;
   }
 

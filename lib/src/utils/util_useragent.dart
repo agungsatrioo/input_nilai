@@ -24,13 +24,7 @@ class UserAgent {
   Future<dynamic> login(
       String login_url, String username, String password) async {
     await Future.delayed(Duration(seconds: 2));
-
-    Map<String, String> authParams = {
-      "content-type": "application/json",
-      "Authorization":
-          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IlNpZmxhYkFwcElucHV0Ig.G7Dnvzs6KKvw7JKy529dkey2mYrUVtDGh2ediS3IRIE"
-    };
-
+    
     return _netutil.post(login_url, body: {
       "identity": username,
       "password": password
@@ -47,9 +41,9 @@ class UserAgent {
     });
   }
 
-  Future<User> get user async {
+  Future<UserModel> get user async {
     var user = await _db.getUser();
-    return User.fromMap(user);
+    return UserModel.fromJson(user);
   }
 
   Future<bool> get isLogged async {
@@ -59,10 +53,10 @@ class UserAgent {
   Future<dynamic> get detail_dosen async {
     await Future.delayed(Duration(seconds: 2));
 
-    User u = await user;
+    UserModel u = await user;
 
     return _netutil
-        .get("$APP_REST_URL/dosen/id_dosen/${u.identity}")
+        .get("$APP_REST_URL/dosen/${u.userIdentity}")
         .then((response) async {
       String data = json.encode(response[0]);
       Map s = json.decode(data);
@@ -73,10 +67,10 @@ class UserAgent {
 
   Future<dynamic> get detail_mahasiswa async {
     await Future.delayed(Duration(seconds: 2));
-    User u = await user;
+    UserModel u = await user;
 
     return _netutil
-        .get("$APP_REST_URL/mahasiswa/nim/${u.identity}")
+        .get("$APP_REST_URL/mahasiswa/${u.userIdentity}")
         .then((response) async {
       String data = json.encode(response[0]);
       Map s = json.decode(data);
@@ -85,12 +79,16 @@ class UserAgent {
     });
   }
 
+  Future<String> get userToken async {
+    return user.then((val) => val.token);
+  }
+
   Future<String> get user_id async {
-    return user.then((val) => val.identity.toString());
+    return user.then((val) => val.userIdentity);
   }
 
   Future<int> get user_level async {
-    return user.then((val) => val.level);
+    return user.then((val) => val.userLevel);
   }
 
   Future<Dosen> get obj_dosen async {

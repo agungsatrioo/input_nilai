@@ -20,17 +20,17 @@ class UserRepository {
     _userAgent = UserAgent();
   }
 
-  Future<User> authenticate({
+  Future<UserModel> authenticate({
     @required String username,
     @required String password,
   }) async {
     return _userAgent
-        .login("${APP_REST_URL}auth", username, password)
+        .login("${APP_REST_URL}/auth", username, password)
         .then((response) async {
       String data = json.encode(response["data"]);
       Map dt = jsonDecode(data);
 
-      return User.fromMap(dt);
+      return UserModel.fromJson(dt);
     });
   }
 
@@ -41,7 +41,7 @@ class UserRepository {
     return;
   }
 
-  Future<void> writeUser(User user) async {
+  Future<void> writeUser(UserModel user) async {
     await _db.saveUser(user);
     await Future.delayed(Duration(seconds: 1));
 

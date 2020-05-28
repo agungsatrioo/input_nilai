@@ -244,6 +244,8 @@ class _PageRevisiFormState extends State<PageRevisiForm> {
   }
 
   _onRevisiError(BuildContext context, dynamic error) {
+    togglePost();
+    
     showMyDialog(
       title: "Gagal",
       body: "Operasi yang Anda minta gagal.",

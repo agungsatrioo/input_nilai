@@ -44,15 +44,14 @@ class _InputVerifyPageState extends State<InputVerifyPage> {
   login(BuildContext scaffoldContext) async {
     toggleVerifying();
 
-    await _ua.user_id.then((val) {
+    await _ua.user.then((val) {
       _ua
-          .login(APP_REST_URL + "auth", val, _passwordController.value.text)
+          .login(APP_REST_URL + "verify", "${val.userIdentity}", _passwordController.value.text)
           .then((response) async {
         toggleVerifying();
         Navigator.of(context).pop(true);
       }).catchError((onError) {
         toggleVerifying();
-        print("Salah login");
 
         Scaffold.of(scaffoldContext).showSnackBar(SnackBar(
           content: Text('${onError.toString().replaceFirst("Exception:", "")}'),

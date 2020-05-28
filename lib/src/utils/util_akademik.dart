@@ -48,137 +48,142 @@ class RESTAkademik {
   Future<DosenSidang> getNilai(dynamic status) async {
     await Future.delayed(Duration(seconds: 2));
 
-    return _networkUtil
-        .get("$APP_REST_URL/cek_nilai/status/$status")
-        .then((val) => DosenSidang.fromJson(val[0]));
+    String token = await _userAgent.userToken;
+
+    return _networkUtil.get("$APP_REST_URL/cek_nilai?id_status=$status",
+        headers: {
+          "Authorization": "Bearer $token"
+        }).then((val) => DosenSidang.fromJson(val[0]));
   }
 
-  Future<String> setNilai(dynamic status, int nilai) {
-    return _networkUtil.post("$APP_REST_URL/input_nilai", body: {
-      "id_status": status,
-      "nilai": nilai,
+  Future<String> setNilai(dynamic status, int nilai) async {
+    String token = await _userAgent.userToken;
+
+    Map<String, String> head = {"Authorization": "Bearer $token"};
+
+    return _networkUtil.post("$APP_REST_URL/nilai", headers: head, body: {
+      "id_status": "$status",
+      "nilai": "$nilai",
     }).then((val) => _setOnAlterValue(val));
   }
 
-  Future<String> putNilai(dynamic status, int nilai) {
-    return _networkUtil.put("$APP_REST_URL/input_nilai", body: {
-      "id_status": status,
-      "nilai": nilai,
+  Future<String> putNilai(dynamic status, int nilai) async {
+    String token = await _userAgent.userToken;
+
+    Map<String, String> head = {"Authorization": "Bearer $token"};
+
+    return _networkUtil.put("$APP_REST_URL/nilai", headers: head, body: {
+      "id_status": "$status",
+      "nilai": "$nilai",
     }).then((val) => _setOnAlterValue(val));
   }
 
-  Future<List<ModelMhsSidang>> get list_up async {
+  Future<List<ModelMhsSidang>> getSidangDetailsDosen(String type) async {
     await Future.delayed(Duration(seconds: 2));
 
-    return _userAgent.user_id.then((id) {
-      return _networkUtil
-          .get("$APP_REST_URL/up/dosen/$id")
-          .then((val) => _dosenModelSidangList(val));
+    return _userAgent.user.then((user) {
+      return _networkUtil.get(
+        APP_REST_URL + "$type?dosen=${user.userIdentity}",
+        headers: {"Authorization": "Bearer ${user.token}"},
+      ).then((val) => _dosenModelSidangList(val));
     });
   }
 
-  Future<List<ModelMhsSidang>> get list_munaqosah async {
+  Future<ModelMhsSidang> getSidangDetailsMhs(String type) async {
     await Future.delayed(Duration(seconds: 2));
 
-    return _userAgent.user_id.then((id) {
-      return _networkUtil
-          .get("$APP_REST_URL/munaqosah/dosen/$id")
-          .then((val) => _dosenModelSidangList(val));
+    return _userAgent.user.then((user) {
+      return _networkUtil.get(
+        APP_REST_URL + "$type?mahasiswa=${user.userIdentity}",
+        headers: {"Authorization": "Bearer ${user.token}"},
+      ).then((val) => ModelMhsSidang.fromJson(val));
     });
   }
 
-  Future<List<ModelMhsSidang>> get list_kompre async {
-    await Future.delayed(Duration(seconds: 2));
+  Future<ModelMhsSidang> get getUPMahasiswa => getSidangDetailsMhs("up");
+  Future<ModelMhsSidang> get getKompreMahasiswa =>
+      getSidangDetailsMhs("kompre");
+  Future<ModelMhsSidang> get getMunaqosahMahasiswa =>
+      getSidangDetailsMhs("munaqosah");
 
-    return _userAgent.user_id.then((id) {
-      return _networkUtil
-          .get("$APP_REST_URL/kompre/dosen/$id")
-          .then((val) => _dosenModelSidangList(val));
-    });
-  }
-
-  Future<ModelMhsSidang> get getUPMahasiswa async {
-    await Future.delayed(Duration(seconds: 2));
-
-    return _userAgent.user_id.then((id) {
-      return _networkUtil
-          .get(APP_REST_URL + "up/mahasiswa/$id")
-          .then((val) => ModelMhsSidang.fromJson(val));
-    });
-  }
-
-  Future<ModelMhsSidang> get getMunaqosahMahasiswa async {
-    await Future.delayed(Duration(seconds: 2));
-
-    return _userAgent.user_id.then((id) {
-      return _networkUtil
-          .get(APP_REST_URL + "munaqosah/mahasiswa/$id")
-          .then((val) => ModelMhsSidang.fromJson(val));
-    });
-  }
-
-  Future<ModelMhsSidang> get getKompreMahasiswa async {
-    await Future.delayed(Duration(seconds: 2));
-
-    return _userAgent.user_id.then((id) {
-      return _networkUtil
-          .get(APP_REST_URL + "kompre/mahasiswa/$id")
-          .then((val) => ModelMhsSidang.fromJson(val));
-    });
-  }
+  Future<List<ModelMhsSidang>> get list_up => getSidangDetailsDosen("up");
+  Future<List<ModelMhsSidang>> get list_kompre =>
+      getSidangDetailsDosen("kompre");
+  Future<List<ModelMhsSidang>> get list_munaqosah =>
+      getSidangDetailsDosen("munaqosah");
 
   Future<List<Revisi>> getRevisiFromDosenID(int id) async {
     await Future.delayed(Duration(seconds: 2));
+    String token = await _userAgent.userToken;
 
-    return _networkUtil
-        .get("$APP_REST_URL/revisi/dosen/$id")
-        .then((val) => _dosenModelRevisiList(val));
+    return _networkUtil.get(
+      "$APP_REST_URL/revisi/dosen/$id",
+      headers: {"Authorization": "Bearer $token"},
+    ).then((val) => _dosenModelRevisiList(val));
   }
 
   Future<List<Revisi>> getRevisiMahasiswa(int id) async {
     await Future.delayed(Duration(seconds: 2));
+    String token = await _userAgent.userToken;
 
-    return _networkUtil
-        .get("$APP_REST_URL/revisi/mahasiswa/$id")
-        .then((val) => _dosenModelRevisiList(val));
+    return _networkUtil.get(
+      "$APP_REST_URL/revisi/mahasiswa/$id",
+      headers: {"Authorization": "Bearer $token"},
+    ).then((val) => _dosenModelRevisiList(val));
   }
 
   Future<Revisi> getRevisiFromID(int id) async {
     await Future.delayed(Duration(seconds: 2));
+    String token = await _userAgent.userToken;
 
-    return _networkUtil
-        .get(APP_REST_URL + "revisi/id_revisi/$id")
-        .then((val) => Revisi.fromJson(val[0]));
+    return _networkUtil.get(
+      APP_REST_URL + "revisi?id_revisi=$id",
+      headers: {"Authorization": "Bearer $token"},
+    ).then((val) => Revisi.fromJson(val[0]));
   }
 
-  Future<String> tambahRevisi(Revisi revisi) {
+  Future<String> tambahRevisi(Revisi revisi) async {
+    String token = await _userAgent.userToken;
+
+    Map<String, String> head = {"Authorization": "Bearer $token"};
+
     return _networkUtil
-        .post("$APP_REST_URL/revisi", body: revisi.toJson())
+        .post("$APP_REST_URL/revisi",
+            headers: head, body: revisi.toJsonForExport())
         .then((val) => _setOnAlterValue(val));
   }
 
-  Future<String> editRevisi(Revisi revisi) {
+  Future<String> editRevisi(Revisi revisi) async {
+    String token = await _userAgent.userToken;
+
+    Map<String, String> head = {"Authorization": "Bearer $token"};
+
     return _networkUtil
-        .put("$APP_REST_URL/revisi", body: revisi.toJson())
+        .put("$APP_REST_URL/revisi",
+            headers: head, body: revisi.toJsonForExport())
         .then((val) => _setOnAlterValue(val));
   }
 
-  Future<String> deleteRevisi(Revisi revisi) {
-    Map<String, String> headers = {
-      "id_revisi": revisi.idRevisi,
-      "id_status": revisi.idStatus,
-    };
+   Future<String> deleteRevisi(Revisi revisi) async {
+    String token = await _userAgent.userToken;
 
-    return _networkUtil
-        .delete("$APP_REST_URL/revisi", headers: headers)
-        .then((val) => _setOnAlterValue(val));
+    Map<String, String> head = {"Authorization": "Bearer $token"};
+
+    return _networkUtil.put("$APP_REST_URL/delrevisi", headers: head, body: {
+      "id_revisi": "${revisi.idRevisi}",
+      "id_status": "${revisi.idStatus}",
+    }).then((val) => _setOnAlterValue(val));
   }
 
-  Future<String> putRevisiMark(Revisi revisi, bool nilai) {
-    return _networkUtil.put("$APP_REST_URL/revisi_mark", body: {
-      "id_revisi": revisi.idRevisi,
-      "id_status": revisi.idStatus,
-      "status_revisi": nilai ? 1 : 0,
+  Future<String> putRevisiMark(Revisi revisi, bool nilai) async {
+    String token = await _userAgent.userToken;
+
+    Map<String, String> head = {"Authorization": "Bearer $token"};
+
+    return _networkUtil.put("$APP_REST_URL/mark_revisi", headers: head, body: {
+      "id_revisi": "${revisi.idRevisi}",
+      "id_status": "${revisi.idStatus}",
+      "status": nilai ? "1" : "0",
     }).then((val) => _setOnAlterValue(val));
   }
 }

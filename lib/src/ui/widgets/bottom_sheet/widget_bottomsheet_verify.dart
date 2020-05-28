@@ -116,9 +116,9 @@ class _PasswordWithToggleState extends State<_PasswordWithToggle> {
   login() async {
     toggleVerifying();
 
-    await _ua.user_id.then((val) {
+    await _ua.user.then((val) {
       _ua
-          .login(APP_REST_URL + "auth", val, _passwordController.value.text)
+          .login(APP_REST_URL + "verify", "${val.userIdentity}", _passwordController.value.text)
           .then((response) async {
         toggleVerifying();
 

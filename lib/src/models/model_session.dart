@@ -1,26 +1,33 @@
-class User {
-  var _identity;
-  var _lastLogin;
-  var _level;
+import 'dart:convert';
 
-  User(this._identity, this._level, this._lastLogin);
+class UserModel {
+    var userIdentity;
+    var userLevel;
+    String token;
+    DateTime lastLogin;
 
-  factory User.fromMap(Map<String, dynamic> obj) =>
-      new User(obj['user_identity'], obj['user_level'], obj['last_login']);
+    UserModel({
+        this.userIdentity,
+        this.userLevel,
+        this.token,
+        this.lastLogin,
+    });
 
-  get level => _level;
+    factory UserModel.fromRawJson(String str) => UserModel.fromJson(json.decode(str));
 
-  get identity => _identity;
+    String toRawJson() => json.encode(toJson());
 
-  DateTime get lastLogin => DateTime.parse(_lastLogin);
+    factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+        userIdentity: json["user_identity"],
+        userLevel: json["user_level"],
+        token: json["token"],
+        lastLogin: DateTime.parse(json["last_login"]),
+    );
 
-  Map<String, dynamic> toMap() {
-    var map = new Map<String, dynamic>();
-
-    map['user_level'] = this._level;
-    map['user_identity'] = this._identity;
-    map['last_login'] = this._lastLogin;
-
-    return map;
-  }
+    Map<String, dynamic> toJson() => {
+        "user_identity": userIdentity,
+        "user_level": userLevel,
+        "token": token,
+        "last_login": lastLogin.toIso8601String(),
+    };
 }

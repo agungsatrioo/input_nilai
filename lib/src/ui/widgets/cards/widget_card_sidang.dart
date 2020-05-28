@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:theme_provider/theme_provider.dart';
 
 import '../../../models/model_akademik.dart';
 import '../../pages/revisi/page_revisi_mhs.dart';
@@ -168,26 +167,24 @@ Widget _judulSidangDosenDetails(BuildContext context, ModelMhsSidang item) {
 
 Widget tombolRevisi(BuildContext context, ModelMhsSidang item) {
   return MyButton.error(
-    caption: "Lihat revisi", 
-    buttonWidth: double.infinity,
-    onTap: () {
-            List<Revisi> allRevisi = List();
+      caption: "Lihat revisi",
+      buttonWidth: double.infinity,
+      onTap: () {
+        List<Revisi> allRevisi = List();
 
-      item.penguji.forEach((f) {
-        allRevisi.addAll(f.revisi);
-      });
-
-      if (item.pembimbing != null) {
-        item.pembimbing.forEach((f) {
+        item.penguji.forEach((f) {
           allRevisi.addAll(f.revisi);
         });
-      }
 
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  PageRevisiMahasiswa(allRevisi)));
-    }
-  );
+        if (item.pembimbing != null) {
+          item.pembimbing.forEach((f) {
+            allRevisi.addAll(f.revisi);
+          });
+        }
+
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => PageRevisiMahasiswa(allRevisi)));
+      });
 }
