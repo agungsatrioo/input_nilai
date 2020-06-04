@@ -31,7 +31,6 @@ class PageRevisiForm extends StatefulWidget {
 
 class _PageRevisiFormState extends State<PageRevisiForm> {
   bool _shouldUpdated = false, isInputting = false;
-  final _formKey = GlobalKey<FormState>();
   Revisi rev;
 
   TextEditingController deadline = TextEditingController();
@@ -130,48 +129,51 @@ class _PageRevisiFormState extends State<PageRevisiForm> {
             onPressed: () => Navigator.of(context).pop(_shouldUpdated),
           ),
           actions: <Widget>[
-            IconButton(
-              icon: isInputting
-                  ? SizedBox(
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2.0,
-                      ),
-                      height: 24.0,
-                      width: 24.0,
-                    )
-                  : Icon(LineIcons.check),
-              onPressed: () {
-                showUserVerifyBottomSheet(context,
-                        message: Text((rev.idRevisi != null
-                                ? "Apakah Anda yakin akan menyunting revisi ini?"
-                                : "Apakah Anda yakin akan menambahkan revisi ini?") +
-                            "\n\nAnda harus memasukkan kata sandi untuk melanjutkan."),
-                        yesColor: colorGreenStd,
-                        noColor: ThemeProvider.themeOf(context)
-                            .data
-                            .colorScheme
-                            .surface,
-                        noTextColor: ThemeProvider.themeOf(context)
-                            .data
-                            .colorScheme
-                            .onSurface)
-                    .then((val) {
-                  val ??= false;
+            Visibility(
+              visible: (deadline.text != null && deadline.text.isNotEmpty) && (deadlineTime.text != null && deadlineTime.text.isNotEmpty) && (rev.detailRevisi != null && rev.detailRevisi.isNotEmpty),
+              child: IconButton(
+                icon: isInputting
+                    ? SizedBox(
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.0,
+                        ),
+                        height: 24.0,
+                        width: 24.0,
+                      )
+                    : Icon(LineIcons.check),
+                onPressed: () {
+                  showUserVerifyBottomSheet(context,
+                          message: Text((rev.idRevisi != null
+                                  ? "Apakah Anda yakin akan menyunting revisi ini?"
+                                  : "Apakah Anda yakin akan menambahkan revisi ini?") +
+                              "\n\nAnda harus memasukkan kata sandi untuk melanjutkan."),
+                          yesColor: colorGreenStd,
+                          noColor: ThemeProvider.themeOf(context)
+                              .data
+                              .colorScheme
+                              .surface,
+                          noTextColor: ThemeProvider.themeOf(context)
+                              .data
+                              .colorScheme
+                              .onSurface)
+                      .then((val) {
+                    val ??= false;
 
-                  setState(() {
-                    _shouldUpdated = val;
-                  });
+                    setState(() {
+                      _shouldUpdated = val;
+                    });
 
-                  if (val) {
-                    togglePost();
-                    if (rev.idRevisi == null) {
-                      addRevisi(context, rev);
-                    } else {
-                      editRevisi(context, rev);
+                    if (val) {
+                      togglePost();
+                      if (rev.idRevisi == null) {
+                        addRevisi(context, rev);
+                      } else {
+                        editRevisi(context, rev);
+                      }
                     }
-                  }
-                });
-              },
+                  });
+                },
+              ),
             ),
           ],
         ),
@@ -179,14 +181,15 @@ class _PageRevisiFormState extends State<PageRevisiForm> {
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: Form(
-              key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   InkWell(
                     onTap: () {
-                      _selectDate(initialDate: rev.tglRevisiDeadline); // Call Function that has showDatePicker()
+                      _selectDate(
+                          initialDate: rev
+                              .tglRevisiDeadline); // Call Function that has showDatePicker()
                     },
                     child: IgnorePointer(
                         child: makeTextField(

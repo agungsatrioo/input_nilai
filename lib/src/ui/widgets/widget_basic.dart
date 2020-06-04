@@ -80,11 +80,13 @@ Widget makeTextField(
         {@required String labelText,
         @required IconData icon,
         @required Function(String) onChange,
+        key,
         TextEditingController controller,
         String value = "",
         TextInputType textInputType = TextInputType.text,
         int maxLines = 1}) =>
     TextFormField(
+      key: key,
         keyboardType: textInputType,
         maxLines: maxLines,
         decoration: InputDecoration(
