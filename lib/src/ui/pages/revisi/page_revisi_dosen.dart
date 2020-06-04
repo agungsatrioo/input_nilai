@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import '../../../models/model_akademik.dart';
-import 'page_revisi_detail.dart';
-import 'page_revisi_form.dart';
-import '../../widgets/revisi/widget_revisi_dosen_item.dart';
-import '../../widgets/widget_basic.dart';
-import '../../widgets/widget_default_view.dart';
-import '../../widgets/widget_loading.dart';
-import '../../../utils/util_akademik.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:theme_provider/theme_provider.dart';
 
+import '../../../models/model_akademik.dart';
+import '../../../utils/util_akademik.dart';
+import '../../widgets/revisi/widget_revisi_dosen_item.dart';
+import '../../widgets/widget_default_view.dart';
+import '../../widgets/widget_loading.dart';
+import 'page_revisi_detail.dart';
+import 'page_revisi_form.dart';
+
 class PageRevisiDosen extends StatefulWidget {
   DosenSidang dosenSidang;
+  ModelMhsSidang mhs;
   RESTAkademik rest;
+  String table;
 
-  PageRevisiDosen({@required this.dosenSidang, @required this.rest});
+  PageRevisiDosen(
+      {@required this.table,
+      @required this.mhs,
+      @required this.dosenSidang,
+      @required this.rest});
 
   @override
   State<StatefulWidget> createState() => _PageRevisiDosenState();
@@ -39,12 +45,15 @@ class _PageRevisiDosenState extends State<PageRevisiDosen> {
     dosenSidang = widget.dosenSidang;
     _rest = widget.rest;
 
-    _revisi = _rest.getNilai(dosenSidang.idStatus).then((val) => val.revisi);
+    _revisi =
+        _rest.getNilai(widget.table, widget.mhs.nim).then((val) => val.revisi);
   }
 
   _refresh() {
     setState(() {
-      _revisi = _rest.getNilai(dosenSidang.idStatus).then((val) => val.revisi);
+      _revisi = _rest
+          .getNilai(widget.table, widget.mhs.nim)
+          .then((val) => val.revisi);
     });
   }
 
@@ -68,8 +77,8 @@ class _PageRevisiDosenState extends State<PageRevisiDosen> {
                     return Visibility(
                       visible:
                           snapshot.connectionState == ConnectionState.done &&
-                              !snapshot.hasError &&
-                              snapshot.hasData,
+                              snapshot.hasData
+                              || snapshot.hasError ,
                       child: IconButton(
                         icon: Icon(LineIcons.refresh),
                         onPressed: () {
@@ -94,6 +103,8 @@ class _PageRevisiDosenState extends State<PageRevisiDosen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => PageRevisiForm(
+                                      mhs: widget.mhs,
+                                          table: widget.table,
                                           dosen: dosenSidang,
                                           rest: _rest,
                                         ))).then((val) {
@@ -118,6 +129,9 @@ class _PageRevisiDosenState extends State<PageRevisiDosen> {
                     return LoadingWidget();
                   default:
                     if (snapshot.hasError) {
+                       debugPrint(
+                        "PAGE DETAIL REVISI DOSEN ERROR!\n==========\n${snapshot.error.toString()}\n=========");
+
                       return DefaultViewWidget(
                         title: "Gagal memuat informasi revisi.",
                         message:
@@ -141,6 +155,9 @@ class _PageRevisiDosenState extends State<PageRevisiDosen> {
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               RevisiDetailPage(
+                                                table: widget.table,
+                                                mahasiswa: widget.mhs,
+                                                dosen: dosenSidang,
                                                 rest: _rest,
                                                 revisi: item,
                                               ))).then((val) {

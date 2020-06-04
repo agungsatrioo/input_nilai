@@ -14,6 +14,7 @@ import '../../widgets/widget_buttons.dart';
 
 class PageUPDetails extends StatefulWidget {
   ModelMhsSidang mhs;
+  String table = "t_sidang_proposal";
 
   PageUPDetails(this.mhs);
 
@@ -41,12 +42,12 @@ class _PageUPDetailsState extends State<PageUPDetails> {
 
     mhs = widget.mhs;
     _rest = RESTAkademik();
-    _nilai = _rest.getNilai(mhs.idStatus);
+    _nilai = _rest.getNilai(widget.table, mhs.nim);
   }
 
   _refresh() {
     setState(() {
-      _nilai = _rest.getNilai(mhs.idStatus);
+      _nilai = _rest.getNilai(widget.table, mhs.nim);
     });
   }
 
@@ -118,14 +119,17 @@ class _PageUPDetailsState extends State<PageUPDetails> {
                               ),
                             );
                           default:
-                            if (snapshot.hasError)
+                            if (snapshot.hasError) {
+                               debugPrint(
+                        "WIDGET PENILAIAN UP ERROR!\n==========\n${snapshot.error.toString()}\n=========");
+                        
                               return Padding(
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: Text("Gagal memuat nilai.",
                                     style:
                                         Theme.of(context).textTheme.bodyText1),
                               );
-                            else {
+                            } else {
                               return Column(
                                 children: <Widget>[
                                   WidgetPenilaianDosen(
@@ -144,6 +148,7 @@ class _PageUPDetailsState extends State<PageUPDetails> {
                                                     "Anda akan memberi penilaian ${mhs.namaMhs} (NIM: ${mhs.nim})",
                                                 onAction: (nilai) =>
                                                     editNilaiDosen(
+                                                      table: widget.table,
                                                         scaffoldContext: myCtx,
                                                         restAkademik: _rest,
                                                         mahasiswaSidang: mhs,
@@ -164,6 +169,7 @@ class _PageUPDetailsState extends State<PageUPDetails> {
                                                   "Anda akan mengubah penilaian ${mhs.namaMhs} (NIM: ${mhs.nim})",
                                               onAction: (nilai) =>
                                                   setNilaiDosen(
+                                                    table: widget.table,
                                                       scaffoldContext: myCtx,
                                                       restAkademik: _rest,
                                                       mahasiswaSidang: mhs,
@@ -179,6 +185,7 @@ class _PageUPDetailsState extends State<PageUPDetails> {
                                         },
                                       )),
                                   ButtonRevisi(
+                                     table: widget.table,
                                     rest: _rest,
                                     dosen: snapshot.data,
                                     mahasiswa: mhs,

@@ -98,7 +98,9 @@ class _UPHomePageDosenState extends State<UPHomePageDosen>
                   return LoadingWidget();
                 default:
                   if (snapshot.hasError) {
-                    print(snapshot.error.toString());
+                     debugPrint(
+                        "PAGE DETAIL UP DOSEN ERROR!\n==========\n${snapshot.error.toString()}\n=========");
+                        
                      return DefaultViewWidget(
                         title: "Gagal memuat informasi Ujian Proposal.",
                         message: "Coba refresh untuk memuat kembali. Pastikan kondisi jaringan Anda dalam keadaan baik.",
@@ -132,7 +134,7 @@ class _UPHomePageDosenState extends State<UPHomePageDosen>
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Center(child: Text(
-                                        "Belum sidang (${tabNumbers[0]})")),
+                                        "Belum dinilai (${tabNumbers[0]})")),
                                   )),
                               Container(
                                   width: (MediaQuery
@@ -152,7 +154,7 @@ class _UPHomePageDosenState extends State<UPHomePageDosen>
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Center(child: Text(
-                                        "Tuntas sidang (${tabNumbers[2]})")),
+                                        "Sudah dinilai (${tabNumbers[2]})")),
                                   )),
                             ],
                             isSelected: _isTabSelected,

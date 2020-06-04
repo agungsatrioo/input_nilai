@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:theme_provider/theme_provider.dart';
 
 import '../../../models/model_akademik.dart';
 import '../../../utils/util_akademik.dart';
@@ -12,9 +11,11 @@ class ButtonRevisi extends StatelessWidget {
   DosenSidang dosen;
   RESTAkademik rest;
   Function(bool) onPageValue;
+  String table;
 
   ButtonRevisi(
       {@required this.rest,
+      @required this.table,
       @required this.mahasiswa,
       @required this.dosen,
       @required this.onPageValue});
@@ -31,6 +32,8 @@ class ButtonRevisi extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => PageRevisiDosen(
+                      mhs: mahasiswa,
+                      table: table,
                       rest: rest,
                       dosenSidang: dosen,
                     ))).then((val) => onPageValue(val));

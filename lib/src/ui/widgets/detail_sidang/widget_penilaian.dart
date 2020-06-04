@@ -13,7 +13,7 @@ class WidgetPenilaianDosen extends StatelessWidget {
   WidgetPenilaianDosen({
     @required this.snapshot,
   }) {
-    rows = {"Nilai": snapshot.nilai, "Mutu": snapshot.mutu};
+    rows = {"Nilai": snapshot.nilai.toString(), "Mutu": snapshot.mutu};
   }
 
   @override

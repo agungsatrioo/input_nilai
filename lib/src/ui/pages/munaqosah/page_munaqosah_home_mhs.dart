@@ -64,6 +64,8 @@ class _MunaqosahHomePageMahasiswaState
                   return LoadingWidget();
                 default:
                   if (snapshot.hasError) {
+                    debugPrint("PAGE DETAIL MUNAQOSAH MAHASISWA ERROR!\n==========\n${snapshot.error.toString()}\n=========");
+
                     return DefaultViewWidget(
                         title: "Gagal memuat informasi Ujian Munaqosah.",
                         message: "Coba refresh untuk memuat kembali. Pastikan kondisi jaringan Anda dalam keadaan baik.",

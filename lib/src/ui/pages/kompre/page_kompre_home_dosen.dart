@@ -91,6 +91,8 @@ class _KomprehensifHomeDosenState extends State<KomprehensifHomePageDosen>
                 default:
                   if (snapshot.hasError) {
                     print(snapshot.error.toString());
+                     debugPrint(
+                        "PAGE DETAIL KOMPRE DOSEN ERROR!\n==========\n${snapshot.error.toString()}\n=========");
                     return DefaultViewWidget(
                         title: "Gagal memuat informasi Ujian Komprehensif.",
                         message: "Coba refresh untuk memuat kembali. Pastikan kondisi jaringan Anda dalam keadaan baik.",
@@ -122,7 +124,7 @@ class _KomprehensifHomeDosenState extends State<KomprehensifHomePageDosen>
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Center(child: Text(
-                                        "Belum sidang (${tabNumbers[0]})")),
+                                        "Belum dinilai (${tabNumbers[0]})")),
                                   )),
                               Container(
                                   width: (MediaQuery
@@ -132,7 +134,7 @@ class _KomprehensifHomeDosenState extends State<KomprehensifHomePageDosen>
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Center(child: Text(
-                                        "Tuntas sidang (${tabNumbers[1]})")),
+                                        "Sudah dinilai (${tabNumbers[1]})")),
                                   )),
                             ],
                             isSelected: _isTabSelected,

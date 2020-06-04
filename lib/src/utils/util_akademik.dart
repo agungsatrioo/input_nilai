@@ -1,4 +1,5 @@
 import '../models/model_akademik.dart';
+import '../models/model_session.dart';
 import 'util_constants.dart';
 import 'util_exceptions.dart';
 import 'util_network.dart';
@@ -45,35 +46,40 @@ class RESTAkademik {
   _dosenModelRevisiList(dynamic val) =>
       (val as Iterable).map((json) => Revisi.fromJson(json)).toList();
 
-  Future<DosenSidang> getNilai(dynamic status) async {
+  Future<DosenSidang> getNilai(String table, dynamic nim) async {
     await Future.delayed(Duration(seconds: 2));
 
-    String token = await _userAgent.userToken;
+    UserModel user = await _userAgent.user;
 
-    return _networkUtil.get("$APP_REST_URL/cek_nilai?id_status=$status",
+    return _networkUtil.get(
+        "${APP_REST_URL}cek_nilai?table=$table&nim=$nim&id_dosen=${user.userIdentity}",
         headers: {
-          "Authorization": "Bearer $token"
+          "Authorization": "Bearer ${user.token}"
         }).then((val) => DosenSidang.fromJson(val[0]));
   }
 
-  Future<String> setNilai(dynamic status, int nilai) async {
-    String token = await _userAgent.userToken;
+  Future<String> setNilai(String table, String nim, int nilai) async {
+    UserModel user = await _userAgent.user;
 
-    Map<String, String> head = {"Authorization": "Bearer $token"};
+    Map<String, String> head = {"Authorization": "Bearer ${user.token}"};
 
     return _networkUtil.post("$APP_REST_URL/nilai", headers: head, body: {
-      "id_status": "$status",
+      "table": "$table",
+      "nim": "$nim",
+      "id_dosen": "${user.userIdentity}",
       "nilai": "$nilai",
     }).then((val) => _setOnAlterValue(val));
   }
 
-  Future<String> putNilai(dynamic status, int nilai) async {
-    String token = await _userAgent.userToken;
+  Future<String> putNilai(String table, dynamic nim, dynamic nilai) async {
+    UserModel user = await _userAgent.user;
 
-    Map<String, String> head = {"Authorization": "Bearer $token"};
+    Map<String, String> head = {"Authorization": "Bearer ${user.token}"};
 
     return _networkUtil.put("$APP_REST_URL/nilai", headers: head, body: {
-      "id_status": "$status",
+      "table": "$table",
+      "nim": "$nim",
+      "id_dosen": "${user.userIdentity}",
       "nilai": "$nilai",
     }).then((val) => _setOnAlterValue(val));
   }
@@ -101,89 +107,126 @@ class RESTAkademik {
   }
 
   Future<ModelMhsSidang> get getUPMahasiswa => getSidangDetailsMhs("up");
+
   Future<ModelMhsSidang> get getKompreMahasiswa =>
       getSidangDetailsMhs("kompre");
+
   Future<ModelMhsSidang> get getMunaqosahMahasiswa =>
       getSidangDetailsMhs("munaqosah");
 
   Future<List<ModelMhsSidang>> get list_up => getSidangDetailsDosen("up");
+
   Future<List<ModelMhsSidang>> get list_kompre =>
       getSidangDetailsDosen("kompre");
+
   Future<List<ModelMhsSidang>> get list_munaqosah =>
       getSidangDetailsDosen("munaqosah");
 
-  Future<List<Revisi>> getRevisiFromDosenID(int id) async {
+  Future<List<Revisi>> getRevisiFromDosenID(
+      String table, dynamic idDosen) async {
     await Future.delayed(Duration(seconds: 2));
     String token = await _userAgent.userToken;
 
     return _networkUtil.get(
-      "$APP_REST_URL/revisi/dosen/$id",
+      "$APP_REST_URL/revisi?table=$table&dosen=$idDosen",
       headers: {"Authorization": "Bearer $token"},
     ).then((val) => _dosenModelRevisiList(val));
   }
 
-  Future<List<Revisi>> getRevisiMahasiswa(int id) async {
+  Future<List<Revisi>> _getRevisiMahasiswa(
+      String table, dynamic idDosen) async {
     await Future.delayed(Duration(seconds: 2));
     String token = await _userAgent.userToken;
 
     return _networkUtil.get(
-      "$APP_REST_URL/revisi/mahasiswa/$id",
+      "$APP_REST_URL/revisi?table=$table&dosen=$idDosen",
       headers: {"Authorization": "Bearer $token"},
     ).then((val) => _dosenModelRevisiList(val));
   }
 
-  Future<Revisi> getRevisiFromID(int id) async {
+  Future<Revisi> getRevisiFromID(
+      String table, dynamic idDosen, dynamic nim, dynamic revisiId) async {
     await Future.delayed(Duration(seconds: 2));
     String token = await _userAgent.userToken;
 
     return _networkUtil.get(
-      APP_REST_URL + "revisi?id_revisi=$id",
+      APP_REST_URL +
+          "revisi?table=$table&dosen=$idDosen&mahasiswa=$nim&id_revisi=$revisiId",
       headers: {"Authorization": "Bearer $token"},
-    ).then((val) => Revisi.fromJson(val[0]));
+    ).then((val) => Revisi.fromJson(val));
   }
 
-  Future<String> tambahRevisi(Revisi revisi) async {
+  Future<String> tambahRevisi(String table, Revisi revisi) async {
     String token = await _userAgent.userToken;
 
     Map<String, String> head = {"Authorization": "Bearer $token"};
 
+    Map<String, String> body = {
+      "table": table,
+      "mahasiswa": revisi.nim,
+      "dosen": revisi.idDosen,
+      "detail_revisi": revisi.detailRevisi,
+      "tgl_revisi_deadline": revisi.tglRevisiDeadline.toIso8601String(),
+      "status_revisi": "${revisi.statusRevisi}"
+    };
+
     return _networkUtil
-        .post("$APP_REST_URL/revisi",
-            headers: head, body: revisi.toJsonForExport())
+        .post("$APP_REST_URL/revisi", headers: head, body: body)
         .then((val) => _setOnAlterValue(val));
   }
 
-  Future<String> editRevisi(Revisi revisi) async {
+  Future<String> editRevisi(String table, Revisi revisi) async {
     String token = await _userAgent.userToken;
 
     Map<String, String> head = {"Authorization": "Bearer $token"};
 
+    Map<String, dynamic> body = {
+      "table": table,
+      "mahasiswa": "${revisi.nim}",
+      "dosen": "${revisi.idDosen}",
+      "id_revisi": "${revisi.idRevisi}",
+      "detail_revisi": revisi.detailRevisi,
+      "tgl_revisi_deadline": revisi.tglRevisiDeadline.toIso8601String(),
+      
+    };
+
     return _networkUtil
-        .put("$APP_REST_URL/revisi",
-            headers: head, body: revisi.toJsonForExport())
+        .put("$APP_REST_URL/revisi", headers: head, body: body)
         .then((val) => _setOnAlterValue(val));
   }
 
-   Future<String> deleteRevisi(Revisi revisi) async {
+  Future<String> deleteRevisi(String table, Revisi revisi) async {
     String token = await _userAgent.userToken;
 
     Map<String, String> head = {"Authorization": "Bearer $token"};
 
-    return _networkUtil.put("$APP_REST_URL/delrevisi", headers: head, body: {
-      "id_revisi": "${revisi.idRevisi}",
-      "id_status": "${revisi.idStatus}",
-    }).then((val) => _setOnAlterValue(val));
+      Map<String, dynamic> body = {
+      "table": "$table",
+      "mahasiswa": "${revisi.nim}",
+      "dosen": "${revisi.idDosen}",
+      "id_revisi": "${revisi.idRevisi}"
+    };
+
+    return _networkUtil
+        .put("$APP_REST_URL/delrevisi", headers: head, body: body)
+        .then((val) => _setOnAlterValue(val));
   }
 
-  Future<String> putRevisiMark(Revisi revisi, bool nilai) async {
+  Future<String> putRevisiMark(String table, Revisi revisi, bool nilai) async {
     String token = await _userAgent.userToken;
 
     Map<String, String> head = {"Authorization": "Bearer $token"};
 
-    return _networkUtil.put("$APP_REST_URL/mark_revisi", headers: head, body: {
+    Map<String, dynamic> body = {
+      "table": "$table",
+      "mahasiswa": "${revisi.nim}",
+      "dosen": "${revisi.idDosen}",
       "id_revisi": "${revisi.idRevisi}",
-      "id_status": "${revisi.idStatus}",
-      "status": nilai ? "1" : "0",
-    }).then((val) => _setOnAlterValue(val));
+      "status_revisi": "$nilai"
+    };
+
+    return _networkUtil
+        .put("$APP_REST_URL/mark_revisi", headers: head, body: body)
+        .then((val) => _setOnAlterValue(val));
   }
 }

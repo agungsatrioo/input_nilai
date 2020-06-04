@@ -13,10 +13,17 @@ import '../../widgets/widget_basic.dart';
 
 class PageRevisiForm extends StatefulWidget {
   Revisi source;
+  ModelMhsSidang mhs;
   DosenSidang dosen;
   RESTAkademik rest;
+  String table;
 
-  PageRevisiForm({@required this.rest, this.source, this.dosen});
+  PageRevisiForm(
+      {@required this.rest,
+      @required this.table,
+      @required this.mhs,
+      this.source,
+      @required this.dosen});
 
   @override
   State<StatefulWidget> createState() => _PageRevisiFormState();
@@ -25,6 +32,7 @@ class PageRevisiForm extends StatefulWidget {
 class _PageRevisiFormState extends State<PageRevisiForm> {
   bool _shouldUpdated = false, isInputting = false;
   final _formKey = GlobalKey<FormState>();
+  Revisi rev;
 
   TextEditingController deadline = TextEditingController();
   TextEditingController deadlineTime = TextEditingController();
@@ -34,30 +42,39 @@ class _PageRevisiFormState extends State<PageRevisiForm> {
     super.initState();
 
     if (widget.source == null) {
-      widget.source = Revisi(
+      rev = Revisi(
         statusRevisi: false,
+        nim: widget.mhs.nim,
+        idDosen: widget.dosen.idDosen.toString(),
         tglRevisiInput: DateTime.now(),
-        idStatus: widget.dosen.idStatus,
+        idStatus: widget.dosen.idStatus.toString(),
       );
     } else {
-      if (widget.source.tglRevisiDeadline != null) {
-        deadline.text = formatToTimeStamp(widget.source.tglRevisiDeadline);
-        deadlineTime.text = formatTime(widget.source.tglRevisiDeadline);
+      rev = widget.source;
+
+      if (rev.tglRevisiDeadline != null) {
+        deadline.text = formatToTimeStamp(rev.tglRevisiDeadline);
+        deadlineTime.text = formatTime(rev.tglRevisiDeadline);
       }
     }
+
+    debugPrint("MAHASISWA: ${widget.mhs.nim}");
+    debugPrint("DOSEN: ${widget.dosen.idDosen}");
+
+    debugPrint("REVISI FORM DETAIL CONTENTS: ${rev.toRawJson()}");
   }
 
-  _selectDate() {
+  _selectDate({DateTime initialDate}) {
     showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: initialDate ?? DateTime.now(),
       firstDate: DateTime.now().subtract(Duration(days: 1)),
       lastDate: DateTime.now().add(Duration(days: 30)),
     ).then((picked) {
       print(picked);
       setState(() {
-        widget.source.tglRevisiDeadline = picked;
-        deadline.text = formatToTimeStamp(widget.source.tglRevisiDeadline);
+        rev.tglRevisiDeadline = picked;
+        deadline.text = formatToTimeStamp(rev.tglRevisiDeadline);
 
         dump();
       });
@@ -70,14 +87,14 @@ class _PageRevisiFormState extends State<PageRevisiForm> {
         .then((picked) {
       print(picked);
       setState(() {
-        widget.source.tglRevisiDeadline = new DateTime.utc(
-            widget.source.tglRevisiDeadline.year,
-            widget.source.tglRevisiDeadline.month,
-            widget.source.tglRevisiDeadline.day,
+        rev.tglRevisiDeadline = new DateTime.utc(
+            rev.tglRevisiDeadline.year,
+            rev.tglRevisiDeadline.month,
+            rev.tglRevisiDeadline.day,
             picked.hour,
             picked.minute);
 
-        deadlineTime.text = formatTime(widget.source.tglRevisiDeadline);
+        deadlineTime.text = formatTime(rev.tglRevisiDeadline);
 
         dump();
       });
@@ -90,7 +107,7 @@ class _PageRevisiFormState extends State<PageRevisiForm> {
   }
 
   void dump() {
-    print(widget.source.toRawJson());
+    print(rev.toRawJson());
   }
 
   togglePost() {
@@ -105,9 +122,8 @@ class _PageRevisiFormState extends State<PageRevisiForm> {
       onWillPop: _onWillPop,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.source.idRevisi == null
-              ? "Tambah Revisi"
-              : "Sunting Revisi"),
+          title:
+              Text(rev.idRevisi == null ? "Tambah Revisi" : "Sunting Revisi"),
           elevation: 0.0,
           leading: IconButton(
             icon: Icon(LineIcons.arrow_left),
@@ -126,7 +142,7 @@ class _PageRevisiFormState extends State<PageRevisiForm> {
                   : Icon(LineIcons.check),
               onPressed: () {
                 showUserVerifyBottomSheet(context,
-                    message: Text((widget.source.idRevisi != null
+                        message: Text((rev.idRevisi != null
                                 ? "Apakah Anda yakin akan menyunting revisi ini?"
                                 : "Apakah Anda yakin akan menambahkan revisi ini?") +
                             "\n\nAnda harus memasukkan kata sandi untuk melanjutkan."),
@@ -148,10 +164,10 @@ class _PageRevisiFormState extends State<PageRevisiForm> {
 
                   if (val) {
                     togglePost();
-                    if (widget.source.idRevisi == null) {
-                      addRevisi(context, widget.source);
+                    if (rev.idRevisi == null) {
+                      addRevisi(context, rev);
                     } else {
-                      editRevisi(context, widget.source);
+                      editRevisi(context, rev);
                     }
                   }
                 });
@@ -170,7 +186,7 @@ class _PageRevisiFormState extends State<PageRevisiForm> {
                 children: [
                   InkWell(
                     onTap: () {
-                      _selectDate(); // Call Function that has showDatePicker()
+                      _selectDate(initialDate: rev.tglRevisiDeadline); // Call Function that has showDatePicker()
                     },
                     child: IgnorePointer(
                         child: makeTextField(
@@ -186,8 +202,8 @@ class _PageRevisiFormState extends State<PageRevisiForm> {
                       onTap: () {
                         _selectTime(
                             initialDate: TimeOfDay(
-                          hour: widget.source.tglRevisiDeadline.hour,
-                          minute: widget.source.tglRevisiDeadline.minute,
+                          hour: rev.tglRevisiDeadline.hour,
+                          minute: rev.tglRevisiDeadline.minute,
                         ));
                       },
                       child: IgnorePointer(
@@ -204,12 +220,13 @@ class _PageRevisiFormState extends State<PageRevisiForm> {
                       child: makeTextField(
                           labelText: "Deskripsi revisi",
                           icon: LineIcons.sticky_note,
-                          value: widget.source.detailRevisi ?? "",
+                          value: rev.detailRevisi ?? "",
                           textInputType: TextInputType.multiline,
                           maxLines: 15,
                           onChange: (val) {
                             setState(() {
-                              widget.source.detailRevisi = val;
+                              rev.detailRevisi = val;
+                              dump();
                             });
                           })),
                 ],
@@ -245,7 +262,7 @@ class _PageRevisiFormState extends State<PageRevisiForm> {
 
   _onRevisiError(BuildContext context, dynamic error) {
     togglePost();
-    
+
     showMyDialog(
       title: "Gagal",
       body: "Operasi yang Anda minta gagal.",
@@ -263,14 +280,14 @@ class _PageRevisiFormState extends State<PageRevisiForm> {
 
   addRevisi(BuildContext context, Revisi revisi) {
     widget.rest
-        .tambahRevisi(revisi)
+        .tambahRevisi(widget.table, revisi)
         .then((String value) => _onRevisiAction(context, value))
         .catchError((e) => _onRevisiError(context, e));
   }
 
   editRevisi(BuildContext context, Revisi revisi) {
     widget.rest
-        .editRevisi(revisi)
+        .editRevisi(widget.table, revisi)
         .then((String value) => _onRevisiAction(context, value))
         .catchError((e) => _onRevisiError(context, e));
   }

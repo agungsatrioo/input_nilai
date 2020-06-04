@@ -97,6 +97,8 @@ class _MunaqosahHomeDosenState extends State<MunaqosahHomeDosen>
                 default:
                   if (snapshot.hasError) {
                     print(snapshot.error.toString());
+                     debugPrint(
+                        "PAGE DETAIL MUNAQOSAH DOSEN ERROR!\n==========\n${snapshot.error.toString()}\n=========");
                     return DefaultViewWidget(
                       title: "Gagal memuat informasi Ujian Munaqosah.",
                       message:
@@ -133,7 +135,7 @@ class _MunaqosahHomeDosenState extends State<MunaqosahHomeDosen>
                                     padding: const EdgeInsets.all(8.0),
                                     child: Center(
                                         child: Text(
-                                      "Belum sidang (${tabNumbers[0]})"
+                                      "Belum dinilai (${tabNumbers[0]})"
                                     )),
                                   )),
                               Container(
@@ -154,7 +156,7 @@ class _MunaqosahHomeDosenState extends State<MunaqosahHomeDosen>
                                     padding: const EdgeInsets.all(8.0),
                                     child: Center(
                                         child: Text(
-                                            "Tuntas sidang (${tabNumbers[2]})")),
+                                            "Sudah dinilai (${tabNumbers[2]})")),
                                   )),
                             ],
                             isSelected: _isTabSelected,

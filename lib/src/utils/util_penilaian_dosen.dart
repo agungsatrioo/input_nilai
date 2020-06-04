@@ -4,6 +4,7 @@ import '../models/model_akademik.dart';
 import 'util_akademik.dart';
 
 setNilaiDosen({
+  @required String table,
   @required BuildContext scaffoldContext, 
   @required RESTAkademik restAkademik,
   @required ModelMhsSidang mahasiswaSidang,
@@ -11,7 +12,7 @@ setNilaiDosen({
   @required Function onRefresh, 
   @required Function onSuccess
 }) {
-  restAkademik.setNilai(mahasiswaSidang.idStatus, nilai).then((String value) async {
+  restAkademik.setNilai(table, mahasiswaSidang.nim, nilai).then((String value) async {
     onRefresh();
 
     Scaffold.of(scaffoldContext).showSnackBar(SnackBar(
@@ -21,6 +22,8 @@ setNilaiDosen({
 
     onSuccess();
   }).catchError((e) async {
+    debugPrint("POST NILAI ERROR!\n==========\n${e.toString()}\n=========");
+
     onRefresh();
 
     Scaffold.of(scaffoldContext).showSnackBar(SnackBar(
@@ -31,6 +34,7 @@ setNilaiDosen({
 }
 
 editNilaiDosen({
+  @required String table,
   @required BuildContext scaffoldContext, 
   @required RESTAkademik restAkademik,
   @required ModelMhsSidang mahasiswaSidang,
@@ -38,7 +42,7 @@ editNilaiDosen({
   @required Function onRefresh, 
   @required Function onSuccess
 }) {
-  restAkademik.putNilai(mahasiswaSidang.idStatus, nilai).then((String value) async {
+  restAkademik.putNilai(table, mahasiswaSidang.nim, nilai).then((String value) async {
     onRefresh();
 
     Scaffold.of(scaffoldContext).showSnackBar(SnackBar(
@@ -48,6 +52,8 @@ editNilaiDosen({
 
     onSuccess();
   }).catchError((e) async {
+    debugPrint("PUT NILAI ERROR!\n==========\n${e.toString()}\n=========");
+
     onRefresh();
 
     Scaffold.of(scaffoldContext).showSnackBar(SnackBar(

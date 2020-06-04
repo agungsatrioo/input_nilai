@@ -20,8 +20,7 @@ class NetworkUtil {
     final String res = response.body;
     final int statusCode = response.statusCode;
 
-    print(res);
-    print(statusCode);
+    debugPrint("RESPONSE\n======\n$res");
 
     if (json == null)
       throw new Exception("Tidak ada pengolah JSON tersedia.");
@@ -64,18 +63,23 @@ class NetworkUtil {
     return (http.Response response) => _processResponse(response);
   }
 
-
   Future<dynamic> get(String url, {Map<String, String> headers}) {
+    debugPrint("GET: $url\n=======\nHeaders: $headers\n========");
+
     return http.get(url, headers: headers).then(_onValue);
   }
 
   Future<dynamic> post(String url, {Map headers, Map body, encoding}) {
+    debugPrint("POST: $url\n=======\nHeaders: $headers\n========\nBody: $body\n=======");
+
     return http
         .post(url, headers: headers, body: body, encoding: encoding)
         .then(_onValue);
   }
 
   Future<dynamic> put(String url, {Map headers, Map body, encoding}) {
+    debugPrint("PUT: $url\n=======\nHeaders: $headers\n========\nBody: $body\n=======");
+
     return http
         .put(url, headers: headers, body: body, encoding: encoding)
         .then(_onValue);

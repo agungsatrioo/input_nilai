@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 import '../models/model_surat_quran.dart';
 
@@ -25,9 +26,14 @@ class UtilQuran {
   static Future<SuratQuran> loadSurat(int surat) async {
     await Future.delayed(Duration(seconds: 2));
 
-    return await rootBundle
-        .loadString("assets/quran/$surat.json")
-        .then((v) => jsonDecode(v))
-        .then((val) => SuratQuran.fromJson(val[surat]));
+    debugPrint("CARI AYAT $surat.");
+
+    return await rootBundle.loadString("assets/quran/$surat.json").then((v) {
+      Map suratDecoded = jsonDecode(v);
+
+      var surat = suratDecoded.values.toList();
+
+      return SuratQuran.fromJson(surat[0]);
+    });
   }
 }

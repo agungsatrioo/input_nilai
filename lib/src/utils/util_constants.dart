@@ -1,6 +1,6 @@
 const String _APP_REST_URL_LOCAL1 = "http://192.168.43.116/siflab/inputapi/";
 
-const String _APP_REST_URL_LOCAL2 = "http://192.168.1.6/sipadang/inputapi/";
+const String _APP_REST_URL_LOCAL2 = "http://192.168.1.5/sipadang/inputapi/";
 
 const String _APP_REST_URL_HOSTD = "https://k3pawd.site/nim/inputapi/";
 

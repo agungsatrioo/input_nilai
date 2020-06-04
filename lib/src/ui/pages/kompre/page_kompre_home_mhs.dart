@@ -61,10 +61,14 @@ class _KompreHomePageMahasiswaState extends State<KompreHomePageMahasiswa> {
                   return LoadingWidget();
                 default:
                   if (snapshot.hasError) {
+                    debugPrint(
+                        "PAGE DETAIL KOMPRE MAHASISWA ERROR!\n==========\n${snapshot.error.toString()}\n=========");
+
                     return DefaultViewWidget(
-                        title: "Gagal memuat informasi Ujian Komprehensif.",
-                        message: "Coba refresh untuk memuat kembali. Pastikan kondisi jaringan Anda dalam keadaan baik.",
-                      );
+                      title: "Gagal memuat informasi Ujian Komprehensif.",
+                      message:
+                          "Coba refresh untuk memuat kembali. Pastikan kondisi jaringan Anda dalam keadaan baik.",
+                    );
                   } else {
                     return SingleChildScrollView(
                       child: Container(

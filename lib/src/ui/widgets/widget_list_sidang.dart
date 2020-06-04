@@ -89,7 +89,7 @@ List<Widget> buildChildFromLists(
 
       _myList.add(ListTile(
         title: Text(item.namaMhs),
-        subtitle: Text('Tgl. sidang: ${DateFormat.yMMMMd("id").format(item.sidangDate)} '),
+        subtitle: Text('Tgl. sidang: ${DateFormat.yMMMMd("id").format(item.sidangDate)}'),
         trailing: Text(item.nim),   
         onTap: () => onTap(item),       
       ));

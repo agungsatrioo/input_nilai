@@ -98,13 +98,14 @@ class ModelMhsSidang {
 }
 
 class DosenSidang {
-  String idStatus;
-  String idDosen;
+  var idStatus;
+  var idDosen;
   String namaDosen;
   String namaStatus;
   dynamic nilai;
   String mutu;
   String color;
+
   List<Revisi> revisi;
 
   DosenSidang({
@@ -154,14 +155,14 @@ class DosenSidang {
 }
 
 class Revisi {
-  String idRevisi;
-  String nim;
-  String idDosen;
+  var idRevisi;
+  var nim;
+  var idDosen;
   String namaMhs;
   String namaDosen;
   String namaStatus;
-  String idStatus;
-  String detailRevisi;
+  var idStatus;
+  var detailRevisi;
   DateTime tglRevisiInput;
   DateTime tglRevisiDeadline;
   bool statusRevisi;

@@ -13,6 +13,7 @@ import '../../widgets/widget_buttons.dart';
 
 class PageKompreDetails extends StatefulWidget {
   ModelMhsSidang mhs;
+  String table = "t_sidang_kompre";
 
   PageKompreDetails(this.mhs);
 
@@ -36,12 +37,12 @@ class _PageKompreDetailsState extends State<PageKompreDetails> {
     super.initState();
 
     _rest = RESTAkademik();
-    _nilai = _rest.getNilai(mhs.idStatus);
+    _nilai = _rest.getNilai(widget.table, mhs.nim);
   }
 
   _refresh() {
     setState(() {
-      _nilai = _rest.getNilai(mhs.idStatus);
+      _nilai = _rest.getNilai(widget.table, mhs.nim);
     });
   }
 
@@ -107,19 +108,21 @@ class _PageKompreDetailsState extends State<PageKompreDetails> {
                                     padding: const EdgeInsets.only(left: 8.0),
                                     child: Text("Memuat nilai...",
                                         style:
-                                            Theme.of(context).textTheme.title),
+                                            Theme.of(context).textTheme.bodyText1),
                                   )
                                 ],
                               ),
                             );
                           default:
-                            if (snapshot.hasError)
+                            if (snapshot.hasError) {
+                             debugPrint(
+                        "WIDGET PENILAIAN KOMPRE ERROR!\n==========\n${snapshot.error.toString()}\n=========");
                               return Padding(
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: Text("Gagal memuat nilai.",
-                                    style: Theme.of(context).textTheme.title),
+                                    style: Theme.of(context).textTheme.bodyText1),
                               );
-                            else {
+                            } else {
                               return Column(
                                 children: <Widget>[
                                   WidgetPenilaianDosen(
@@ -138,6 +141,7 @@ class _PageKompreDetailsState extends State<PageKompreDetails> {
                                                     "Anda akan memberi penilaian ${mhs.namaMhs} (NIM: ${mhs.nim})",
                                                 onAction: (nilai) =>
                                                     editNilaiDosen(
+                                                        table: widget.table,
                                                         scaffoldContext: myCtx,
                                                         restAkademik: _rest,
                                                         mahasiswaSidang: mhs,
@@ -158,6 +162,7 @@ class _PageKompreDetailsState extends State<PageKompreDetails> {
                                                   "Anda akan mengubah penilaian ${mhs.namaMhs} (NIM: ${mhs.nim})",
                                               onAction: (nilai) =>
                                                   setNilaiDosen(
+                                                      table: widget.table,
                                                       scaffoldContext: myCtx,
                                                       restAkademik: _rest,
                                                       mahasiswaSidang: mhs,

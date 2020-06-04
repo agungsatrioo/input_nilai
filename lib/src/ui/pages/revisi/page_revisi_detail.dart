@@ -19,8 +19,16 @@ import 'page_revisi_form.dart';
 class RevisiDetailPage extends StatefulWidget {
   Revisi revisi;
   RESTAkademik rest;
+  String table;
+  DosenSidang dosen;
+  ModelMhsSidang mahasiswa;
 
-  RevisiDetailPage({@required this.revisi, @required this.rest});
+  RevisiDetailPage(
+      {@required this.table,
+      @required this.revisi,
+      @required this.dosen,
+      @required this.mahasiswa,
+      @required this.rest});
 
   @override
   State<StatefulWidget> createState() => _RevisiDetailPageState();
@@ -43,12 +51,14 @@ class _RevisiDetailPageState extends State<RevisiDetailPage> {
     _rest = widget.rest;
 
     _shouldUpdated = false;
-    _future = _rest.getRevisiFromID(int.tryParse(_revisi.idRevisi));
+    _future = _rest.getRevisiFromID(widget.table, widget.dosen.idDosen,
+        widget.mahasiswa.nim, _revisi.idRevisi);
   }
 
   _refresh() {
     setState(() {
-      _future = _rest.getRevisiFromID(int.tryParse(_revisi.idRevisi));
+      _future = _rest.getRevisiFromID(widget.table, widget.dosen.idDosen,
+          widget.mahasiswa.nim, _revisi.idRevisi);
     });
   }
 
@@ -98,6 +108,9 @@ class _RevisiDetailPageState extends State<RevisiDetailPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => PageRevisiForm(
+                                      dosen: widget.dosen,
+                                      mhs: widget.mahasiswa,
+                                          table: widget.table,
                                           rest: _rest,
                                           source: _revisi,
                                         ))).then((val) {
@@ -168,6 +181,9 @@ class _RevisiDetailPageState extends State<RevisiDetailPage> {
                     return LoadingWidget();
                   default:
                     if (snapshot.hasError) {
+                       debugPrint(
+                        "PAGE DETAIL REVISI ERROR!\n==========\n${snapshot.error.toString()}\n=========");
+
                       return DefaultViewWidget(
                         title: "Gagal memuat informasi revisi.",
                         message:
@@ -252,7 +268,7 @@ class _RevisiDetailPageState extends State<RevisiDetailPage> {
   }
 
   putMark(BuildContext ctx, Revisi revisi, bool nilai) {
-    _rest.putRevisiMark(revisi, nilai).then((value) {
+    _rest.putRevisiMark(widget.table, revisi, nilai).then((value) {
       _refresh();
 
       setState(() {
@@ -321,7 +337,7 @@ class _RevisiDetailPageState extends State<RevisiDetailPage> {
     _toggleDel();
 
     widget.rest
-        .deleteRevisi(revisi)
+        .deleteRevisi(widget.table, revisi)
         .then((String value) => _onRevisiAction(context, value))
         .catchError((e) => _onRevisiError(context, e));
   }
