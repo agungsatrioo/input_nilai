@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:input_nilai/src/ui/pages/page_home.dart';
-import 'package:input_nilai/src/utils/blocs/auth/util_authevent.dart';
-import 'package:input_nilai/src/utils/util_blocs.dart';
 import 'package:line_icons/line_icons.dart';
 
-import '../../utils/util_constants.dart';
+import '../../utils/blocs/auth/util_authevent.dart';
+import '../../utils/util_blocs.dart';
 import '../../utils/util_useragent.dart';
 import '../widgets/widget_boolean_builder.dart';
 
@@ -45,14 +43,12 @@ class _GantiPasswordPageState extends State<GantiPasswordPage> {
 
     await _ua.user.then((val) {
       _ua
-          .changePassword("${val.userIdentity}",
-              _passwordController.value.text, val.token)
+          .changePassword(
+              "${val.userIdentity}", _passwordController.value.text, val.token)
           .then((response) async {
         toggleVerifying();
 
-        BlocProvider.of<AuthenticationBloc>(context)
-                        .add(PasswordChanged());
-                        
+        BlocProvider.of<AuthenticationBloc>(context).add(PasswordChanged());
       }).catchError((onError) {
         toggleVerifying();
 
