@@ -52,7 +52,7 @@ class RESTAkademik {
     UserModel user = await _userAgent.user;
 
     return _networkUtil.get(
-        "${APP_REST_URL}cek_nilai?table=$table&nim=$nim&id_dosen=${user.userIdentity}",
+        "${APP_REST_URL}cek_nilai?table=$table&mahasiswa=$nim&id_dosen=${user.userIdentity}",
         headers: {
           "Authorization": "Bearer ${user.token}"
         }).then((val) => DosenSidang.fromJson(val[0]));
