@@ -25,3 +25,5 @@ class LoggedIn extends AuthenticationEvent {
 }
 
 class LoggedOut extends AuthenticationEvent {}
+
+class PasswordChanged extends AuthenticationEvent {}

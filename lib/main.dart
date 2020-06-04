@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:input_nilai/src/ui/pages/page_ganti_password.dart';
+import 'package:input_nilai/src/utils/util_useragent.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:theme_provider/theme_provider.dart';
 
@@ -68,6 +70,9 @@ class MyApp extends StatelessWidget {
                   }
                   if (state is AuthenticationAuthenticated) {
                     return HomePage();
+                  }
+                  if (state is AuthenticationFirstTime) {
+                    return GantiPasswordPage();
                   }
                   if (state is AuthenticationUnauthenticated) {
                     return LoginPageBloc(userRepository: userRepository);

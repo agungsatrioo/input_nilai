@@ -34,6 +34,10 @@ class UserRepository {
     });
   }
 
+  Future<bool> checkFirstTime() async {
+    return await _userAgent.isFirstTime.catchError((e) => false);
+  }
+
   Future<void> deleteUser() async {
     /// delete from keystore/keychain
     await Future.delayed(Duration(seconds: 1));

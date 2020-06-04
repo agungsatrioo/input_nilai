@@ -24,7 +24,7 @@ class UserAgent {
   Future<dynamic> login(
       String login_url, String username, String password) async {
     await Future.delayed(Duration(seconds: 2));
-    
+
     return _netutil.post(login_url, body: {
       "identity": username,
       "password": password
@@ -33,6 +33,28 @@ class UserAgent {
     }).catchError((e) {
       print(e.toString());
       throw new Exception("Gagal login.");
+    }).then((dynamic res) {
+      if (res['status'] == "failed")
+        throw new Exception(res['msg']);
+      else
+        return res;
+    });
+  }
+
+  Future<dynamic> changePassword(
+      String username, String password, String token) async {
+    await Future.delayed(Duration(seconds: 2));
+
+    Map<String, String> headers = {"Authorization": "Bearer ${token}"};
+
+    return _netutil.post(APP_REST_URL + "ganti_sandi", headers: headers, body: {
+      "identity": username,
+      "password": password
+    }).timeout(Duration(minutes: 1), onTimeout: () {
+      throw new TimeoutException("Waktu tersambung habis.");
+    }).catchError((e) {
+      print(e.toString());
+      throw new Exception("Gagal mengganti password.");
     }).then((dynamic res) {
       if (res['status'] == "failed")
         throw new Exception(res['msg']);
@@ -77,6 +99,15 @@ class UserAgent {
 
       return s;
     });
+  }
+
+  Future<bool> get isFirstTime async {
+    UserModel _user = await user;
+
+    return _netutil.get("$APP_REST_URL/is_first_run/${_user.userIdentity}",
+        headers: {
+          "Authorization": "Bearer ${_user.token}"
+        }).then((response) => response["result"]);
   }
 
   Future<String> get userToken async {

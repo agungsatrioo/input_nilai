@@ -25,13 +25,19 @@ class AuthenticationBloc
   Stream<AuthenticationState> mapEventToState(
     AuthenticationEvent event,
   ) async* {
+    
     if (event is AppStarted) {
       await Future.delayed(Duration(seconds: 3));
 
       final bool hasToken = await userRepository.hasToken();
 
       if (hasToken) {
-        yield AuthenticationAuthenticated();
+        final bool firstTime = await userRepository.checkFirstTime();
+
+        if (firstTime)
+          yield AuthenticationFirstTime();
+        else
+          yield AuthenticationAuthenticated();
       } else {
         yield AuthenticationUnauthenticated();
       }
@@ -40,6 +46,16 @@ class AuthenticationBloc
     if (event is LoggedIn) {
       yield AuthenticationLoading();
       await userRepository.writeUser(event.user);
+
+      final bool firstTime = await userRepository.checkFirstTime();
+
+      if (firstTime)
+        yield AuthenticationFirstTime();
+      else
+        yield AuthenticationAuthenticated();
+    }
+
+    if(event is PasswordChanged) {
       yield AuthenticationAuthenticated();
     }
 

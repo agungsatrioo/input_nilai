@@ -9,6 +9,8 @@ class AuthenticationUninitialized extends AuthenticationState {}
 
 class AuthenticationAuthenticated extends AuthenticationState {}
 
+class AuthenticationFirstTime extends AuthenticationState {}
+
 class AuthenticationUnauthenticated extends AuthenticationState {}
 
 class AuthenticationLoading extends AuthenticationState {}
