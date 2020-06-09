@@ -6,9 +6,9 @@ import '../../../models/model_akademik.dart';
 import '../timeline/widget_timeline.dart';
 
 class RevisiDosenItem extends StatelessWidget {
-  Revisi _revisi;
+  final Revisi _revisi;
 
-  RevisiDosenItem(this._revisi);
+  const RevisiDosenItem(this._revisi);
   
   @override
   Widget build(BuildContext context) {

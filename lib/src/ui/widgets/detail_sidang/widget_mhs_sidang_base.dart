@@ -14,7 +14,7 @@ import 'widget_dosen_detail.dart';
 class DetailSidangMahasiswaBase extends StatelessWidget {
   final ModelMhsSidang data;
 
-  DetailSidangMahasiswaBase(this.data);
+  const DetailSidangMahasiswaBase(this.data);
 
   @override
   Widget build(BuildContext context) {

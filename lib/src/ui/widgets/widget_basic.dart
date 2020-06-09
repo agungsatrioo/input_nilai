@@ -10,7 +10,7 @@ Widget caption_text(BuildContext context, String text) =>
 class SystemPadding extends StatelessWidget {
   final Widget child;
 
-  SystemPadding({Key key, this.child}) : super(key: key);
+  const SystemPadding({Key key, this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ Widget textWithCaption(BuildContext context, String caption, String content) =>
           SizedBox(height: 4),
           Text(
             content,
-            style: Theme.of(context).textTheme.title,
+            style: Theme.of(context).textTheme.headline6,
           ),
         ],
       ),

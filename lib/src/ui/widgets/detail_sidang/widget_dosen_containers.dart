@@ -6,7 +6,7 @@ import '../../../models/model_akademik.dart';
 class JadwalSidangMahasiwaContainer extends StatelessWidget {
   final ModelMhsSidang _data;
 
-  JadwalSidangMahasiwaContainer(this._data);
+  const JadwalSidangMahasiwaContainer(this._data);
 
   @override
   Widget build(BuildContext context) {

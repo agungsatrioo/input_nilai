@@ -6,11 +6,9 @@ import '../../../models/model_surat_quran.dart';
 class SurahItem extends StatelessWidget {
   final IndexQuran surah;
 
-  SurahItem({
+  const SurahItem({
     @required this.surah
-  }) {
-    assert(surah != null);
-  }
+  });
 
   @override
   Widget build(BuildContext context) {

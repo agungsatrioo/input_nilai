@@ -11,7 +11,7 @@ class AlertWidget extends StatelessWidget {
   final Widget trailing;
   final AlertType alertType;
 
-  AlertWidget({
+  const AlertWidget({
     @required this.alertType,
     @required this.title,
     @required this.message,

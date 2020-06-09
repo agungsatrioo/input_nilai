@@ -6,7 +6,7 @@ import '../../../models/model_akademik.dart';
 class SidangDosenDetailsWidget extends StatelessWidget {
   final List<DosenSidang> listDosen;
 
-  SidangDosenDetailsWidget({@required this.listDosen});
+  const SidangDosenDetailsWidget({@required this.listDosen});
 
   @override
   Widget build(BuildContext context) {

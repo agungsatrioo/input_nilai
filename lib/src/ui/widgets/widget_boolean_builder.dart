@@ -4,7 +4,7 @@ class SingleChildBooleanWidget extends StatelessWidget {
   final bool boolean;
   final Widget ifTrue, ifFalse;
 
-  SingleChildBooleanWidget(
+  const SingleChildBooleanWidget(
       {@required this.boolean, //Conditions to which widget are assigned.
       @required this.ifTrue, //Widget to returned if condition is true.
       @required this.ifFalse //Widget to returned if condition is false.
