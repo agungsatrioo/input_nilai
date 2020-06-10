@@ -16,17 +16,21 @@ class LoginPageBloc extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(10),
-          child: BlocProvider(
-            create: (context) {
-              return LoginBloc(
-                authenticationBloc:
-                    BlocProvider.of<AuthenticationBloc>(context),
-                userRepository: userRepository,
-              );
-            },
-            child: LoginForm(),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: BlocProvider(
+                create: (context) {
+                  return LoginBloc(
+                    authenticationBloc:
+                        BlocProvider.of<AuthenticationBloc>(context),
+                    userRepository: userRepository,
+                  );
+                },
+                child: LoginForm(),
+              ),
+            ),
           ),
         ),
       ),

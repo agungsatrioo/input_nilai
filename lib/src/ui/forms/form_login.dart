@@ -24,6 +24,41 @@ class _LoginFormState extends State<LoginForm> {
     });
   }
 
+  _showHelpDosen(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      isDismissible: true,
+      builder: (context) {
+        return Container(
+            padding: EdgeInsets.all(10.0),
+            child: Wrap(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text("Bantuan untuk login sebagai dosen", style: Theme.of(context).textTheme.headline6,),
+
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text("Jika Anda sebagai dosen mengalami kesulitan ketika masuk ke dalam sistem, harap coba cara-cara berikut:\n\n- Tambahkan prefiks \"id_dosen~\", \"nip~\", \"nik~\", atau \"nidn~\" (tanpa tanda kutip) sebelum ID Dosen/NIP/NIK/NIDN (~ adalah tanda alis).\nContoh: Dosen dengan NIP 7701 dapat masuk ke sistem dengan mengetikkan \"nip~7701\" (tanpa tanda kutip) di kotak teks identitas.\n\n- Jika masalah masih berlanjut, harap hubungi administrator SIPADANG untuk penjelasan lebih lanjut."),
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 10),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                          child: MyButton.primary(
+                              caption: "OK",
+                              onTap: () => Navigator.of(context).pop(true))),
+                    ],
+                  ),
+                )
+              ],
+            ));
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     _onLoginButtonPressed() {
@@ -52,6 +87,7 @@ class _LoginFormState extends State<LoginForm> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Center(
                   child: Image.asset("assets/images/icon.png", scale: 5),
@@ -111,17 +147,24 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                  padding:
+                      EdgeInsets.only(bottom: 4, left: 4, right: 4, top: 8),
                   child: SingleChildBooleanWidget(
-                    boolean: state is LoginLoading, 
-                    ifTrue: CircularProgressIndicator(), 
-                    ifFalse: MyButton.primary(
-                      buttonWidth: double.infinity,
-                      caption: "Login", 
-                      onTap: () => _onLoginButtonPressed()
-                    )
-                  ),
+                      boolean: state is LoginLoading,
+                      ifTrue: CircularProgressIndicator(),
+                      ifFalse: MyButton.primary(
+                          buttonWidth: double.infinity,
+                          caption: "Login",
+                          onTap: () => _onLoginButtonPressed())),
                 ),
+                Container(
+                    padding: EdgeInsets.only(bottom: 4, left: 4, right: 4),
+                    child: Visibility(
+                        visible: !(state is LoginLoading),
+                        child: MyButton.flatPrimary(
+                            buttonWidth: double.infinity,
+                            caption: "Bantuan Login Sebagai Dosen?",
+                            onTap: () => _showHelpDosen(context)))),
               ],
             ),
           );
