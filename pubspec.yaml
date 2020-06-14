@@ -48,6 +48,7 @@ dependencies:
   package_info: ^0.4.0+16
   animations: ^1.0.0+5
   dartx: ^0.4.0
+  dcdg: ^2.0.1
 
 dependency_overrides:
   path: ^1.7.0
